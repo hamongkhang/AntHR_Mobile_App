@@ -2,12 +2,11 @@ import React, {useState, createRef,useEffect} from 'react';
 import { LinearGradient } from "expo-linear-gradient";
 import {StyleSheet,TextInput,View,Text,ScrollView,Image,Keyboard,TouchableOpacity,KeyboardAvoidingView,ToastAndroid} from 'react-native';
 import {REACT_APP_API} from "@env"
-import AsyncStorage from '@react-native-async-storage/async-storage'
 import Loader from './Components/Loader';
 
 const ForgotPasswordScreen = ({navigation}) => {
   const [loading, setLoading] = useState(false);
-  const [showForm, setShowForm] = useState(true);
+  const [showForm, setShowForm] = useState(false);
   const [errorForm1, setErrorForm1] = useState({
     email:null,
   });
@@ -211,7 +210,7 @@ const ForgotPasswordScreen = ({navigation}) => {
                   <View style={styles.SectionStyle}>
                   <TextInput
                     style={styles.inputStyle}
-                    onChangeText={(confirm_new_password) =>setConfirm({...confirm,['confirm_new_password']: confirm_new_password})}
+                    onChangeText={(confirm_new_password) =>setConfirm({...confirm,['new_password_confirmed']: confirm_new_password})}
                     placeholder="Confirm New Password"
                     placeholderTextColor="#8b9cb5"
                     autoCapitalize="none"
@@ -224,9 +223,9 @@ const ForgotPasswordScreen = ({navigation}) => {
                     secureTextEntry={true}
                   />
                 </View>
-                  {errorForm2.confirm_new_password != '' ? (
+                  {errorForm2.new_password_confirmed != '' ? (
                     <Text style={styles.errorTextStyle}>
-                      {errorForm2.confirm_new_password}
+                      {errorForm2.new_password_confirmed}
                     </Text>
                   ) : null}
                 </>

@@ -4,7 +4,7 @@ import {StyleSheet,TextInput,View,Text,ScrollView,Image,Keyboard,TouchableOpacit
 import {REACT_APP_API} from "@env"
 import Loader from './Components/Loader';
 
-const ForgotPasswordScreen = ({navigation}) => {
+const ChangePasswordScreen = ({navigation}) => {
   const [loading, setLoading] = useState(false);
   const [showForm, setShowForm] = useState(false);
   const [errorForm1, setErrorForm1] = useState({
@@ -135,7 +135,7 @@ const ForgotPasswordScreen = ({navigation}) => {
                   }}
                 />
               </View>
-              <Text style={styles.buttonTextStyleAccount}><Text style={styles.buttonTextStyleAccount2} >Hello, </Text>hope you have a nice day!</Text>
+              <Text style={styles.buttonTextStyleAccount}><Text style={styles.buttonTextStyleAccount2} >Hello, </Text>hope ddyou have a nice day!</Text>
               <View style={styles.SectionStyle}>
                 <TextInput
                   style={styles.inputStyle}
@@ -251,7 +251,6 @@ const ForgotPasswordScreen = ({navigation}) => {
                     <Text style={styles.buttonTextStyle}>CONTINUE</Text>
                   </TouchableOpacity>
               }
-               <Text style={styles.buttonTextStyleForgot2}>You want to login? <Text style={styles.buttonTextStyleForgot3} onPress={() => navigation.navigate('LoginScreen')}>Login</Text></Text>
             </KeyboardAvoidingView>
           </View>
         </ScrollView>
@@ -259,7 +258,7 @@ const ForgotPasswordScreen = ({navigation}) => {
       </LinearGradient>
   );
 };
-export default ForgotPasswordScreen;
+export default ChangePasswordScreen;
 
 const styles = StyleSheet.create({
     linearGradient: {
@@ -356,17 +355,5 @@ const styles = StyleSheet.create({
     fontWeight:"bold",
     textAlign:"left",
     marginLeft: 35,
-  },
-  buttonTextStyleForgot3: {
-    color: '#ff9900',
-    fontSize: 16,
-    fontWeight:"bold",
-    textAlign:"center",
-  },
-  buttonTextStyleForgot2: {
-    color: 'white',
-    fontSize: 14,
-    marginLeft:10,
-    textAlign:"center",
   },
 });

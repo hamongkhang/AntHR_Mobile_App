@@ -8,16 +8,22 @@ import RegisterScreen from './Screen/RegisterScreen';
 import DrawerNavigationRoutes from './Screen/DrawerNavigationRoutes';
 import HomeScreen from "./Screen/DrawerScreens/HomeScreen";
 import ForgotPasswordScreen from './Screen/ForgotPasswordScreen';
+import ChangePasswordScreen from "./Screen/ChangePasswordScreen";
 
 const Stack = createNativeStackNavigator();
 
 const App = () => {
   return (
      <NavigationContainer>
-       <Stack.Navigator initialRouteName="ForgotPasswordScreen">
+       <Stack.Navigator initialRouteName="ChangePasswordScreen">
         <Stack.Screen
           name="Welcome"
           component={Welcome}
+          options={{headerShown: false}}
+        /> 
+        <Stack.Screen
+          name="ChangePasswordScreen"
+          component={ChangePasswordScreen}
           options={{headerShown: false}}
         /> 
         <Stack.Screen

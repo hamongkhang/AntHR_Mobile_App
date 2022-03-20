@@ -8,11 +8,8 @@ import Loader from './Components/Loader';
 const LoginScreen = ({navigation}) => {
   const [domain, setDomain] = useState('');
   const [errorForm1, setErrorForm1] = useState({domain:null});
-  const [userEmail, setUserEmail] = useState('');
-  const [userPassword, setUserPassword] = useState('');
   const [loading, setLoading] = useState(false);
-  const [errortext, setErrortext] = useState('');
-  const [showForm, setShowForm] = useState(false);
+  const [showForm, setShowForm] = useState(true);
   const [user, setUser] = useState({
     email:'',
     password:''
@@ -57,7 +54,7 @@ const LoginScreen = ({navigation}) => {
             AsyncStorage.setItem('id', json.user.id);
             setLoading(false);
             ToastAndroid.showWithGravityAndOffset('Logged in successfully !!!',ToastAndroid.LONG,ToastAndroid.CENTER,10,10);
-            //navigate('/home');
+            navigation.navigate('HomeScreen');
           }
        });
   };
@@ -82,7 +79,7 @@ const LoginScreen = ({navigation}) => {
                 setLoading(false);
               }
             } else {
-              setLoading(false);
+                setLoading(false);
                 ToastAndroid.showWithGravityAndOffset('Successfully!!!',ToastAndroid.LONG,ToastAndroid.CENTER,10,10);
                 if(!showForm){
                   setShowForm(true);
@@ -92,16 +89,21 @@ const LoginScreen = ({navigation}) => {
           }
         });
   };
+  const googleLogin=()=>{
+    setErrorForm2("");
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+      ToastAndroid.showWithGravityAndOffset('Login information is incorrect !!!',ToastAndroid.LONG,ToastAndroid.CENTER,10,10);
+    }, 3000);
+  }
   useEffect(() => {
-    //AsyncStorage.clear();
       AsyncStorage.getItem('access_token', (err, result) => {
         if (result) {
-          alert("da dang nhap");
+         navigation.navigate('HomeScreen');
         }else{
-          alert("chua dang nhap")
         }
       });
-     // navigate('/home');
 }, []);
   return (
         showForm
@@ -215,7 +217,7 @@ const LoginScreen = ({navigation}) => {
               <TextInput
                 style={styles.inputStyle}
                 onChangeText={(password) =>setUser({...user,['password']: password})}
-                placeholder="Password" //12345
+                placeholder="Password"
                 placeholderTextColor="#8b9cb5"
                 keyboardType="default"
                 ref={passwordInputRef}
@@ -231,7 +233,7 @@ const LoginScreen = ({navigation}) => {
                 {errorForm2.password}
               </Text>
             ) : null}
-              <Text style={styles.buttonTextStyleForgot} onPress={() => navigation.navigate('RegisterScreen')}>Forgot Password ?</Text>
+              <Text style={styles.buttonTextStyleForgot} onPress={() => navigation.navigate('ForgotPasswordScreen')}>Forgot Password ?</Text>
             <TouchableOpacity
               style={styles.buttonStyle}
               activeOpacity={0.5}
@@ -243,7 +245,7 @@ const LoginScreen = ({navigation}) => {
             <TouchableOpacity
               style={styles.buttonStyleGoogle}
               activeOpacity={0.5}
-              onPress={handleSubmitPress}
+              onPress={()=>googleLogin()}
               >
                 <View style={{flex: 1, flexDirection: 'row', paddingVertical: 10, }}>
                 <Image

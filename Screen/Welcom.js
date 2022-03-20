@@ -1,11 +1,21 @@
-import React from 'react';
+import React,{useState} from 'react';
 import { LinearGradient } from "expo-linear-gradient";
 import {StyleSheet,View,Text,ScrollView,Image,TouchableOpacity,KeyboardAvoidingView,} from 'react-native';
+import Loader from './Components/Loader';
 
 const Welcome = ({navigation}) => {
+  const [loading, setLoading] = useState(false);
+  const getStart=()=>{
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+      navigation.navigate('LoginScreen');
+    }, 3000);
+  }
   return (
     <LinearGradient colors={['#f5fdf8', '#f7f9fc']} style={styles.linearGradient}>
       <View style={styles.mainBody}>
+      <Loader loading={loading} />
         <ScrollView
           keyboardShouldPersistTaps="handled"
           contentContainerStyle={{
@@ -34,7 +44,7 @@ const Welcome = ({navigation}) => {
               <TouchableOpacity
                 style={styles.buttonStyle}
                 activeOpacity={0.5}
-                onPress={() => navigation.navigate('LoginScreen')}
+                onPress={() => getStart()}
                 >
                 <Text style={styles.buttonTextStyle}>LET'S STARTED</Text>
               </TouchableOpacity>

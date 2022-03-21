@@ -5,180 +5,12 @@ import {REACT_APP_API} from "@env"
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import Loader from './Components/Loader';
 import { Drawer,Avatar,Dialog, Portal,List  } from 'react-native-paper';
-import { TabView, SceneMap,TabBar} from 'react-native-tab-view';
-
-  const FirstRoute = () => (
-    <View
-      style={{
-        backgroundColor:"white",
-        padding:20,
-      }}
-    >
-      <View style={{alignItems:"center",marginBottom:10}}>
-        <Text style={{fontSize:18,fontWeight:"bold",color:"rgb(35, 54, 78)"}}>Persional Information</Text>
-      </View>
-      <View style={{flex: 1, flexDirection: 'row',marginBottom:5}}>
-        <Text style={{fontWeight:"bold",fontSize:16,color:"rgb(35, 54, 78)"}}>First name: </Text>
-        <Text style={{fontSize:16,color:"rgb(35, 54, 78)"}}>Hà</Text>
-      </View>
-      <View style={{flex: 1, flexDirection: 'row',marginBottom:5}}>
-        <Text style={{fontWeight:"bold",fontSize:16,color:"rgb(35, 54, 78)"}}>Last name: </Text>
-        <Text style={{fontSize:16,color:"rgb(35, 54, 78)"}}>Mộng Khang</Text>
-      </View>
-      <View style={{flex: 1, flexDirection: 'row',marginBottom:5}}>
-        <Text style={{fontWeight:"bold",fontSize:16,color:"rgb(35, 54, 78)"}}>First name: </Text>
-        <Text style={{fontSize:16,color:"rgb(35, 54, 78)"}}>Hà</Text>
-      </View>
-      <View style={{flex: 1, flexDirection: 'row',marginBottom:5}}>
-        <Text style={{fontWeight:"bold",fontSize:16,color:"rgb(35, 54, 78)"}}>First name: </Text>
-        <Text style={{fontSize:16,color:"rgb(35, 54, 78)"}}>Hà</Text>
-      </View>
-      <View style={{flex: 1, flexDirection: 'row',marginBottom:5}}>
-        <Text style={{fontWeight:"bold",fontSize:16,color:"rgb(35, 54, 78)"}}>First name: </Text>
-        <Text style={{fontSize:16,color:"rgb(35, 54, 78)"}}>Hà</Text>
-      </View>
-      <View style={{flex: 1, flexDirection: 'row',marginBottom:5}}>
-        <Text style={{fontWeight:"bold",fontSize:16,color:"rgb(35, 54, 78)"}}>First name: </Text>
-        <Text style={{fontSize:16,color:"rgb(35, 54, 78)"}}>Hà</Text>
-      </View>
-    </View>
-  );
-
-const SecondRoute = () => (
-  <View
-  style={{
-    backgroundColor:"white",
-    padding:20,
-  }}
->
-  <View style={{alignItems:"center",marginBottom:10}}>
-    <Text style={{fontSize:18,fontWeight:"bold",color:"rgb(35, 54, 78)"}}>Address Information</Text>
-  </View>
-  <View style={{flex: 1, flexDirection: 'row',marginBottom:5}}>
-    <Text style={{fontWeight:"bold",fontSize:16,color:"rgb(35, 54, 78)"}}>First name: </Text>
-    <Text style={{fontSize:16,color:"rgb(35, 54, 78)"}}>Hà</Text>
-  </View>
-  <View style={{flex: 1, flexDirection: 'row',marginBottom:5}}>
-    <Text style={{fontWeight:"bold",fontSize:16,color:"rgb(35, 54, 78)"}}>Last name: </Text>
-    <Text style={{fontSize:16,color:"rgb(35, 54, 78)"}}>Mộng Khang</Text>
-  </View>
-  <View style={{flex: 1, flexDirection: 'row',marginBottom:5}}>
-    <Text style={{fontWeight:"bold",fontSize:16,color:"rgb(35, 54, 78)"}}>First name: </Text>
-    <Text style={{fontSize:16,color:"rgb(35, 54, 78)"}}>Hà</Text>
-  </View>
-  <View style={{flex: 1, flexDirection: 'row',marginBottom:5}}>
-    <Text style={{fontWeight:"bold",fontSize:16,color:"rgb(35, 54, 78)"}}>First name: </Text>
-    <Text style={{fontSize:16,color:"rgb(35, 54, 78)"}}>Hà</Text>
-  </View>
-  <View style={{flex: 1, flexDirection: 'row',marginBottom:5}}>
-    <Text style={{fontWeight:"bold",fontSize:16,color:"rgb(35, 54, 78)"}}>First name: </Text>
-    <Text style={{fontSize:16,color:"rgb(35, 54, 78)"}}>Hà</Text>
-  </View>
-  <View style={{flex: 1, flexDirection: 'row',marginBottom:5}}>
-    <Text style={{fontWeight:"bold",fontSize:16,color:"rgb(35, 54, 78)"}}>First name: </Text>
-    <Text style={{fontSize:16,color:"rgb(35, 54, 78)"}}>Hà</Text>
-  </View>
-</View>
-);
-const ThirdRoute = () => (
-  <View
-  style={{
-    backgroundColor:"white",
-    padding:20,
-  }}
->
-  <View style={{alignItems:"center",marginBottom:10}}>
-    <Text style={{fontSize:18,fontWeight:"bold",color:"rgb(35, 54, 78)"}}>Bank Information</Text>
-  </View>
-  <View style={{flex: 1, flexDirection: 'row',marginBottom:5}}>
-    <Text style={{fontWeight:"bold",fontSize:16,color:"rgb(35, 54, 78)"}}>First name: </Text>
-    <Text style={{fontSize:16,color:"rgb(35, 54, 78)"}}>Hà</Text>
-  </View>
-  <View style={{flex: 1, flexDirection: 'row',marginBottom:5}}>
-    <Text style={{fontWeight:"bold",fontSize:16,color:"rgb(35, 54, 78)"}}>Last name: </Text>
-    <Text style={{fontSize:16,color:"rgb(35, 54, 78)"}}>Mộng Khang</Text>
-  </View>
-  <View style={{flex: 1, flexDirection: 'row',marginBottom:5}}>
-    <Text style={{fontWeight:"bold",fontSize:16,color:"rgb(35, 54, 78)"}}>First name: </Text>
-    <Text style={{fontSize:16,color:"rgb(35, 54, 78)"}}>Hà</Text>
-  </View>
-  <View style={{flex: 1, flexDirection: 'row',marginBottom:5}}>
-    <Text style={{fontWeight:"bold",fontSize:16,color:"rgb(35, 54, 78)"}}>First name: </Text>
-    <Text style={{fontSize:16,color:"rgb(35, 54, 78)"}}>Hà</Text>
-  </View>
-  <View style={{flex: 1, flexDirection: 'row',marginBottom:5}}>
-    <Text style={{fontWeight:"bold",fontSize:16,color:"rgb(35, 54, 78)"}}>First name: </Text>
-    <Text style={{fontSize:16,color:"rgb(35, 54, 78)"}}>Hà</Text>
-  </View>
-  <View style={{flex: 1, flexDirection: 'row',marginBottom:5}}>
-    <Text style={{fontWeight:"bold",fontSize:16,color:"rgb(35, 54, 78)"}}>First name: </Text>
-    <Text style={{fontSize:16,color:"rgb(35, 54, 78)"}}>Hà</Text>
-  </View>
-</View>
-);
-
-const fourthRoute = () => (
-  <View
-  style={{
-    backgroundColor:"white",
-    padding:20,
-  }}
->
-  <View style={{alignItems:"center",marginBottom:10}}>
-    <Text style={{fontSize:18,fontWeight:"bold",color:"rgb(35, 54, 78)"}}>Account Information</Text>
-  </View>
-  <View style={{flex: 1, flexDirection: 'row',marginBottom:5}}>
-    <Text style={{fontWeight:"bold",fontSize:16,color:"rgb(35, 54, 78)"}}>First name: </Text>
-    <Text style={{fontSize:16,color:"rgb(35, 54, 78)"}}>Hà</Text>
-  </View>
-  <View style={{flex: 1, flexDirection: 'row',marginBottom:5}}>
-    <Text style={{fontWeight:"bold",fontSize:16,color:"rgb(35, 54, 78)"}}>Last name: </Text>
-    <Text style={{fontSize:16,color:"rgb(35, 54, 78)"}}>Mộng Khang</Text>
-  </View>
-  <View style={{flex: 1, flexDirection: 'row',marginBottom:5}}>
-    <Text style={{fontWeight:"bold",fontSize:16,color:"rgb(35, 54, 78)"}}>First name: </Text>
-    <Text style={{fontSize:16,color:"rgb(35, 54, 78)"}}>Hà</Text>
-  </View>
-  <View style={{flex: 1, flexDirection: 'row',marginBottom:5}}>
-    <Text style={{fontWeight:"bold",fontSize:16,color:"rgb(35, 54, 78)"}}>First name: </Text>
-    <Text style={{fontSize:16,color:"rgb(35, 54, 78)"}}>Hà</Text>
-  </View>
-  <View style={{flex: 1, flexDirection: 'row',marginBottom:5}}>
-    <Text style={{fontWeight:"bold",fontSize:16,color:"rgb(35, 54, 78)"}}>First name: </Text>
-    <Text style={{fontSize:16,color:"rgb(35, 54, 78)"}}>Hà</Text>
-  </View>
-  <View style={{flex: 1, flexDirection: 'row',marginBottom:5}}>
-    <Text style={{fontWeight:"bold",fontSize:16,color:"rgb(35, 54, 78)"}}>First name: </Text>
-    <Text style={{fontSize:16,color:"rgb(35, 54, 78)"}}>Hà</Text>
-  </View>
-</View>
-);
-const renderTabBar = props => (
-  <TabBar
-    {...props}
-    indicatorStyle={{ backgroundColor: '#edf8f1' }}
-    style={{ backgroundColor: '#ff9900'}}
-  />
-);
-const renderScene = SceneMap({
-  first: FirstRoute,
-  second: SecondRoute,
-  third:ThirdRoute,
-  fourth:fourthRoute
-});
+  
 const AccountScreen = ({navigation}) => {
   const [loading, setLoading] = useState(false);
-  const [expanded, setExpanded] =useState(true);
-  const layout = useWindowDimensions();
+  const [showTab,setShowTab]=useState(1)
+  const [token, setToken] = useState('');
 
-  const [index, setIndex] = useState(0);
-  const [routes] = React.useState([
-    { key: 'first', title: 'Persional',icon:"account" },
-    { key: 'second', title: 'Address' },
-    { key: 'third', title: 'Bank' },
-    { key: 'fourth', title: 'Account' },
-  ]);
-  const handlePress = () => setExpanded(!expanded);
   // const [domain, setDomain] = useState('');
   // const [errorForm1, setErrorForm1] = useState({domain:null});
   // const [loading, setLoading] = useState(false);
@@ -273,6 +105,21 @@ const AccountScreen = ({navigation}) => {
   //     ToastAndroid.showWithGravityAndOffset('Login information is incorrect !!!',ToastAndroid.LONG,ToastAndroid.CENTER,10,10);
   //   }, 3000);
   // }
+  const onChangeTab=(value)=>{
+    setShowTab(value);
+  }
+  const onClickLogout=()=>{
+    const requestOptions = {
+        method: 'POST',
+        headers: { "Authorization": `Bearer ` + token }
+    };
+    fetch(REACT_APP_API + '/user/logout', requestOptions)
+        .then((res) => res.json())
+        .then((json) => {
+        });
+        AsyncStorage.clear();
+        navigation.navigate('LoginScreen');
+  }
   useEffect(() => {
     const getToken = async () => {
       try {
@@ -301,18 +148,250 @@ const AccountScreen = ({navigation}) => {
           <Text style={styles.email_header}>hamongkhang@gmail.com</Text>
         </View>
         <View style={styles.body}>
-         <Dialog.ScrollArea style={{padding:0}}> 
+        <View style={{backgroundColor:"#ffa000",flexDirection: 'row',opacity:1,borderRadius:5,marginLeft:10,marginRight:10}}>
+          {
+                  (showTab==1)
+                ?
+                <View 
+                style={{
+                  width:"25%",
+                  alignItems:"center",
+                  paddingTop:10,
+                  paddingBottom:10,
+                  borderBottomWidth:4,
+                  borderBottomColor:"#edf8f1"
+                }}
+                >
+                <Image
+                  source={require('../Image/persional_icon.png')}
+                  style={{
+                    width: 30,
+                    height: 30,
+                  }}
+                />
+                <Text style={{color:"white",fontWeight:"bold",fontSize:12}} onPress={()=>onChangeTab(1)}>Persional</Text>
+              </View>
+              :
+              <View 
+              style={{
+                width:"25%",
+                alignItems:"center",
+                paddingTop:10,
+                paddingBottom:10,
+                opacity:0.5
+              }}
+              >
+              <Image
+                source={require('../Image/persional_icon.png')}
+                style={{
+                  width: 30,
+                  height: 30,
+                }}
+              />
+                <Text style={{color:"white",fontWeight:"bold",fontSize:12}} onPress={()=>onChangeTab(1)}>Persional</Text>
+            </View>
+          }
+          {
+                  (showTab==2)
+                ?
+                <View 
+                style={{
+                  width:"25%",
+                  alignItems:"center",
+                  paddingTop:10,
+                  paddingBottom:10,
+                  borderBottomWidth:4,
+                  borderBottomColor:"#edf8f1"
+                }}
+                >
+                <Image
+                  source={require('../Image/address_icon.png')}
+                  style={{
+                    width: 30,
+                    height: 30,
+                  }}
+                />
+                <Text style={{color:"white",fontWeight:"bold",fontSize:12}} onPress={()=>onChangeTab(2)}>Address</Text>
+              </View>
+              :
+              <View 
+              style={{
+                width:"25%",
+                alignItems:"center",
+                paddingTop:10,
+                paddingBottom:10,
+                opacity:0.5
+              }}
+              >
+              <Image
+                source={require('../Image/address_icon.png')}
+                style={{
+                  width: 30,
+                  height: 30,
+                }}
+              />
+              <Text style={{color:"white",fontWeight:"bold",fontSize:12}} onPress={()=>onChangeTab(2)}>Address</Text>
+            </View>
+          }
+          {
+                  (showTab==3)
+                ?
+                <View 
+                style={{
+                  width:"25%",
+                  alignItems:"center",
+                  paddingTop:10,
+                  paddingBottom:10,
+                  borderBottomWidth:4,
+                  borderBottomColor:"#edf8f1"
+                }}
+                >
+                <Image
+                  source={require('../Image/bank_icon.png')}
+                  style={{
+                    width: 30,
+                    height: 30,
+                  }}
+                />
+                <Text style={{color:"white",fontWeight:"bold",fontSize:12}} onPress={()=>onChangeTab(3)}>Bank</Text>
+              </View>
+              :
+              <View 
+              style={{
+                width:"25%",
+                alignItems:"center",
+                paddingTop:10,
+                paddingBottom:10,
+                opacity:0.5
+              }}
+              >
+              <Image
+                source={require('../Image/bank_icon.png')}
+                style={{
+                  width: 30,
+                  height: 30,
+                }}
+              />
+              <Text style={{color:"white",fontWeight:"bold",fontSize:12}} onPress={()=>onChangeTab(3)}>Bank</Text>
+            </View>
+          }
+          {
+                  (showTab==4)
+                ?
+                <View 
+                style={{
+                  width:"25%",
+                  alignItems:"center",
+                  paddingTop:10,
+                  paddingBottom:10,
+                  borderBottomWidth:4,
+                  borderBottomColor:"#edf8f1"
+                }}
+                >
+                <Image
+                  source={require('../Image/account_icon.png')}
+                  style={{
+                    width: 30,
+                    height: 30,
+                  }}
+                />
+                <Text style={{color:"white",fontWeight:"bold",fontSize:12}} onPress={()=>onChangeTab(4)}>Account</Text>
+              </View>
+              :
+              <View 
+              style={{
+                width:"25%",
+                alignItems:"center",
+                paddingTop:10,
+                paddingBottom:10,
+                opacity:0.5
+              }}
+              >
+              <Image
+                source={require('../Image/account_icon.png')}
+                style={{
+                  width: 30,
+                  height: 30,
+                }}
+              />
+              <Text style={{color:"white",fontWeight:"bold",fontSize:12}} onPress={()=>onChangeTab(4)}>Account</Text>
+            </View>
+          }
+            </View>
+         <Dialog.ScrollArea> 
           <ScrollView>
-            <TabView
-              navigationState={{ index, routes }}
-              renderScene={renderScene}
-              onIndexChange={setIndex}
-              initialLayout={{ height:100,width: layout.width }}
-              renderTabBar={renderTabBar}
-            />
+            {
+                (showTab==1)
+              ?
+              <View style={{padding:15}}> 
+                <View style={{alignItems:"center",marginBottom:10}}>
+                  <Text style={{fontSize:18,fontWeight:"bold",color:"rgb(35, 54, 78)",marginTop:20}}>Persional Information</Text>
+                </View>
+                <View style={{flex: 1, flexDirection: 'row',marginBottom:5}}>
+                  <Text style={{fontWeight:"bold",fontSize:16,color:"rgb(35, 54, 78)"}}>First name: </Text>
+                  <Text style={{fontSize:16,color:"rgb(35, 54, 78)", textAlign: "right",marginLeft: 'auto'}}>Hà</Text>
+                </View>         
+              </View>
+              :
+                  (showTab==2)
+                ?
+                <View style={{padding:15}}> 
+                <View style={{alignItems:"center",marginBottom:10}}>
+                  <Text style={{fontSize:18,fontWeight:"bold",color:"rgb(35, 54, 78)",marginTop:20}}>Address Information</Text>
+                </View>
+                <View style={{flex: 1, flexDirection: 'row',marginBottom:5}}>
+                  <Text style={{fontWeight:"bold",fontSize:16,color:"rgb(35, 54, 78)"}}>First name: </Text>
+                  <Text style={{fontSize:16,color:"rgb(35, 54, 78)", textAlign: "right",marginLeft: 'auto'}}>Hà</Text>
+                </View>         
+              </View>
+                :
+                (showTab==3)
+                ?
+                <View style={{padding:15}}> 
+                <View style={{alignItems:"center",marginBottom:10}}>
+                  <Text style={{fontSize:18,fontWeight:"bold",color:"rgb(35, 54, 78)",marginTop:20}}>Bank Information</Text>
+                </View>
+                <View style={{flex: 1, flexDirection: 'row',marginBottom:5}}>
+                  <Text style={{fontWeight:"bold",fontSize:16,color:"rgb(35, 54, 78)"}}>First name: </Text>
+                  <Text style={{fontSize:16,color:"rgb(35, 54, 78)", textAlign: "right",marginLeft: 'auto'}}>Hà</Text>
+                </View>         
+              </View>
+              :
+              <View style={{padding:15}}> 
+              <View style={{alignItems:"center",marginBottom:10}}>
+                <Text style={{fontSize:18,fontWeight:"bold",color:"rgb(35, 54, 78)",marginTop:20}}>Account Information</Text>
+              </View>
+              <View style={{flex: 1, flexDirection: 'row',marginBottom:5}}>
+                <Text style={{fontWeight:"bold",fontSize:16,color:"rgb(35, 54, 78)"}}>First name: </Text>
+                <Text style={{fontSize:16,color:"rgb(35, 54, 78)", textAlign: "right",marginLeft: 'auto'}}>Hà</Text>
+              </View>       
+            </View>
+            }
           </ScrollView>
-         </Dialog.ScrollArea>  
+         </Dialog.ScrollArea> 
+         { 
+          (showTab==4)
+          ?
+              <TouchableOpacity
+                style={styles.buttonStyle}
+                activeOpacity={0.5}
+                //onPress={handleSubmitPress}
+              >
+                <Text style={styles.buttonTextStyle}>CHANGE PASSWORD</Text>
+              </TouchableOpacity>  
+          :null
+         }
         </View>
+        <TouchableOpacity onPress={()=>onClickLogout()} style={styles.footer}>
+              <Image
+                source={require('../Image/logout_icon.png')}
+                style={{
+                  width: 30,
+                  height: 30,
+                }}
+              />
+              <Text style={{ marginLeft:10,fontSize:22,fontWeight:"bold",color:"rgb(35, 54, 78)"}} >Log out</Text>
+        </TouchableOpacity>
         </View> 
       </LinearGradient>
   );
@@ -330,7 +409,7 @@ const styles = StyleSheet.create({
     alignItems:"center"
   },
   header:{
-    marginTop:"15%",
+    marginTop:"10%",
     alignItems:"center",
     backgroundColor:"white",
     padding:20,
@@ -349,6 +428,18 @@ const styles = StyleSheet.create({
     borderWidth:1,
     borderColor:"rgb(227, 235, 241)",
   },
+  footer:{
+    marginTop:10,
+    justifyContent:"center",
+    backgroundColor:"white",
+    padding:20,
+    width:"100%",
+    borderRadius:5,
+    borderWidth:1,
+    borderColor:"rgb(227, 235, 241)",
+    flexDirection: 'row',
+    marginBottom:10
+  },
   email_header:{
     marginTop:5,
     fontSize:16,
@@ -360,88 +451,23 @@ const styles = StyleSheet.create({
     fontWeight:"bold",
     color:"rgb(35, 54, 78)",
   },
-  // SectionStyle: {
-  //   flexDirection: 'row',
-  //   height: 40,
-  //   marginTop: 20,
-  //   marginLeft: 35,
-  //   marginRight: 35,
-  //   margin: 10,
-  // },
-  // buttonStyle: {
-  //   backgroundColor: '#FFFF66',
-  //   borderWidth: 1,
-  //   borderColor: '#ff9900',
-  //   height: 42,
-  //   alignItems: 'center',
-  //   borderRadius: 30,
-  //   marginLeft: 35,
-  //   marginRight: 35,
-  //   marginTop: 20,
-  //   marginBottom: 25,
-  // },
-  // buttonTextStyle: {
-  //   color: '#ff9900',
-  //   paddingVertical: 10,
-  //   fontSize: 16,
-  //   fontWeight:"bold"
-  // },
-  // buttonTextStyleOr: {
-  //   color: 'white',
-  //   textAlign: 'center',
-  //   fontSize: 12,
-  //   fontWeight:"bold",
-  // },
-  // inputStyle: {
-  //   flex: 1,
-  //   color: 'white',
-  //   paddingLeft: 15,
-  //   paddingRight: 15,
-  //   borderWidth: 1,
-  //   borderRadius: 30,
-  //   borderColor: '#dadae8',
-  // },
-  // errorTextStyle: {
-  //   color: 'red',
-  //   textAlign: 'center',
-  //   fontSize: 14,
-  // },
-  // buttonStyleGoogle:{
-  //   borderWidth: 1,
-  //   borderColor: '#dadae8',
-  //   height: 42,
-  //   alignItems: 'center',
-  //   borderRadius: 30,
-  //   marginLeft: 35,
-  //   marginRight: 35,
-  //   marginTop: 20,
-  //   marginBottom: 25,
-  // },
-  // buttonTextStyleGoogle: {
-  //   color: 'white',
-  //   fontSize: 12,
-  //   fontWeight:"bold",
-  //   marginLeft:10
-  // },
-  // buttonTextStyleForgot: {
-  //   color: '#ff9900',
-  //   fontSize: 12,
-  //   fontWeight:"bold",
-  //   marginLeft:10,
-  //   textAlign:"right",
-  //   paddingRight: 40,
-  // },
-  // buttonTextStyleAccount2: {
-  //   color: '#ff9900',
-  //   fontSize: 18,
-  //   fontWeight:"bold",
-  //   textAlign:"center",
-  // }, 
-  // buttonTextStyleAccount: {
-  //   color: 'white',
-  //   fontSize: 14,
-  //   fontWeight:"bold",
-  //   textAlign:"left",
-  //   marginLeft: 35,
-  // },
-});
+  buttonStyle: {
+    backgroundColor: '#FFFF66',
+    borderWidth: 1,
+    borderColor: '#ff9900',
+    height: 42,
+    alignItems: 'center',
+    borderRadius: 30,
+    marginLeft: 35,
+    marginRight: 35,
+    marginTop: 20,
+    marginBottom: 25,
+    
+  },
+  buttonTextStyle: {
+    color: '#ff9900',
+    paddingVertical: 10,
+    fontSize: 16,
+    fontWeight:"bold"
+  },
+})

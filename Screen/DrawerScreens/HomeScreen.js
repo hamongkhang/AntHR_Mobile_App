@@ -15,7 +15,7 @@ import AccountScreen from '../Account';
   const AttendanceRoute = () => <Text>AttendanceRoute</Text>;
   const GiftRoute = () => <Text>AccountRoute</Text>;
 
-const HomeScreen = () => {
+const HomeScreen = ({navigation}) => {
   const [index, setIndex] = React.useState(0);
   
   const [routes] = React.useState([
@@ -23,7 +23,7 @@ const HomeScreen = () => {
     { key: 'Folder', title: 'Folder', icon: 'folder', color: '#4caf50' },
     { key: 'News', title: 'News', icon: 'newspaper', color: '#9c27b0' },
     { key: 'Attendance', title: 'Attendance', icon: 'calendar', color: '#ab003c' },
-    { key: 'Account', title: 'Account', icon: 'account', color: '#b26a00' },
+    { key: 'Account', title: 'Account', icon: 'account', color: '#ff9900' },
   ]);
 
   const renderScene = BottomNavigation.SceneMap({

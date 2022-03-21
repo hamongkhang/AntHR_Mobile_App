@@ -17,6 +17,7 @@ const HomeScreen = ({navigation}) => {
   const [index, setIndex] = React.useState(0);
   const [token, setToken] = useState('');
   const [loading, setLoading] = useState(false);
+  const [showButton, setShowButton] = useState(false);
 
   const [routes] = React.useState([
     { key: 'Gift', title: 'Gift', icon: 'gift', color: 'rgb(98, 0, 238)' },
@@ -48,7 +49,9 @@ const HomeScreen = ({navigation}) => {
         AsyncStorage.clear();
         navigation.navigate('LoginScreen')
       }
-
+  const onClickShowButton=()=>{
+    setShowButton(!showButton)
+  }
   useEffect(() => {
     const getToken = async () => {
       try {
@@ -74,18 +77,23 @@ const HomeScreen = ({navigation}) => {
       <LinearGradient colors={['#312A6C', '#852D91']}>
         <Appbar.Header>
             <Image  style={{marginLeft:10,width:60,height:60}} source={require('../Image/logo1.png')} /> 
-            <Avatar.Image onPress={()=>showButton()} size={40} style={{backgroundColor:"#edf8f1",marginLeft:"auto",marginRight:10}} source={require('../Image/logo1.png')} />
+            <Text style={{marginLeft:"auto",marginRight:10}} onPress={() => onClickShowButton()}>
+              <Avatar.Image size={40} style={{backgroundColor:"#edf8f1",marginLeft:"auto",marginRight:10}} source={require('../Image/logo1.png')} />
+            </Text>
         </Appbar.Header>
+        {showButton?
         <LinearGradient colors={['#FE6B8B', '#FF8E53']}>
         <View style={{padding:20,flexDirection:"row",justifyContent:"center"}}>
           <Button style={{marginRight:40}} icon="account" mode="contained" onPress={() => console.log('Pressed')}>
-              Password
+            Password
          </Button>
          <Button icon="logout" mode="contained" onPress={() => console.log('Pressed')}>
               Log out
          </Button>
         </View>
         </LinearGradient>
+        :null
+        } 
         </LinearGradient>
         <BottomNavigation
           navigationState={{ index, routes }}

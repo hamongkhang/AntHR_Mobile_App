@@ -1,97 +1,32 @@
-// Example of Splash, Login and Sign Up in React Native
-// https://aboutreact.com/react-native-login-and-signup/
+import * as React from 'react';
+import { BottomNavigation, Text } from 'react-native-paper';
 
-// Import React
-import React from 'react';
+const MusicRoute = () => <Text>Music</Text>;
 
-// Import Navigators from React Navigation
-import {createStackNavigator} from '@react-navigation/stack';
-import {createDrawerNavigator} from '@react-navigation/drawer';
+const AlbumsRoute = () => <Text>Albums</Text>;
 
-// Import Screens
-import HomeScreen from './DrawerScreens/HomeScreen';
-import SettingsScreen from './DrawerScreens/SettingsScreen';
-import CustomSidebarMenu from './Components/CustomSidebarMenu';
-import NavigationDrawerHeader from './Components/NavigationDrawerHeader';
+const RecentsRoute = () => <Text>Recents</Text>;
 
-const Stack = createStackNavigator();
-const Drawer = createDrawerNavigator();
+const DrawerNavigatorRoutes = () => {
+  const [index, setIndex] = React.useState(0);
+  const [routes] = React.useState([
+    { key: 'music', title: 'Music', icon: 'queue-music' },
+    { key: 'albums', title: 'Albums', icon: 'album' },
+    { key: 'recents', title: 'Recents', icon: 'history' },
+  ]);
 
-const homeScreenStack = ({navigation}) => {
+  const renderScene = BottomNavigation.SceneMap({
+    music: MusicRoute,
+    albums: AlbumsRoute,
+    recents: RecentsRoute,
+  });
+
   return (
-    <Stack.Navigator initialRouteName="HomeScreen">
-      <Stack.Screen
-        name="HomeScreen"
-        component={HomeScreen}
-        options={{
-          title: 'Home', //Set Header Title
-          headerLeft: () => (
-            <NavigationDrawerHeader navigationProps={navigation} />
-          ),
-          headerStyle: {
-            backgroundColor: '#307ecc', //Set Header color
-          },
-          headerTintColor: '#fff', //Set Header text color
-          headerTitleStyle: {
-            fontWeight: 'bold', //Set Header text style
-          },
-        }}
-      />
-    </Stack.Navigator>
-  );
-};
-
-const settingScreenStack = ({navigation}) => {
-  return (
-    <Stack.Navigator
-      initialRouteName="SettingsScreen"
-      screenOptions={{
-        headerLeft: () => (
-          <NavigationDrawerHeader navigationProps={navigation} />
-        ),
-        headerStyle: {
-          backgroundColor: '#307ecc', //Set Header color
-        },
-        headerTintColor: '#fff', //Set Header text color
-        headerTitleStyle: {
-          fontWeight: 'bold', //Set Header text style
-        },
-      }}>
-      <Stack.Screen
-        name="SettingsScreen"
-        component={SettingsScreen}
-        options={{
-          title: 'Settings', //Set Header Title
-        }}
-      />
-    </Stack.Navigator>
-  );
-};
-
-const DrawerNavigatorRoutes = (props) => {
-  return (
-    <Drawer.Navigator
-      drawerContentOptions={{
-        activeTintColor: '#cee1f2',
-        color: '#cee1f2',
-        itemStyle: {marginVertical: 5, color: 'white'},
-        labelStyle: {
-          color: '#d8d8d8',
-        },
-      }}
-      screenOptions={{headerShown: false}}
-      drawerContent={CustomSidebarMenu}>
-      <Drawer.Screen
-        name="homeScreenStack"
-        options={{drawerLabel: 'Home Screen'}}
-        component={homeScreenStack}
-      />
-      <Drawer.Screen
-        name="settingScreenStack"
-        options={{drawerLabel: 'Setting Screen'}}
-        component={settingScreenStack}
-      />
-    </Drawer.Navigator>
+    <BottomNavigation
+      navigationState={{ index, routes }}
+      onIndexChange={setIndex}
+      renderScene={renderScene}
+    />
   );
 };
 

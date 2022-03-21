@@ -1,6 +1,6 @@
 import {View, Text, SafeAreaView,Image} from 'react-native';
 import React, {useState, createRef,useEffect} from 'react';
-import { Appbar,Avatar,BottomNavigation  } from 'react-native-paper';
+import { Appbar,Avatar,BottomNavigation,Button  } from 'react-native-paper';
 import { LinearGradient } from "expo-linear-gradient";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {REACT_APP_API} from "@env";
@@ -73,10 +73,19 @@ const HomeScreen = ({navigation}) => {
       <Loader loading={loading} />
       <LinearGradient colors={['#312A6C', '#852D91']}>
         <Appbar.Header>
-            <Avatar.Image size={60} style={{marginLeft:10}} source={require('../Image/logo1.png')} /> 
-            <Appbar.Action icon="logout" onPress={()=>onClickLogout()} />
-            <Avatar.Image size={40} style={{backgroundColor:"#edf8f1",marginLeft:"auto",marginRight:10}} source={require('../Image/logo1.png')} />
+            <Image  style={{marginLeft:10,width:60,height:60}} source={require('../Image/logo1.png')} /> 
+            <Avatar.Image onPress={()=>showButton()} size={40} style={{backgroundColor:"#edf8f1",marginLeft:"auto",marginRight:10}} source={require('../Image/logo1.png')} />
         </Appbar.Header>
+        <LinearGradient colors={['#FE6B8B', '#FF8E53']}>
+        <View style={{padding:20,flexDirection:"row",justifyContent:"center"}}>
+          <Button style={{marginRight:40}} icon="account" mode="contained" onPress={() => console.log('Pressed')}>
+              Password
+         </Button>
+         <Button icon="logout" mode="contained" onPress={() => console.log('Pressed')}>
+              Log out
+         </Button>
+        </View>
+        </LinearGradient>
         </LinearGradient>
         <BottomNavigation
           navigationState={{ index, routes }}

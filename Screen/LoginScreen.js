@@ -3,7 +3,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import {StyleSheet,TextInput,View,Text,ScrollView,Image,Keyboard,TouchableOpacity,KeyboardAvoidingView,ToastAndroid} from 'react-native';
 import {REACT_APP_API} from "@env"
 import AsyncStorage from '@react-native-async-storage/async-storage'
-import Loader from './Components/Loader';
+import Loader from './Loader';
 
 const LoginScreen = ({navigation}) => {
   const [domain, setDomain] = useState('');
@@ -53,7 +53,7 @@ const LoginScreen = ({navigation}) => {
             AsyncStorage.setItem('role', json.name.role);
             AsyncStorage.setItem('id', json.user.id);
             setLoading(false);
-            ToastAndroid.showWithGravityAndOffset('Logged in successfully !!!',ToastAndroid.LONG,ToastAndroid.CENTER,10,10);
+            //ToastAndroid.showWithGravityAndOffset('Logged in successfully !!!',ToastAndroid.LONG,ToastAndroid.CENTER,10,10);
             navigation.navigate('HomeScreen');
           }
        });
@@ -80,7 +80,7 @@ const LoginScreen = ({navigation}) => {
               }
             } else {
                 setLoading(false);
-                ToastAndroid.showWithGravityAndOffset('Successfully!!!',ToastAndroid.LONG,ToastAndroid.CENTER,10,10);
+                //ToastAndroid.showWithGravityAndOffset('Successfully!!!',ToastAndroid.LONG,ToastAndroid.CENTER,10,10);
                 if(!showForm){
                   setShowForm(true);
                 }else{

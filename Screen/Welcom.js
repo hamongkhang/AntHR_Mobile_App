@@ -1,7 +1,7 @@
 import React,{useState} from 'react';
 import { LinearGradient } from "expo-linear-gradient";
 import {StyleSheet,View,Text,ScrollView,Image,TouchableOpacity,KeyboardAvoidingView,} from 'react-native';
-import Loader from './Components/Loader';
+import Loader from "./Loader";
 
 const Welcome = ({navigation}) => {
   const [loading, setLoading] = useState(false);
@@ -9,7 +9,7 @@ const Welcome = ({navigation}) => {
     setLoading(true);
     setTimeout(() => {
       setLoading(false);
-      navigation.navigate('LoginScreen');
+      navigation.navigate('HomeScreen');
     }, 3000);
   }
   return (

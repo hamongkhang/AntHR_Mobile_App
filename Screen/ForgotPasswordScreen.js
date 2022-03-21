@@ -2,7 +2,7 @@ import React, {useState, createRef,useEffect} from 'react';
 import { LinearGradient } from "expo-linear-gradient";
 import {StyleSheet,TextInput,View,Text,ScrollView,Image,Keyboard,TouchableOpacity,KeyboardAvoidingView,ToastAndroid} from 'react-native';
 import {REACT_APP_API} from "@env"
-import Loader from './Components/Loader';
+import Loader from './Loader';
 
 const ForgotPasswordScreen = ({navigation}) => {
   const [loading, setLoading] = useState(false);

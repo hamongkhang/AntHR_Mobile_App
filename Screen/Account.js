@@ -1,12 +1,17 @@
-import React, {useState, createRef,useEffect} from 'react';
+import React, {useState,useEffect} from 'react';
 import { LinearGradient } from "expo-linear-gradient";
-import {StyleSheet,TextInput,View,Text,ScrollView,Image,Keyboard,TouchableOpacity,KeyboardAvoidingView,ToastAndroid,useWindowDimensions } from 'react-native';
-import {REACT_APP_API} from "@env"
+import {StyleSheet,View,Text,ScrollView,Image,TouchableOpacity} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage'
-import Loader from './Components/Loader';
-import { Drawer,Avatar,Dialog, Portal,List  } from 'react-native-paper';
-  
-const AccountScreen = ({navigation}) => {
+import {Avatar,Dialog } from 'react-native-paper';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import {REACT_APP_API} from "@env"
+import Loader from './Loader';
+import LoginScreen from "./LoginScreen";
+import Welcom from "./Welcom";
+
+const Stack = createNativeStackNavigator();
+
+const Account = (props) => {
   const [loading, setLoading] = useState(false);
   const [showTab,setShowTab]=useState(1)
   const [token, setToken] = useState('');
@@ -108,18 +113,7 @@ const AccountScreen = ({navigation}) => {
   const onChangeTab=(value)=>{
     setShowTab(value);
   }
-  const onClickLogout=()=>{
-    const requestOptions = {
-        method: 'POST',
-        headers: { "Authorization": `Bearer ` + token }
-    };
-    fetch(REACT_APP_API + '/user/logout', requestOptions)
-        .then((res) => res.json())
-        .then((json) => {
-        });
-        AsyncStorage.clear();
-        navigation.navigate('LoginScreen');
-  }
+
   useEffect(() => {
     const getToken = async () => {
       try {
@@ -130,13 +124,6 @@ const AccountScreen = ({navigation}) => {
       }
     }
     getToken();
-    AsyncStorage.getItem('access_token', (err, result) => {
-      if (result) {
-        
-      }else{
-        navigation.navigate('LoginScreen')
-      }
-    });
     }, []);
   return (
       <LinearGradient colors={['#edf8f1', '#f7f9fc']} style={styles.linearGradient}>
@@ -396,8 +383,29 @@ const AccountScreen = ({navigation}) => {
       </LinearGradient>
   );
 };
-export default AccountScreen;
+const AccountScreen= () => {
+return (
+     <Stack.Navigator initialRouteName="Account">
+       <Stack.Screen
+        name="LoginScreen"
+        component={LoginScreen}
+        options={{headerShown: false}}
+      /> 
+       <Stack.Screen
+        name="Account"
+        component={Account}
+        options={{headerShown: false}}
+      /> 
+       <Stack.Screen
+        name="Welcom"
+        component={Welcom}
+        options={{headerShown: false}}
+      /> 
+   </Stack.Navigator>
+);
+};
 
+export default AccountScreen;
 const styles = StyleSheet.create({
   linearGradient: {
       flex:1,

@@ -28,7 +28,6 @@ const HomeScreen = ({navigation}) => {
     { key: 'Attendance', title: 'Attendance', icon: 'calendar', color: '#ab003c' },
     { key: 'Account', title: 'Account', icon: 'account', color: '#ff9900' },
   ]);
-
   const renderScene = BottomNavigation.SceneMap({
     Gift: GiftRoute,
     Folder: FolderRoute,

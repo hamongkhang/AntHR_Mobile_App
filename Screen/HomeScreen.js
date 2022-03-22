@@ -20,7 +20,6 @@ const HomeScreen = ({navigation}) => {
   const [loading, setLoading] = useState(false);
   const [showButton, setShowButton] = useState(false);
 
-
   const [routes] = React.useState([
     { key: 'Gift', title: 'Gift', icon: 'gift', color: 'rgb(98, 0, 238)' },
     { key: 'Folder', title: 'Folder', icon: 'folder', color: '#4caf50' },

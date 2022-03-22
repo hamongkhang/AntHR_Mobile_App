@@ -14,6 +14,7 @@ const AccountScreen = ({navigation}) => {
   const [users, setUsers] = useState([]);
   const [id,setId]=useState('');
   const getInforEmployee = (token,id) => {
+      setLoading(true);
       fetch(REACT_APP_API + '/employee/getAllEmployee', {
         method: "GET",
         headers: { "Authorization": `Bearer ` + token }

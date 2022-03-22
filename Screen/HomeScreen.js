@@ -6,10 +6,11 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {REACT_APP_API,REACT_APP_FILE} from "@env";
 import Loader from './Loader';
 import AccountScreen from './Account';
+import NewScreen from "./NewScreen";
 
 const AccountRoute = () => <AccountScreen></AccountScreen>;
 const FolderRoute = () => <Text>FolderRoute</Text>;
-const NewsRoute = () => <Text>NewsRoute</Text>;
+const NewsRoute = () => <NewScreen></NewScreen>;
 const AttendanceRoute = () => <Text>AttendanceRoute</Text>;
 const GiftRoute = () => <Text>AccountRoute</Text>;
 

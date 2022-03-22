@@ -34,7 +34,6 @@ const HomeScreen = ({navigation}) => {
     Attendance: AttendanceRoute,
     Account: AccountRoute,
   });
-
   const onClickLogout=()=>{
     setLoading(true);
     const requestOptions = {
@@ -65,6 +64,7 @@ const HomeScreen = ({navigation}) => {
     }
     getToken();
     }, []);
+    
   return (
     <SafeAreaView style={{flex: 1}}>
       <View style={{flex: 1}}>

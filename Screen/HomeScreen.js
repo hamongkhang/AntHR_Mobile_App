@@ -34,7 +34,6 @@ const HomeScreen = ({navigation}) => {
     Attendance: AttendanceRoute,
     Account: AccountRoute,
   });
-
   const onClickLogout=()=>{
     setLoading(true);
     const requestOptions = {

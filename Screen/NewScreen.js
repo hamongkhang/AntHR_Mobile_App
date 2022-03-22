@@ -13,6 +13,8 @@ const NewScreen = ({navigation}) => {
   const [select, setSelect] = React.useState('');
   const [expanded, setExpanded] = React.useState(false);
   const [news, setNews]= useState([]);
+  const [check, setCheck] = useState(false);
+  const [result, setResult]= useState([]);
 
   const onChangeSearch = query => setSearchQuery(query);
 
@@ -28,10 +30,31 @@ const NewScreen = ({navigation}) => {
         setNews(data.data);
     });
   }
-  const onChangeSelect=(value)=>{
+  
+  const onChangeSelect = (value) => {
+    setCheck(true);
     setSelect(value);
     setExpanded(!expanded);
+    var a=[];
+   if(value=="Important"){
+    for (var i = 0; i < news.length; i++) {
+      if (news[i].important == 1) {
+        a.push(news[i]);
+      }
+    }
+  }else if(value=="Non Important"){
+    for (var i = 0; i < news.length; i++) {
+      if (news[i].important == 0) {
+        a.push(news[i]);
+      }
+    }
+  }else{
+    for (var i = 0; i < news.length; i++) {
+       a.push(news[i])
+    }
   }
+  setResult(a)
+  }   
 
   useEffect(() => {
     const getToken = async () => {
@@ -65,36 +88,65 @@ const NewScreen = ({navigation}) => {
               </List.Section>
             </View>
             <ScrollView> 
-            {
-              news.length ?
-                news.map((item) => {
-                    return(
-                      <View style={styles.item_one}>
-                <View style={{flexDirection:"row",alignItems:"center"}}>
-                  <Text style={{fontSize:18,fontHeight:20,color:"rgb(35, 54, 78)",fontWeight:"bold"}}>{item.title?item.title:"-"}</Text>
-                  {(item.important==1)
-                  ?
-                  <Text style={{fontSize:17,paddingTop:4,paddingBottom:4,paddingRight:7,paddingLeft:7,backgroundColor:"rgb(216, 246, 226)",color:"rgb(31, 153, 70)",borderRadius:3,marginLeft:10}}>IMPORTANT</Text>
-                  :
-                  null}
-                </View>
-                <View style={{flexDirection:"row",alignItems:"center"}}>
-                  <Image
-                    source={require('../Image/clock_icon.png')}
-                    style={{
-                      width: 14,
-                      height: 14,
-                      marginRight:5
-                    }}
-                  />                  
-                  <Text style={{fontWeight:500,fontSize:16,color:"rgb(105, 129, 148)",marginRight:5}}>    
-                                                {new Intl.DateTimeFormat('de-DE', { 
-                                                    year: 'numeric', month: 'long', day: 'numeric' 
-                                                }).format(new Date(item.updated_at))} | Admin</Text>
-                </View>
-              </View> 
-                    );
-                  }):null
+            {!check?
+                  news.length?
+                    news.map((item,index)=>{
+                      return(
+                        <View style={styles.item_one}>
+                  <View style={{flexDirection:"row",alignItems:"center"}}>
+                    <Text style={{fontSize:18,fontHeight:20,color:"rgb(35, 54, 78)",fontWeight:"bold"}}>{item.title?item.title:"-"}</Text>
+                    {(item.important==1)
+                    ?
+                    <Text style={{fontSize:17,paddingTop:4,paddingBottom:4,paddingRight:7,paddingLeft:7,backgroundColor:"rgb(216, 246, 226)",color:"rgb(31, 153, 70)",borderRadius:3,marginLeft:10}}>IMPORTANT</Text>
+                    :
+                    null}
+                  </View>
+                  <View style={{flexDirection:"row",alignItems:"center"}}>
+                    <Image
+                      source={require('../Image/clock_icon.png')}
+                      style={{
+                        width: 14,
+                        height: 14,
+                        marginRight:5
+                      }}
+                    />                  
+                    <Text style={{fontWeight:500,fontSize:16,color:"rgb(105, 129, 148)",marginRight:5}}>    
+                                                  {new Intl.DateTimeFormat('de-DE', { 
+                                                      year: 'numeric', month: 'long', day: 'numeric' 
+                                                  }).format(new Date(item.updated_at))} | Admin</Text>
+                  </View>
+                        </View> 
+                      )
+                    }):null
+              :result.length?result.map((item,index)=>{
+                return(
+                  <View style={styles.item_one}>
+                  <View style={{flexDirection:"row",alignItems:"center"}}>
+                    <Text style={{fontSize:18,fontHeight:20,color:"rgb(35, 54, 78)",fontWeight:"bold"}}>{item.title?item.title:"-"}</Text>
+                    {(item.important==1)
+                    ?
+                    <Text style={{fontSize:17,paddingTop:4,paddingBottom:4,paddingRight:7,paddingLeft:7,backgroundColor:"rgb(216, 246, 226)",color:"rgb(31, 153, 70)",borderRadius:3,marginLeft:10}}>IMPORTANT</Text>
+                    :
+                    null}
+                  </View>
+                  <View style={{flexDirection:"row",alignItems:"center"}}>
+                    <Image
+                      source={require('../Image/clock_icon.png')}
+                      style={{
+                        width: 14,
+                        height: 14,
+                        marginRight:5
+                      }}
+                    />                  
+                    <Text style={{fontWeight:500,fontSize:16,color:"rgb(105, 129, 148)",marginRight:5}}>    
+                                                  {new Intl.DateTimeFormat('de-DE', { 
+                                                      year: 'numeric', month: 'long', day: 'numeric' 
+                                                  }).format(new Date(item.updated_at))} | Admin</Text>
+                  </View>
+                  </View> 
+                )
+              }):
+              null
             }
             </ScrollView>   
         </View> 

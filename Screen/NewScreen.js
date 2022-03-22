@@ -15,8 +15,8 @@ const NewScreen = ({navigation}) => {
   const [news, setNews]= useState([]);
   const [check, setCheck] = useState(false);
   const [result, setResult]= useState([]);
-
-  const onChangeSearch = query => setSearchQuery(query);
+  const [search,setSearch]=useState(false);
+  const [searchNews,setSearchNews]=useState([]);
 
   const getNews = (token) =>{
     setLoading(true);
@@ -30,7 +30,26 @@ const NewScreen = ({navigation}) => {
         setNews(data.data);
     });
   }
-  
+
+  const onChangeSearch=query=>{
+    setSearchQuery(query);
+    setCheck(true);
+    if(query!=""){
+      setSearch(true);
+    }else{
+      setSearch(false);
+    }
+    var a=[];
+    for(var i=0;i<news.length;i++){
+        if(news[i].title.indexOf(query)!=-1){
+          a.push(news[i]);
+        }else{
+          setResult([]);
+      }
+    }
+    setResult(a);
+    }
+
   const onChangeSelect = (value) => {
     setCheck(true);
     setSelect(value);

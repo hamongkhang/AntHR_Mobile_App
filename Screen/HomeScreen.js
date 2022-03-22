@@ -3,7 +3,7 @@ import React, {useState, createRef,useEffect} from 'react';
 import { Appbar,Avatar,BottomNavigation,Button  } from 'react-native-paper';
 import { LinearGradient } from "expo-linear-gradient";
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {REACT_APP_API} from "@env";
+import {REACT_APP_API,REACT_APP_FILE} from "@env";
 import Loader from './Loader';
 import AccountScreen from './Account';
 
@@ -16,6 +16,7 @@ const GiftRoute = () => <Text>AccountRoute</Text>;
 const HomeScreen = ({navigation}) => {
   const [index, setIndex] = React.useState(0);
   const [token, setToken] = useState('');
+  const [avatar, setAvatar] = useState('');
   const [loading, setLoading] = useState(false);
   const [showButton, setShowButton] = useState(false);
 
@@ -53,6 +54,19 @@ const HomeScreen = ({navigation}) => {
   const onClickShowButton=()=>{
     setShowButton(!showButton)
   }
+  useEffect(() => {
+    const getToken = async () => {
+      try {
+        const token = await AsyncStorage.getItem("access_token");
+        const id_user = await AsyncStorage.getItem("id");
+        const avatar_user = await AsyncStorage.getItem("avatar");
+        setAvatar(avatar_user);
+      } catch (err) {
+        console.log(err);
+      }
+    }
+    getToken();
+    }, []);
   return (
     <SafeAreaView style={{flex: 1}}>
       <View style={{flex: 1}}>
@@ -61,7 +75,17 @@ const HomeScreen = ({navigation}) => {
         <Appbar.Header>
             <Image  style={{marginLeft:10,width:60,height:60}} source={require('../Image/logo1.png')} /> 
             <Text style={{marginLeft:"auto",marginRight:10}} onPress={() => onClickShowButton()}>
-              <Avatar.Image size={40} style={{backgroundColor:"#edf8f1",marginLeft:"auto",marginRight:10}} source={require('../Image/logo1.png')} />
+              {
+                                (avatar==="null")
+                            ?
+                                <Avatar.Image size={40} style={{backgroundColor:"#edf8f1",marginLeft:"auto",marginRight:10}}  source = {{uri:REACT_APP_FILE+'/avatar/avatar.png'}} />
+                            :
+                                (avatar.search('https://') != -1)
+                                ?
+                                    <Avatar.Image size={40} style={{backgroundColor:"#edf8f1",marginLeft:"auto",marginRight:10}}  source = {{uri:avatar}} />
+                                :
+                                    <Avatar.Image size={40} style={{backgroundColor:"#edf8f1",marginLeft:"auto",marginRight:10}}  source = {{uri:REACT_APP_FILE+'/avatar/'+avatar}} />
+                                }
             </Text>
         </Appbar.Header>
         {showButton?

@@ -3,122 +3,39 @@ import { LinearGradient } from "expo-linear-gradient";
 import {StyleSheet,View,Text,ScrollView,Image,TouchableOpacity} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import {Avatar,Dialog } from 'react-native-paper';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import {REACT_APP_API} from "@env"
+import {REACT_APP_API,REACT_APP_FILE} from "@env"
 import Loader from './Loader';
-import LoginScreen from "./LoginScreen";
-import Welcom from "./Welcom";
 
-const Stack = createNativeStackNavigator();
 
-const Account = (props) => {
+const AccountScreen = ({navigation}) => {
   const [loading, setLoading] = useState(false);
   const [showTab,setShowTab]=useState(1)
-  const [token, setToken] = useState('');
+  const [employees, setEmployees] = useState([]);
+  const [users, setUsers] = useState([]);
+  const [id,setId]=useState('');
+  const getInforEmployee = (token,id) => {
+      fetch(REACT_APP_API + '/employee/getAllEmployee', {
+        method: "GET",
+        headers: { "Authorization": `Bearer ` + token }
+      })
+        .then(response => response.json())
+        .then(data => {
+          setUsers(data.data[0]);
+          setEmployees(data.data[1]);
+          setLoading(false)
+        });
+  }
 
-  // const [domain, setDomain] = useState('');
-  // const [errorForm1, setErrorForm1] = useState({domain:null});
-  // const [loading, setLoading] = useState(false);
-  // const [showForm, setShowForm] = useState(true);
-  // const [user, setUser] = useState({
-  //   email:'',
-  //   password:''
-  // });
-
-  // const [errorForm2, setErrorForm2] = useState({
-  //   email:null,
-  //   password:null,
-  // });
-  // const passwordInputRef = createRef();
-  // const handleSubmitPress = () => {
-  //   setLoading(true);
-  //   const _formData = new FormData();
-  //   _formData.append('email', user.email);
-  //   _formData.append('password', user.password);
-  //   const requestOptions = {
-  //       method: 'POST',
-  //       body: _formData,
-  //   };
-  //   fetch(REACT_APP_API+'/user/login', requestOptions)
-  //       .then((res) => res.json())
-  //       .then((json) => {
-  //         if(json.error){
-  //           if (json.error === 'Unauthorized') {
-  //             setLoading(false);
-  //             ToastAndroid.showWithGravityAndOffset('Login information is incorrect !!!',ToastAndroid.LONG,ToastAndroid.CENTER,10,10);
-  //             setErrorForm2('');
-  //         } else if (json.error === 'Blocked') {
-  //             setLoading(false);
-  //             ToastAndroid.showWithGravityAndOffset('Your account has been blocked !!!',ToastAndroid.LONG,ToastAndroid.CENTER,10,10);
-  //             setErrorForm2("");
-  //         }else{
-  //             setLoading(false);
-  //             setErrorForm2(json.error);
-  //         }
-  //         }else{
-  //           AsyncStorage.setItem('access_token', json.access_token);
-  //           AsyncStorage.setItem('first_name', json.name.first_name);
-  //           AsyncStorage.setItem('last_name', json.name.last_name);
-  //           AsyncStorage.setItem('avatar', json.name.avatar);
-  //           AsyncStorage.setItem('email', json.name.email);
-  //           AsyncStorage.setItem('role', json.name.role);
-  //           AsyncStorage.setItem('id', json.user.id);
-  //           setLoading(false);
-  //           ToastAndroid.showWithGravityAndOffset('Logged in successfully !!!',ToastAndroid.LONG,ToastAndroid.CENTER,10,10);
-  //           navigation.navigate('HomeScreen');
-  //         }
-  //      });
-  // };
-  // const handleCheckDomainPress = () => {
-  //   setLoading(true);
-  //   const _formData = new FormData();
-  //   _formData.append('domain', domain);
-  //   const requestOptions = {
-  //       method: 'POST',
-  //       body: _formData,
-  //   };
-  //   fetch(REACT_APP_API+'/user/checkDomain', requestOptions)
-  //       .then((res) => res.json())
-  //       .then((json) => {
-  //           if (json.error) {
-  //             if(json.error=="No one have domain"){
-  //               setLoading(false);
-  //               ToastAndroid.showWithGravityAndOffset('Domain does not exist !!!',ToastAndroid.LONG,ToastAndroid.CENTER,10,10);
-  //               setErrorForm1("");
-  //             }else{
-  //               setErrorForm1(json.error);
-  //               setLoading(false);
-  //             }
-  //           } else {
-  //               setLoading(false);
-  //               ToastAndroid.showWithGravityAndOffset('Successfully!!!',ToastAndroid.LONG,ToastAndroid.CENTER,10,10);
-  //               if(!showForm){
-  //                 setShowForm(true);
-  //               }else{
-  //                 setShowForm(false);
-  //            }
-  //         }
-  //       });
-  // };
-  // const [active, setActive] = useState('');
-
-  // const googleLogin=()=>{
-  //   setErrorForm2("");
-  //   setLoading(true);
-  //   setTimeout(() => {
-  //     setLoading(false);
-  //     ToastAndroid.showWithGravityAndOffset('Login information is incorrect !!!',ToastAndroid.LONG,ToastAndroid.CENTER,10,10);
-  //   }, 3000);
-  // }
   const onChangeTab=(value)=>{
     setShowTab(value);
   }
-
   useEffect(() => {
     const getToken = async () => {
       try {
-        const savedNickname = await AsyncStorage.getItem("access_token");
-        setToken(savedNickname);
+        const token = await AsyncStorage.getItem("access_token");
+        const id_user = await AsyncStorage.getItem("id");
+        setId(id_user);
+        getInforEmployee(token,id_user);
       } catch (err) {
         console.log(err);
       }
@@ -129,10 +46,27 @@ const Account = (props) => {
       <LinearGradient colors={['#edf8f1', '#f7f9fc']} style={styles.linearGradient}>
         <View style={styles.mainBody}>
         <Loader loading={loading} />
+        {
+          employees.length ?
+            employees.map((item) => {
+              if(item.user_id==id){
+                return(
+                     
+                  <>
+            
         <View style={styles.header}>
-          <Avatar.Image size={80} source={require('../Image/logo1.png')} />
-          <Text style={styles.name_header}>Hà Mộng Khang</Text>
-          <Text style={styles.email_header}>hamongkhang@gmail.com</Text>
+                    {item.avatar
+                                  ?
+                                  (item.avatar.search('https://') != -1)
+                                    ?
+                                    <Avatar.Image size={80} source = {{uri:item.avatar}} />
+                                    :
+                                      <Avatar.Image size={80} source = {{uri:REACT_APP_FILE + '/avatar/' + item.avatar}} />
+                                  :
+                                  <Avatar.Image size={80} source = {{uri:REACT_APP_FILE + '/avatar/avatar.png'}} />
+                                }
+          <Text style={styles.name_header}>{item.last_name+" "+item.first_name}</Text>
+          <Text style={styles.email_header}>{item.email}</Text>
         </View>
         <View style={styles.body}>
         <View style={{backgroundColor:"#ffa000",flexDirection: 'row',opacity:1,borderRadius:5,marginLeft:10,marginRight:10}}>
@@ -316,8 +250,60 @@ const Account = (props) => {
                 </View>
                 <View style={{flex: 1, flexDirection: 'row',marginBottom:5}}>
                   <Text style={{fontWeight:"bold",fontSize:16,color:"rgb(35, 54, 78)"}}>First name: </Text>
-                  <Text style={{fontSize:16,color:"rgb(35, 54, 78)", textAlign: "right",marginLeft: 'auto'}}>Hà</Text>
+                  <Text style={{fontSize:16,color:"rgb(35, 54, 78)", textAlign: "right",marginLeft: 'auto'}}>{item.first_name?item.first_name:"-"}</Text>
                 </View>         
+                <View style={{flex: 1, flexDirection: 'row',marginBottom:5}}>
+                  <Text style={{fontWeight:"bold",fontSize:16,color:"rgb(35, 54, 78)"}}>Last name: </Text>
+                  <Text style={{fontSize:16,color:"rgb(35, 54, 78)", textAlign: "right",marginLeft: 'auto'}}>{item.last_name?item.last_name:"-"}</Text>
+                </View>   
+                <View style={{flex: 1, flexDirection: 'row',marginBottom:5}}>
+                  <Text style={{fontWeight:"bold",fontSize:16,color:"rgb(35, 54, 78)"}}>Email: </Text>
+                  <Text style={{fontSize:16,color:"rgb(35, 54, 78)", textAlign: "right",marginLeft: 'auto'}}>{item.email?item.email:"-"}</Text>
+                </View>         
+                <View style={{flex: 1, flexDirection: 'row',marginBottom:5}}>
+                  <Text style={{fontWeight:"bold",fontSize:16,color:"rgb(35, 54, 78)"}}>Phone: </Text>
+                  <Text style={{fontSize:16,color:"rgb(35, 54, 78)", textAlign: "right",marginLeft: 'auto'}}>{item.phone?item.phone:"-"}</Text>
+                </View>    
+                <View style={{flex: 1, flexDirection: 'row',marginBottom:5}}>
+                  <Text style={{fontWeight:"bold",fontSize:16,color:"rgb(35, 54, 78)"}}>Birthday: </Text>
+                  <Text style={{fontSize:16,color:"rgb(35, 54, 78)", textAlign: "right",marginLeft: 'auto'}}>{item.birthday?item.birthday:"-"}</Text>
+                </View>  
+                <View style={{flex: 1, flexDirection: 'row',marginBottom:5}}>
+                  <Text style={{fontWeight:"bold",fontSize:16,color:"rgb(35, 54, 78)"}}>Gender: </Text>
+                  <Text style={{fontSize:16,color:"rgb(35, 54, 78)", textAlign: "right",marginLeft: 'auto'}}>{item.gender?item.gender:"-"}</Text>
+                </View>  
+                <View style={{flex: 1, flexDirection: 'row',marginBottom:5}}>
+                  <Text style={{fontWeight:"bold",fontSize:16,color:"rgb(35, 54, 78)"}}>Join At: </Text>
+                  <Text style={{fontSize:16,color:"rgb(35, 54, 78)", textAlign: "right",marginLeft: 'auto'}}>{item.created_at?item.created_at:"-"}</Text>
+                </View>  
+                <View style={{flex: 1, flexDirection: 'row',marginBottom:5}}>
+                  <Text style={{fontWeight:"bold",fontSize:16,color:"rgb(35, 54, 78)"}}>Position: </Text>
+                  <Text style={{fontSize:16,color:"rgb(35, 54, 78)", textAlign: "right",marginLeft: 'auto'}}>-</Text>
+                </View> 
+                <View style={{flex: 1, flexDirection: 'row',marginBottom:5}}>
+                  <Text style={{fontWeight:"bold",fontSize:16,color:"rgb(35, 54, 78)"}}>Departmant: </Text>
+                  <Text style={{fontSize:16,color:"rgb(35, 54, 78)", textAlign: "right",marginLeft: 'auto'}}>-</Text>
+                </View> 
+                <View style={{flex: 1, flexDirection: 'row',marginBottom:5}}>
+                  <Text style={{fontWeight:"bold",fontSize:16,color:"rgb(35, 54, 78)"}}>Office: </Text>
+                  <Text style={{fontSize:16,color:"rgb(35, 54, 78)", textAlign: "right",marginLeft: 'auto'}}>Viet Nam</Text>
+                </View> 
+                <View style={{flex: 1, flexDirection: 'row',marginBottom:5}}>
+                  <Text style={{fontWeight:"bold",fontSize:16,color:"rgb(35, 54, 78)"}}>Line Manager: </Text>
+                  <Text style={{fontSize:16,color:"rgb(35, 54, 78)", textAlign: "right",marginLeft: 'auto'}}>-</Text>
+                </View> 
+                <View style={{flex: 1, flexDirection: 'row',marginBottom:5}}>
+                  <Text style={{fontWeight:"bold",fontSize:16,color:"rgb(35, 54, 78)"}}>Health Insurance: </Text>
+                  <Text style={{fontSize:16,color:"rgb(35, 54, 78)", textAlign: "right",marginLeft: 'auto'}}>-</Text>
+                </View> 
+                <View style={{flex: 1, flexDirection: 'row',marginBottom:5}}>
+                  <Text style={{fontWeight:"bold",fontSize:16,color:"rgb(35, 54, 78)"}}>Marital Status: </Text>
+                  <Text style={{fontSize:16,color:"rgb(35, 54, 78)", textAlign: "right",marginLeft: 'auto'}}>-</Text>
+                </View> 
+                <View style={{flex: 1, flexDirection: 'row',marginBottom:5}}>
+                  <Text style={{fontWeight:"bold",fontSize:16,color:"rgb(35, 54, 78)"}}>Social Insurance: </Text>
+                  <Text style={{fontSize:16,color:"rgb(35, 54, 78)", textAlign: "right",marginLeft: 'auto'}}>-</Text>
+                </View> 
               </View>
               :
                   (showTab==2)
@@ -327,9 +313,33 @@ const Account = (props) => {
                   <Text style={{fontSize:18,fontWeight:"bold",color:"rgb(35, 54, 78)",marginTop:20}}>Address Information</Text>
                 </View>
                 <View style={{flex: 1, flexDirection: 'row',marginBottom:5}}>
-                  <Text style={{fontWeight:"bold",fontSize:16,color:"rgb(35, 54, 78)"}}>First name: </Text>
-                  <Text style={{fontSize:16,color:"rgb(35, 54, 78)", textAlign: "right",marginLeft: 'auto'}}>Hà</Text>
+                  <Text style={{fontWeight:"bold",fontSize:16,color:"rgb(35, 54, 78)"}}>Primary Address: </Text>
+                  <Text style={{fontSize:16,color:"rgb(35, 54, 78)", textAlign: "right",marginLeft: 'auto'}}>-</Text>
+                </View>     
+                <View style={{flex: 1, flexDirection: 'row',marginBottom:5}}>
+                  <Text style={{fontWeight:"bold",fontSize:16,color:"rgb(35, 54, 78)"}}>Country: </Text>
+                  <Text style={{fontSize:16,color:"rgb(35, 54, 78)", textAlign: "right",marginLeft: 'auto'}}>-</Text>
                 </View>         
+                <View style={{flex: 1, flexDirection: 'row',marginBottom:5}}>
+                  <Text style={{fontWeight:"bold",fontSize:16,color:"rgb(35, 54, 78)"}}>State/Province: </Text>
+                  <Text style={{fontSize:16,color:"rgb(35, 54, 78)", textAlign: "right",marginLeft: 'auto'}}>-</Text>
+                </View>     
+                <View style={{flex: 1, flexDirection: 'row',marginBottom:5}}>
+                  <Text style={{fontWeight:"bold",fontSize:16,color:"rgb(35, 54, 78)"}}>City: </Text>
+                  <Text style={{fontSize:16,color:"rgb(35, 54, 78)", textAlign: "right",marginLeft: 'auto'}}>-</Text>
+                </View>     
+                <View style={{flex: 1, flexDirection: 'row',marginBottom:5}}>
+                  <Text style={{fontWeight:"bold",fontSize:16,color:"rgb(35, 54, 78)"}}>Postal Code: </Text>
+                  <Text style={{fontSize:16,color:"rgb(35, 54, 78)", textAlign: "right",marginLeft: 'auto'}}>-</Text>
+                </View>     
+                <View style={{flex: 1, flexDirection: 'row',marginBottom:5}}>
+                  <Text style={{fontWeight:"bold",fontSize:16,color:"rgb(35, 54, 78)"}}>Relationship: </Text>
+                  <Text style={{fontSize:16,color:"rgb(35, 54, 78)", textAlign: "right",marginLeft: 'auto'}}>-</Text>
+                </View>     
+                <View style={{flex: 1, flexDirection: 'row',marginBottom:5}}>
+                  <Text style={{fontWeight:"bold",fontSize:16,color:"rgb(35, 54, 78)"}}>Phone Number: </Text>
+                  <Text style={{fontSize:16,color:"rgb(35, 54, 78)", textAlign: "right",marginLeft: 'auto'}}>-</Text>
+                </View>    
               </View>
                 :
                 (showTab==3)
@@ -339,9 +349,29 @@ const Account = (props) => {
                   <Text style={{fontSize:18,fontWeight:"bold",color:"rgb(35, 54, 78)",marginTop:20}}>Bank Information</Text>
                 </View>
                 <View style={{flex: 1, flexDirection: 'row',marginBottom:5}}>
-                  <Text style={{fontWeight:"bold",fontSize:16,color:"rgb(35, 54, 78)"}}>First name: </Text>
-                  <Text style={{fontSize:16,color:"rgb(35, 54, 78)", textAlign: "right",marginLeft: 'auto'}}>Hà</Text>
-                </View>         
+                  <Text style={{fontWeight:"bold",fontSize:16,color:"rgb(35, 54, 78)"}}>Bank Name: </Text>
+                  <Text style={{fontSize:16,color:"rgb(35, 54, 78)", textAlign: "right",marginLeft: 'auto'}}>-</Text>
+                </View>     
+                <View style={{flex: 1, flexDirection: 'row',marginBottom:5}}>
+                  <Text style={{fontWeight:"bold",fontSize:16,color:"rgb(35, 54, 78)"}}>Branch: </Text>
+                  <Text style={{fontSize:16,color:"rgb(35, 54, 78)", textAlign: "right",marginLeft: 'auto'}}>-</Text>
+                </View>   
+                <View style={{flex: 1, flexDirection: 'row',marginBottom:5}}>
+                  <Text style={{fontWeight:"bold",fontSize:16,color:"rgb(35, 54, 78)"}}>SWIFT / BIC: </Text>
+                  <Text style={{fontSize:16,color:"rgb(35, 54, 78)", textAlign: "right",marginLeft: 'auto'}}>-</Text>
+                </View>   
+                <View style={{flex: 1, flexDirection: 'row',marginBottom:5}}>
+                  <Text style={{fontWeight:"bold",fontSize:16,color:"rgb(35, 54, 78)"}}>Account Name: </Text>
+                  <Text style={{fontSize:16,color:"rgb(35, 54, 78)", textAlign: "right",marginLeft: 'auto'}}>-</Text>
+                </View>
+                <View style={{flex: 1, flexDirection: 'row',marginBottom:5}}>
+                  <Text style={{fontWeight:"bold",fontSize:16,color:"rgb(35, 54, 78)"}}>Account Number: </Text>
+                  <Text style={{fontSize:16,color:"rgb(35, 54, 78)", textAlign: "right",marginLeft: 'auto'}}>-</Text>
+                </View>
+                <View style={{flex: 1, flexDirection: 'row',marginBottom:5}}>
+                  <Text style={{fontWeight:"bold",fontSize:16,color:"rgb(35, 54, 78)"}}>IBAN: </Text>
+                  <Text style={{fontSize:16,color:"rgb(35, 54, 78)", textAlign: "right",marginLeft: 'auto'}}>-</Text>
+                </View>
               </View>
               :
               <View style={{padding:15}}> 
@@ -349,62 +379,38 @@ const Account = (props) => {
                 <Text style={{fontSize:18,fontWeight:"bold",color:"rgb(35, 54, 78)",marginTop:20}}>Account Information</Text>
               </View>
               <View style={{flex: 1, flexDirection: 'row',marginBottom:5}}>
+                <Text style={{fontWeight:"bold",fontSize:16,color:"rgb(35, 54, 78)"}}>Email: </Text>
+                <Text style={{fontSize:16,color:"rgb(35, 54, 78)", textAlign: "right",marginLeft: 'auto'}}>{item.email?item.email:"-"}</Text>
+              </View> 
+              <View style={{flex: 1, flexDirection: 'row',marginBottom:5}}>
                 <Text style={{fontWeight:"bold",fontSize:16,color:"rgb(35, 54, 78)"}}>First name: </Text>
-                <Text style={{fontSize:16,color:"rgb(35, 54, 78)", textAlign: "right",marginLeft: 'auto'}}>Hà</Text>
+                <Text style={{fontSize:16,color:"rgb(35, 54, 78)", textAlign: "right",marginLeft: 'auto'}}>{item.first_name?item.first_name:"-"}</Text>
               </View>       
+              <View style={{flex: 1, flexDirection: 'row',marginBottom:5}}>
+                <Text style={{fontWeight:"bold",fontSize:16,color:"rgb(35, 54, 78)"}}>Last name: </Text>
+                <Text style={{fontSize:16,color:"rgb(35, 54, 78)", textAlign: "right",marginLeft: 'auto'}}>{item.last_name?item.last_name:"-"}</Text>
+              </View>     
+              <View style={{flex: 1, flexDirection: 'row',marginBottom:5}}>
+                <Text style={{fontWeight:"bold",fontSize:16,color:"rgb(35, 54, 78)"}}>Created at: </Text>
+                <Text style={{fontSize:16,color:"rgb(35, 54, 78)", textAlign: "right",marginLeft: 'auto'}}>{item.created_at?item.created_at:"-"}</Text>
+              </View>     
+              <View style={{flex: 1, flexDirection: 'row',marginBottom:5}}>
+                <Text style={{fontWeight:"bold",fontSize:16,color:"rgb(35, 54, 78)"}}>Updated at: </Text>
+                <Text style={{fontSize:16,color:"rgb(35, 54, 78)", textAlign: "right",marginLeft: 'auto'}}>{item.updated_at?item.updated_at:"-"}</Text>
+              </View>     
             </View>
             }
           </ScrollView>
          </Dialog.ScrollArea> 
-         { 
-          (showTab==4)
-          ?
-              <TouchableOpacity
-                style={styles.buttonStyle}
-                activeOpacity={0.5}
-                //onPress={handleSubmitPress}
-              >
-                <Text style={styles.buttonTextStyle}>CHANGE PASSWORD</Text>
-              </TouchableOpacity>  
-          :null
-         }
         </View>
-        <TouchableOpacity onPress={()=>onClickLogout()} style={styles.footer}>
-              <Image
-                source={require('../Image/logout_icon.png')}
-                style={{
-                  width: 30,
-                  height: 30,
-                }}
-              />
-              <Text style={{ marginLeft:10,fontSize:22,fontWeight:"bold",color:"rgb(35, 54, 78)"}} >Log out</Text>
-        </TouchableOpacity>
+        </>
+        );
+            }}):null
+        }
         </View> 
       </LinearGradient>
   );
 };
-const AccountScreen= () => {
-return (
-     <Stack.Navigator initialRouteName="Account">
-       <Stack.Screen
-        name="LoginScreen"
-        component={LoginScreen}
-        options={{headerShown: false}}
-      /> 
-       <Stack.Screen
-        name="Account"
-        component={Account}
-        options={{headerShown: false}}
-      /> 
-       <Stack.Screen
-        name="Welcom"
-        component={Welcom}
-        options={{headerShown: false}}
-      /> 
-   </Stack.Navigator>
-);
-};
-
 export default AccountScreen;
 const styles = StyleSheet.create({
   linearGradient: {
@@ -417,7 +423,7 @@ const styles = StyleSheet.create({
     alignItems:"center"
   },
   header:{
-    marginTop:"10%",
+    marginTop:"5%",
     alignItems:"center",
     backgroundColor:"white",
     padding:20,
@@ -435,6 +441,7 @@ const styles = StyleSheet.create({
     borderRadius:5,
     borderWidth:1,
     borderColor:"rgb(227, 235, 241)",
+    marginBottom:10
   },
   footer:{
     marginTop:10,

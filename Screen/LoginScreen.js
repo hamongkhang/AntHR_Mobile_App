@@ -51,7 +51,7 @@ const LoginScreen = ({navigation}) => {
             AsyncStorage.setItem('avatar', json.name.avatar);
             AsyncStorage.setItem('email', json.name.email);
             AsyncStorage.setItem('role', json.name.role);
-            AsyncStorage.setItem('id', json.user.id);
+            AsyncStorage.setItem('id', json.user.id.toString());
             setLoading(false);
             //ToastAndroid.showWithGravityAndOffset('Logged in successfully !!!',ToastAndroid.LONG,ToastAndroid.CENTER,10,10);
             navigation.navigate('HomeScreen');
@@ -98,12 +98,9 @@ const LoginScreen = ({navigation}) => {
     }, 3000);
   }
   useEffect(() => {
-      AsyncStorage.getItem('access_token', (err, result) => {
-        if (result) {
-         navigation.navigate('HomeScreen');
-        }else{
-        }
-      });
+      AsyncStorage.getItem('access_token').then((value) =>
+        (value === null)? null : navigation.replace('HomeScreen')
+      );
 }, []);
   return (
         showForm

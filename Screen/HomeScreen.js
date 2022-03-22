@@ -19,6 +19,7 @@ const HomeScreen = ({navigation}) => {
   const [loading, setLoading] = useState(false);
   const [showButton, setShowButton] = useState(false);
 
+
   const [routes] = React.useState([
     { key: 'Gift', title: 'Gift', icon: 'gift', color: 'rgb(98, 0, 238)' },
     { key: 'Folder', title: 'Folder', icon: 'folder', color: '#4caf50' },
@@ -52,24 +53,6 @@ const HomeScreen = ({navigation}) => {
   const onClickShowButton=()=>{
     setShowButton(!showButton)
   }
-  useEffect(() => {
-    const getToken = async () => {
-      try {
-        const savedNickname = await AsyncStorage.getItem("access_token");
-        setToken(savedNickname);
-      } catch (err) {
-        console.log(err);
-      }
-    }
-    getToken();
-    AsyncStorage.getItem('access_token', (err, result) => {
-      if (result) {
-        
-      }else{
-        navigation.navigate('LoginScreen');
-      }
-    });
-    }, []);
   return (
     <SafeAreaView style={{flex: 1}}>
       <View style={{flex: 1}}>

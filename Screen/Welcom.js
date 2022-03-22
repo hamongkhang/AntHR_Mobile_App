@@ -9,7 +9,7 @@ const Welcome = ({navigation}) => {
     setLoading(true);
     setTimeout(() => {
       setLoading(false);
-      navigation.navigate('HomeScreen');
+      navigation.navigate('LoginScreen');
     }, 3000);
   }
   return (

@@ -60,13 +60,6 @@ const ChangePasswordScreen = ({navigation}) => {
   }
   useEffect(() => {
     getToken();
-    AsyncStorage.getItem('access_token', (err, result) => {
-      if (result) {
-        
-      }else{
-        navigation.navigate('LoginScreen')
-      }
-    });
     }, []);
   return (
       <LinearGradient colors={['#312A6C', '#852D91']} style={styles.linearGradient}>

@@ -84,10 +84,10 @@ const HomeScreen = ({navigation}) => {
         {showButton?
         <LinearGradient colors={['#FE6B8B', '#FF8E53']}>
         <View style={{padding:20,flexDirection:"row",justifyContent:"center"}}>
-          <Button style={{marginRight:40}} icon="account" mode="contained" onPress={() => console.log('Pressed')}>
+          <Button style={{marginRight:40}} icon="account" mode="contained" onPress={() => navigation.navigate('ChangePasswordScreen')}>
             Password
          </Button>
-         <Button icon="logout" mode="contained" onPress={() => console.log('Pressed')}>
+         <Button icon="logout" mode="contained" onPress={() =>onClickLogout()}>
               Log out
          </Button>
         </View>

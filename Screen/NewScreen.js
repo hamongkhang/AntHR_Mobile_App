@@ -5,6 +5,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import {Avatar,Dialog,Searchbar,List,TextInput,Button    } from 'react-native-paper';
 import {REACT_APP_API,REACT_APP_FILE} from "@env"
 import Loader from './Loader';
+import deepFreezeAndThrowOnMutationInDev from 'react-native/Libraries/Utilities/deepFreezeAndThrowOnMutationInDev';
 
 
 const NewScreen = ({navigation}) => {
@@ -15,8 +16,8 @@ const NewScreen = ({navigation}) => {
   const [news, setNews]= useState([]);
   const [check, setCheck] = useState(false);
   const [result, setResult]= useState([]);
-  const [search,setSearch]=useState(false);
-  const [searchNews,setSearchNews]=useState([]);
+  const [detail, setDetail]= useState([]);
+  const [checkDetail, setCheckDetail] = useState(true);
 
   const getNews = (token) =>{
     setLoading(true);
@@ -34,11 +35,6 @@ const NewScreen = ({navigation}) => {
   const onChangeSearch=query=>{
     setSearchQuery(query);
     setCheck(true);
-    if(query!=""){
-      setSearch(true);
-    }else{
-      setSearch(false);
-    }
     var a=[];
     for(var i=0;i<news.length;i++){
         if(news[i].title.indexOf(query)!=-1){
@@ -75,6 +71,17 @@ const NewScreen = ({navigation}) => {
   setResult(a)
   }   
 
+  const onChangeNewDetail=(id)=>{
+    setCheckDetail(false);
+    var a=[];
+    for (var i = 0; i < news.length; i++) {
+      if (news[i].id == id) {
+        a.push(news[i]);
+      }
+    }
+    setDetail(a);
+  }
+ console.log(detail);
   useEffect(() => {
     const getToken = async () => {
       try {
@@ -88,6 +95,7 @@ const NewScreen = ({navigation}) => {
     }, []);
 
   return (
+    checkDetail?
       <LinearGradient colors={['#edf8f1', '#f7f9fc']} style={styles.linearGradient}>
         <View style={styles.mainBody}>
         <Loader loading={loading} />
@@ -113,7 +121,7 @@ const NewScreen = ({navigation}) => {
                       return(
                         <View style={styles.item_one}>
                   <View style={{flexDirection:"row",alignItems:"center"}}>
-                    <Text style={{fontSize:18,fontHeight:20,color:"rgb(35, 54, 78)",fontWeight:"bold"}}>{item.title?item.title:"-"}</Text>
+                    <Text onPress={()=>onChangeNewDetail(item.id)} style={{fontSize:18,fontHeight:20,color:"rgb(35, 54, 78)",fontWeight:"bold"}}>{item.title?item.title:"-"}</Text>
                     {(item.important==1)
                     ?
                     <Text style={{fontSize:17,paddingTop:4,paddingBottom:4,paddingRight:7,paddingLeft:7,backgroundColor:"rgb(216, 246, 226)",color:"rgb(31, 153, 70)",borderRadius:3,marginLeft:10}}>IMPORTANT</Text>
@@ -141,7 +149,7 @@ const NewScreen = ({navigation}) => {
                 return(
                   <View style={styles.item_one}>
                   <View style={{flexDirection:"row",alignItems:"center"}}>
-                    <Text style={{fontSize:18,fontHeight:20,color:"rgb(35, 54, 78)",fontWeight:"bold"}}>{item.title?item.title:"-"}</Text>
+                    <Text  onPress={()=>onChangeNewDetail(item.id)} style={{fontSize:18,fontHeight:20,color:"rgb(35, 54, 78)",fontWeight:"bold"}}>{item.title?item.title:"-"}</Text>
                     {(item.important==1)
                     ?
                     <Text style={{fontSize:17,paddingTop:4,paddingBottom:4,paddingRight:7,paddingLeft:7,backgroundColor:"rgb(216, 246, 226)",color:"rgb(31, 153, 70)",borderRadius:3,marginLeft:10}}>IMPORTANT</Text>
@@ -170,6 +178,51 @@ const NewScreen = ({navigation}) => {
             </ScrollView>   
         </View> 
       </LinearGradient>
+      :
+      <LinearGradient colors={['#edf8f1', '#f7f9fc']} style={styles.linearGradient}>
+        <View style={styles.mainBodyDetail}>
+          <View style={styles.item_one_detail}>
+          <View style={{flexDirection:"row",alignItems:"center",marginBottom:40}}>
+            <Image
+                      source={require('../Image/back_icon.png')}
+                      style={{
+                        width: 15,
+                        height: 15,
+                        marginRight:5
+                      }}
+              />         
+              <Text style={{fontSize:14,fontHeight:20,color:"rgb(79, 94, 113)",fontWeight:"bold",marginLeft:5}} onPress={()=>setCheckDetail(true)}>Back</Text>  
+          </View>
+            <View style={{flexDirection:"row",alignItems:"center"}}>
+                    <Text  style={{fontSize:18,fontHeight:20,color:"rgb(35, 54, 78)",fontWeight:"bold"}}>
+                      {detail[0].title?detail[0].title:"-"}
+                    </Text>
+                    {(detail[0].important==1)
+                    ?
+                    <Text style={{fontSize:17,paddingTop:4,paddingBottom:4,paddingRight:7,paddingLeft:7,backgroundColor:"rgb(216, 246, 226)",color:"rgb(31, 153, 70)",borderRadius:3,marginLeft:10}}>IMPORTANT</Text>
+                    :
+                    null}
+                  </View>
+                  <View style={{flexDirection:"row",alignItems:"center"}}>
+                    <Image
+                      source={require('../Image/clock_icon.png')}
+                      style={{
+                        width: 14,
+                        height: 14,
+                        marginRight:5
+                      }}
+                    />                  
+                    <Text style={{fontWeight:500,fontSize:16,color:"rgb(105, 129, 148)",marginRight:5}}>    
+                                                  {new Intl.DateTimeFormat('de-DE', { 
+                                                      year: 'numeric', month: 'long', day: 'numeric' 
+                                                  }).format(new Date(detail[0].updated_at))} | Admin</Text>
+                  </View>
+                  <View style={{flexDirection:"row",alignItems:"center",marginTop:50}}>
+                    <Text style={{color:"rgb(14, 34, 61)"}}>{detail[0].content?detail[0].content:"-"}</Text>
+                  </View>
+          </View>
+        </View>
+      </LinearGradient>
   );
 };
 export default NewScreen;
@@ -180,10 +233,29 @@ const styles = StyleSheet.create({
   mainBody: {
     flex: 1,
   },
+  mainBodyDetail: {
+    flex: 1,
+    justifyContent:"center",
+    alignItems:"center",
+  },
+  item_one_detail:{
+    backgroundColor:"white",
+    width:"100%",
+    padding:20,
+    marginTop:10,
+    marginBottom:10,
+    borderTopWidth:1,
+    borderTopColor:"rgb(227, 235, 241)",
+    borderBottomWidth:1,
+    borderBottomColor:"rgb(227, 235, 241)",
+    height:"98%",
+    width:"96%",
+    borderRadius:5
+  },
   header:{
     backgroundColor:"white",
     width:"100%",
-    padding:20
+    padding:20,
   },
   item_one:{
     backgroundColor:"white",

@@ -1,22 +1,22 @@
-import React, {useState, createRef,useEffect} from 'react';
+import React, { useState, createRef, useEffect } from 'react';
 import { LinearGradient } from "expo-linear-gradient";
-import {StyleSheet,TextInput,View,Text,ScrollView,Image,Keyboard,TouchableOpacity,KeyboardAvoidingView,ToastAndroid} from 'react-native';
-import {REACT_APP_API} from "@env"
+import { StyleSheet, TextInput, View, Text, ScrollView, Image, Keyboard, TouchableOpacity, KeyboardAvoidingView, ToastAndroid } from 'react-native';
+import { REACT_APP_API } from "@env"
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import Loader from './Loader';
 
-const LoginScreen = ({navigation}) => {
+const LoginScreen = ({ navigation }) => {
   const [domain, setDomain] = useState('');
-  const [errorForm1, setErrorForm1] = useState({domain:null});
+  const [errorForm1, setErrorForm1] = useState({ domain: null });
   const [loading, setLoading] = useState(false);
   const [showForm, setShowForm] = useState(true);
   const [user, setUser] = useState({
-    email:'',
-    password:''
+    email: '',
+    password: ''
   });
   const [errorForm2, setErrorForm2] = useState({
-    email:null,
-    password:null,
+    email: null,
+    password: null,
   });
   const passwordInputRef = createRef();
   const handleSubmitPress = () => {
@@ -25,253 +25,253 @@ const LoginScreen = ({navigation}) => {
     _formData.append('email', user.email);
     _formData.append('password', user.password);
     const requestOptions = {
-        method: 'POST',
-        body: _formData,
+      method: 'POST',
+      body: _formData,
     };
-    fetch(REACT_APP_API+'/user/login', requestOptions)
-        .then((res) => res.json())
-        .then((json) => {
-          if(json.error){
-            if (json.error === 'Unauthorized') {
-              setLoading(false);
-              ToastAndroid.showWithGravityAndOffset('Login information is incorrect !!!',ToastAndroid.LONG,ToastAndroid.CENTER,10,10);
-              setErrorForm2('');
-          } else if (json.error === 'Blocked') {
-              setLoading(false);
-              ToastAndroid.showWithGravityAndOffset('Your account has been blocked !!!',ToastAndroid.LONG,ToastAndroid.CENTER,10,10);
-              setErrorForm2("");
-          }else{
-              setLoading(false);
-              setErrorForm2(json.error);
-          }
-          }else{
-            AsyncStorage.setItem('access_token', json.access_token);
-            AsyncStorage.setItem('first_name', json.name.first_name);
-            AsyncStorage.setItem('last_name', json.name.last_name);
-            AsyncStorage.setItem('avatar', json.name.avatar);
-            AsyncStorage.setItem('email', json.name.email);
-            AsyncStorage.setItem('role', json.name.role);
-            AsyncStorage.setItem('id', json.user.id.toString());
+    fetch(REACT_APP_API + '/user/login', requestOptions)
+      .then((res) => res.json())
+      .then((json) => {
+        if (json.error) {
+          if (json.error === 'Unauthorized') {
             setLoading(false);
-            //ToastAndroid.showWithGravityAndOffset('Logged in successfully !!!',ToastAndroid.LONG,ToastAndroid.CENTER,10,10);
-            navigation.navigate('HomeScreen');
+            ToastAndroid.showWithGravityAndOffset('Login information is incorrect !!!', ToastAndroid.LONG, ToastAndroid.CENTER, 10, 10);
+            setErrorForm2('');
+          } else if (json.error === 'Blocked') {
+            setLoading(false);
+            ToastAndroid.showWithGravityAndOffset('Your account has been blocked !!!', ToastAndroid.LONG, ToastAndroid.CENTER, 10, 10);
+            setErrorForm2("");
+          } else {
+            setLoading(false);
+            setErrorForm2(json.error);
           }
-       });
+        } else {
+          AsyncStorage.setItem('access_token', json.access_token);
+          AsyncStorage.setItem('first_name', json.name.first_name);
+          AsyncStorage.setItem('last_name', json.name.last_name);
+          AsyncStorage.setItem('avatar', json.name.avatar);
+          AsyncStorage.setItem('email', json.name.email);
+          AsyncStorage.setItem('role', json.name.role);
+          AsyncStorage.setItem('id', json.user.id.toString());
+          setLoading(false);
+          //ToastAndroid.showWithGravityAndOffset('Logged in successfully !!!',ToastAndroid.LONG,ToastAndroid.CENTER,10,10);
+          navigation.navigate('HomeScreen');
+        }
+      });
   };
   const handleCheckDomainPress = () => {
     setLoading(true);
     const _formData = new FormData();
     _formData.append('domain', domain);
     const requestOptions = {
-        method: 'POST',
-        body: _formData,
+      method: 'POST',
+      body: _formData,
     };
-    fetch(REACT_APP_API+'/user/checkDomain', requestOptions)
-        .then((res) => res.json())
-        .then((json) => {
-            if (json.error) {
-              if(json.error=="No one have domain"){
-                setLoading(false);
-                ToastAndroid.showWithGravityAndOffset('Domain does not exist !!!',ToastAndroid.LONG,ToastAndroid.CENTER,10,10);
-                setErrorForm1("");
-              }else{
-                setErrorForm1(json.error);
-                setLoading(false);
-              }
-            } else {
-                setLoading(false);
-                //ToastAndroid.showWithGravityAndOffset('Successfully!!!',ToastAndroid.LONG,ToastAndroid.CENTER,10,10);
-                if(!showForm){
-                  setShowForm(true);
-                }else{
-                  setShowForm(false);
-             }
+    fetch(REACT_APP_API + '/user/checkDomain', requestOptions)
+      .then((res) => res.json())
+      .then((json) => {
+        if (json.error) {
+          if (json.error == "No one have domain") {
+            setLoading(false);
+            ToastAndroid.showWithGravityAndOffset('Domain does not exist !!!', ToastAndroid.LONG, ToastAndroid.CENTER, 10, 10);
+            setErrorForm1("");
+          } else {
+            setErrorForm1(json.error);
+            setLoading(false);
           }
-        });
+        } else {
+          setLoading(false);
+          //ToastAndroid.showWithGravityAndOffset('Successfully!!!',ToastAndroid.LONG,ToastAndroid.CENTER,10,10);
+          if (!showForm) {
+            setShowForm(true);
+          } else {
+            setShowForm(false);
+          }
+        }
+      });
   };
-  const googleLogin=()=>{
+  const googleLogin = () => {
     setErrorForm2("");
     setLoading(true);
     setTimeout(() => {
       setLoading(false);
-      ToastAndroid.showWithGravityAndOffset('Login information is incorrect !!!',ToastAndroid.LONG,ToastAndroid.CENTER,10,10);
+      ToastAndroid.showWithGravityAndOffset('Login information is incorrect !!!', ToastAndroid.LONG, ToastAndroid.CENTER, 10, 10);
     }, 3000);
   }
   useEffect(() => {
-      AsyncStorage.getItem('access_token').then((value) =>
-        (value === null)? null : navigation.replace('HomeScreen')
-      );
-}, []);
+    AsyncStorage.getItem('access_token').then((value) =>
+      (value === null) ? null : navigation.replace('HomeScreen')
+    );
+  }, []);
   return (
-        showForm
+    showForm
       ?
       <LinearGradient colors={['#312A6C', '#852D91']} style={styles.linearGradient}>
-      <View style={styles.mainBody}>
-        <Loader loading={loading} />
-        <ScrollView
-          keyboardShouldPersistTaps="handled"
-          contentContainerStyle={{
-            flex: 1,
-            justifyContent: 'center',
-            alignContent: 'center',
-          }}>
-          <View>
-            <KeyboardAvoidingView enabled>
-              <View style={{alignItems: 'center'}}>
-                <Image
-                  source={require('../Image/logo1.png')}
-                  style={{
-                    width: '100%',
-                    height: 150,
-                    resizeMode: 'contain',
-                    margin: 30,
-                  }}
-                />
-              </View>
-              <Text style={styles.buttonTextStyleAccount}><Text style={styles.buttonTextStyleAccount2} >Hello, </Text>hope you have a nice day!</Text>
-              <View style={styles.SectionStyle}>
-                <TextInput
-                  style={styles.inputStyle}
-                  onChangeText={(domain) =>
-                    setDomain(domain)
-                  }
-                  placeholder="Domain Company"
-                  placeholderTextColor="#8b9cb5"
-                  autoCapitalize="none"
-                  returnKeyType="next"
-                  onSubmitEditing={() =>
-                    passwordInputRef.current &&
-                    passwordInputRef.current.focus()
-                  }
-                  underlineColorAndroid="#f000"
-                  blurOnSubmit={false}
-                />
-              </View>
-              {errorForm1.domain != '' ? (
-                <Text style={styles.errorTextStyle}>
-                  {errorForm1.domain}
-                </Text>
-              ) : null}
-              <TouchableOpacity
-                style={styles.buttonStyle}
-                activeOpacity={0.5}
-                onPress={handleCheckDomainPress}
+        <View style={styles.mainBody}>
+          <Loader loading={loading} />
+          <ScrollView
+            keyboardShouldPersistTaps="handled"
+            contentContainerStyle={{
+              flex: 1,
+              justifyContent: 'center',
+              alignContent: 'center',
+            }}>
+            <View>
+              <KeyboardAvoidingView enabled>
+                <View style={{ alignItems: 'center' }}>
+                  <Image
+                    source={require('../Image/logo1.png')}
+                    style={{
+                      width: '100%',
+                      height: 150,
+                      resizeMode: 'contain',
+                      margin: 30,
+                    }}
+                  />
+                </View>
+                <Text style={styles.buttonTextStyleAccount}><Text style={styles.buttonTextStyleAccount2} >Hello, </Text>hope you have a nice day!</Text>
+                <View style={styles.SectionStyle}>
+                  <TextInput
+                    style={styles.inputStyle}
+                    onChangeText={(domain) =>
+                      setDomain(domain)
+                    }
+                    placeholder="Domain Company"
+                    placeholderTextColor="#8b9cb5"
+                    autoCapitalize="none"
+                    returnKeyType="next"
+                    onSubmitEditing={() =>
+                      passwordInputRef.current &&
+                      passwordInputRef.current.focus()
+                    }
+                    underlineColorAndroid="#f000"
+                    blurOnSubmit={false}
+                  />
+                </View>
+                {errorForm1.domain != '' ? (
+                  <Text style={styles.errorTextStyle}>
+                    {errorForm1.domain}
+                  </Text>
+                ) : null}
+                <TouchableOpacity
+                  style={styles.buttonStyle}
+                  activeOpacity={0.5}
+                  onPress={handleCheckDomainPress}
                 >
-                <Text style={styles.buttonTextStyle}>CONTINUE</Text>
-              </TouchableOpacity>
-            </KeyboardAvoidingView>
-          </View>
-        </ScrollView>
-      </View>
+                  <Text style={styles.buttonTextStyle}>CONTINUE</Text>
+                </TouchableOpacity>
+              </KeyboardAvoidingView>
+            </View>
+          </ScrollView>
+        </View>
       </LinearGradient>
       :
       <LinearGradient colors={['#312A6C', '#852D91']} style={styles.linearGradient}>
-    <View style={styles.mainBody}>
-      <Loader loading={loading} />
-      <ScrollView
-        keyboardShouldPersistTaps="handled"
-        contentContainerStyle={{
-          flex: 1,
-          justifyContent: 'center',
-          alignContent: 'center',
-        }}>
-        <View>
-          <KeyboardAvoidingView enabled>
-            <View style={{alignItems: 'center'}}>
-              <Image
-                source={require('../Image/logo1.png')}
-                style={{
-                  width: '100%',
-                  height: 150,
-                  resizeMode: 'contain',
-                  margin: 30,
-                }}
-              />
-            </View>
-            <View style={styles.SectionStyle}>
-              <TextInput
-                style={styles.inputStyle}
-                onChangeText={(email) =>setUser({...user,['email']: email})}
-                placeholder="Email Address"
-                placeholderTextColor="#8b9cb5"
-                autoCapitalize="none"
-                keyboardType="email-address"
-                returnKeyType="next"
-                onSubmitEditing={() =>
-                  passwordInputRef.current &&
-                  passwordInputRef.current.focus()
-                }
-                underlineColorAndroid="#f000"
-                blurOnSubmit={false}
-              />
-            </View>
-            {errorForm2.email != '' ? (
-              <Text style={styles.errorTextStyle}>
-                {errorForm2.email}
-              </Text>
-            ) : null}
-            <View style={styles.SectionStyle}>
-              <TextInput
-                style={styles.inputStyle}
-                onChangeText={(password) =>setUser({...user,['password']: password})}
-                placeholder="Password"
-                placeholderTextColor="#8b9cb5"
-                keyboardType="default"
-                ref={passwordInputRef}
-                onSubmitEditing={Keyboard.dismiss}
-                blurOnSubmit={false}
-                secureTextEntry={true}
-                underlineColorAndroid="#f000"
-                returnKeyType="next"
-              />
-            </View>
-            {errorForm2.password != '' ? (
-              <Text style={styles.errorTextStyle}>
-                {errorForm2.password}
-              </Text>
-            ) : null}
-              <Text style={styles.buttonTextStyleForgot} onPress={() => navigation.navigate('ForgotPasswordScreen')}>Forgot Password ?</Text>
-            <TouchableOpacity
-              style={styles.buttonStyle}
-              activeOpacity={0.5}
-              onPress={handleSubmitPress}
-              >
-              <Text style={styles.buttonTextStyle}>CONTINUE</Text>
-            </TouchableOpacity>
-            <Text style={styles.buttonTextStyleOr}>OR</Text>
-            <TouchableOpacity
-              style={styles.buttonStyleGoogle}
-              activeOpacity={0.5}
-              onPress={()=>googleLogin()}
-              >
-                <View style={{flex: 1, flexDirection: 'row', paddingVertical: 10, }}>
-                <Image
-                source={require('../Image/logo_google.png')}
-                style={{
-                  width: 18,
-                  height: 18,
-                  paddingVertical: 10,
-                }}
-              />
-              <Text style={styles.buttonTextStyleGoogle}>Login with Google</Text>
+        <View style={styles.mainBody}>
+          <Loader loading={loading} />
+          <ScrollView
+            keyboardShouldPersistTaps="handled"
+            contentContainerStyle={{
+              flex: 1,
+              justifyContent: 'center',
+              alignContent: 'center',
+            }}>
+            <View>
+              <KeyboardAvoidingView enabled>
+                <View style={{ alignItems: 'center' }}>
+                  <Image
+                    source={require('../Image/logo1.png')}
+                    style={{
+                      width: '100%',
+                      height: 150,
+                      resizeMode: 'contain',
+                      margin: 30,
+                    }}
+                  />
                 </View>
-            </TouchableOpacity>
-          </KeyboardAvoidingView>
+                <View style={styles.SectionStyle}>
+                  <TextInput
+                    style={styles.inputStyle}
+                    onChangeText={(email) => setUser({ ...user, ['email']: email })}
+                    placeholder="Email Address"
+                    placeholderTextColor="#8b9cb5"
+                    autoCapitalize="none"
+                    keyboardType="email-address"
+                    returnKeyType="next"
+                    onSubmitEditing={() =>
+                      passwordInputRef.current &&
+                      passwordInputRef.current.focus()
+                    }
+                    underlineColorAndroid="#f000"
+                    blurOnSubmit={false}
+                  />
+                </View>
+                {errorForm2.email != '' ? (
+                  <Text style={styles.errorTextStyle}>
+                    {errorForm2.email}
+                  </Text>
+                ) : null}
+                <View style={styles.SectionStyle}>
+                  <TextInput
+                    style={styles.inputStyle}
+                    onChangeText={(password) => setUser({ ...user, ['password']: password })}
+                    placeholder="Password"
+                    placeholderTextColor="#8b9cb5"
+                    keyboardType="default"
+                    ref={passwordInputRef}
+                    onSubmitEditing={Keyboard.dismiss}
+                    blurOnSubmit={false}
+                    secureTextEntry={true}
+                    underlineColorAndroid="#f000"
+                    returnKeyType="next"
+                  />
+                </View>
+                {errorForm2.password != '' ? (
+                  <Text style={styles.errorTextStyle}>
+                    {errorForm2.password}
+                  </Text>
+                ) : null}
+                <Text style={styles.buttonTextStyleForgot} onPress={() => navigation.navigate('ForgotPasswordScreen')}>Forgot Password ?</Text>
+                <TouchableOpacity
+                  style={styles.buttonStyle}
+                  activeOpacity={0.5}
+                  onPress={handleSubmitPress}
+                >
+                  <Text style={styles.buttonTextStyle}>CONTINUE</Text>
+                </TouchableOpacity>
+                <Text style={styles.buttonTextStyleOr}>OR</Text>
+                <TouchableOpacity
+                  style={styles.buttonStyleGoogle}
+                  activeOpacity={0.5}
+                  onPress={() => googleLogin()}
+                >
+                  <View style={{ flex: 1, flexDirection: 'row', paddingVertical: 10, }}>
+                    <Image
+                      source={require('../Image/logo_google.png')}
+                      style={{
+                        width: 18,
+                        height: 18,
+                        paddingVertical: 10,
+                      }}
+                    />
+                    <Text style={styles.buttonTextStyleGoogle}>Login with Google</Text>
+                  </View>
+                </TouchableOpacity>
+              </KeyboardAvoidingView>
+            </View>
+          </ScrollView>
         </View>
-      </ScrollView>
-    </View>
-    </LinearGradient>
+      </LinearGradient>
   );
 };
 export default LoginScreen;
 
 const styles = StyleSheet.create({
-    linearGradient: {
-        flex:1,
-        paddingLeft: 15,
-        paddingRight: 15,
-        borderRadius: 5
-      },
+  linearGradient: {
+    flex: 1,
+    paddingLeft: 15,
+    paddingRight: 15,
+    borderRadius: 5
+  },
   mainBody: {
     flex: 1,
     justifyContent: 'center',
@@ -301,13 +301,13 @@ const styles = StyleSheet.create({
     color: '#ff9900',
     paddingVertical: 10,
     fontSize: 16,
-    fontWeight:"bold"
+    fontWeight: "bold"
   },
   buttonTextStyleOr: {
     color: 'white',
     textAlign: 'center',
     fontSize: 12,
-    fontWeight:"bold",
+    fontWeight: "bold",
   },
   inputStyle: {
     flex: 1,
@@ -323,7 +323,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: 14,
   },
-  buttonStyleGoogle:{
+  buttonStyleGoogle: {
     borderWidth: 1,
     borderColor: '#dadae8',
     height: 42,
@@ -337,28 +337,28 @@ const styles = StyleSheet.create({
   buttonTextStyleGoogle: {
     color: 'white',
     fontSize: 12,
-    fontWeight:"bold",
-    marginLeft:10
+    fontWeight: "bold",
+    marginLeft: 10
   },
   buttonTextStyleForgot: {
     color: '#ff9900',
     fontSize: 12,
-    fontWeight:"bold",
-    marginLeft:10,
-    textAlign:"right",
+    fontWeight: "bold",
+    marginLeft: 10,
+    textAlign: "right",
     paddingRight: 40,
   },
   buttonTextStyleAccount2: {
     color: '#ff9900',
     fontSize: 18,
-    fontWeight:"bold",
-    textAlign:"center",
-  }, 
+    fontWeight: "bold",
+    textAlign: "center",
+  },
   buttonTextStyleAccount: {
     color: 'white',
     fontSize: 14,
-    fontWeight:"bold",
-    textAlign:"left",
+    fontWeight: "bold",
+    textAlign: "left",
     marginLeft: 35,
   },
 });

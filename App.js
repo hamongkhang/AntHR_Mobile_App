@@ -8,13 +8,14 @@ import LoginScreen from "./Screen/LoginScreen";
 import HomeScreen from "./Screen/HomeScreen";
 import AccountScreen from "./Screen/Account";
 import NewScreen from './Screen/NewScreen';
+import DocumentScreen from './Screen/DocumentScreen';
 
 const Stack = createNativeStackNavigator();
 
 const App = () => {
   return (
      <NavigationContainer>
-       <Stack.Navigator initialRouteName="NewScreen">
+       <Stack.Navigator initialRouteName="DocumentScreen">
         <Stack.Screen
           name="Welcome"
           component={Welcome}
@@ -43,6 +44,11 @@ const App = () => {
         <Stack.Screen
           name="NewScreen"
           component={NewScreen}
+          options={{headerShown: false}}
+        /> 
+        <Stack.Screen
+          name="DocumentScreen"
+          component={DocumentScreen}
           options={{headerShown: false}}
         /> 
         <Stack.Screen

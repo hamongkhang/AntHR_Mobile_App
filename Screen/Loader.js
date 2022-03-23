@@ -1,9 +1,9 @@
 import React from 'react';
-import {StyleSheet, View, Modal, ActivityIndicator} from 'react-native';
+import { StyleSheet, View, Modal, ActivityIndicator } from 'react-native';
 import { LinearGradient } from "expo-linear-gradient";
 
 const Loader = (props) => {
-  const {loading, ...attributes} = props;
+  const { loading, ...attributes } = props;
 
   return (
     <Modal
@@ -14,16 +14,16 @@ const Loader = (props) => {
         console.log('close modal');
       }}>
       <View style={styles.modalBackground}>
-      <LinearGradient colors={['#FE6B8B', '#FF8E53']} style={styles.activityIndicatorWrapper}>
-        <View style={styles.activityIndicatorWrapper}>
-          <ActivityIndicator
-            animating={true}
-            color="white"
-            size="large"
-            style={styles.activityIndicator}
-          />
-        </View>
-      </LinearGradient>
+        <LinearGradient colors={['#FE6B8B', '#FF8E53']} style={styles.activityIndicatorWrapper}>
+          <View style={styles.activityIndicatorWrapper}>
+            <ActivityIndicator
+              animating={true}
+              color="white"
+              size="large"
+              style={styles.activityIndicator}
+            />
+          </View>
+        </LinearGradient>
       </View>
     </Modal>
   );

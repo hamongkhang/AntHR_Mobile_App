@@ -87,8 +87,8 @@ const AccountScreen = ({ navigation }) => {
                               <Image
                                 source={require('../Image/persional_icon.png')}
                                 style={{
-                                  width: 30,
-                                  height: 30,
+                                  width: 25,
+                                  height: 25,
                                 }}
                               />
                               <Text style={{ color: "white", fontWeight: "bold", fontSize: 12 }} onPress={() => onChangeTab(1)}>Persional</Text>
@@ -106,8 +106,8 @@ const AccountScreen = ({ navigation }) => {
                               <Image
                                 source={require('../Image/persional_icon.png')}
                                 style={{
-                                  width: 30,
-                                  height: 30,
+                                  width: 25,
+                                  height: 25,
                                 }}
                               />
                               <Text style={{ color: "white", fontWeight: "bold", fontSize: 12 }} onPress={() => onChangeTab(1)}>Persional</Text>
@@ -129,8 +129,8 @@ const AccountScreen = ({ navigation }) => {
                               <Image
                                 source={require('../Image/address_icon.png')}
                                 style={{
-                                  width: 30,
-                                  height: 30,
+                                  width: 25,
+                                  height: 25,
                                 }}
                               />
                               <Text style={{ color: "white", fontWeight: "bold", fontSize: 12 }} onPress={() => onChangeTab(2)}>Address</Text>
@@ -148,8 +148,8 @@ const AccountScreen = ({ navigation }) => {
                               <Image
                                 source={require('../Image/address_icon.png')}
                                 style={{
-                                  width: 30,
-                                  height: 30,
+                                  width: 25,
+                                  height: 25,
                                 }}
                               />
                               <Text style={{ color: "white", fontWeight: "bold", fontSize: 12 }} onPress={() => onChangeTab(2)}>Address</Text>
@@ -171,8 +171,8 @@ const AccountScreen = ({ navigation }) => {
                               <Image
                                 source={require('../Image/bank_icon.png')}
                                 style={{
-                                  width: 30,
-                                  height: 30,
+                                  width: 25,
+                                  height: 25,
                                 }}
                               />
                               <Text style={{ color: "white", fontWeight: "bold", fontSize: 12 }} onPress={() => onChangeTab(3)}>Bank</Text>
@@ -190,8 +190,8 @@ const AccountScreen = ({ navigation }) => {
                               <Image
                                 source={require('../Image/bank_icon.png')}
                                 style={{
-                                  width: 30,
-                                  height: 30,
+                                  width: 25,
+                                  height: 25,
                                 }}
                               />
                               <Text style={{ color: "white", fontWeight: "bold", fontSize: 12 }} onPress={() => onChangeTab(3)}>Bank</Text>
@@ -213,8 +213,8 @@ const AccountScreen = ({ navigation }) => {
                               <Image
                                 source={require('../Image/account_icon.png')}
                                 style={{
-                                  width: 30,
-                                  height: 30,
+                                  width: 25,
+                                  height: 25,
                                 }}
                               />
                               <Text style={{ color: "white", fontWeight: "bold", fontSize: 12 }} onPress={() => onChangeTab(4)}>Account</Text>
@@ -232,8 +232,8 @@ const AccountScreen = ({ navigation }) => {
                               <Image
                                 source={require('../Image/account_icon.png')}
                                 style={{
-                                  width: 30,
-                                  height: 30,
+                                  width: 25,
+                                  height: 25,
                                 }}
                               />
                               <Text style={{ color: "white", fontWeight: "bold", fontSize: 12 }} onPress={() => onChangeTab(4)}>Account</Text>

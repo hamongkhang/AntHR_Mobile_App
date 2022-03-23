@@ -96,7 +96,7 @@ const ForgotPasswordScreen = ({ navigation }) => {
       .then((res) => res.json())
       .then((json) => {
         if (json.error) {
-          if (json.error === 'No one have code') {
+          if (json.error == 'No one have code') {
             setLoading(false);
             ToastAndroid.showWithGravityAndOffset('Code you entered is incorrect !!!', ToastAndroid.LONG, ToastAndroid.CENTER, 10, 10);
             setErrorForm2('');

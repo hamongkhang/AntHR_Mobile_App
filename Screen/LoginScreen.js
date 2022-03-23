@@ -32,11 +32,11 @@ const LoginScreen = ({ navigation }) => {
       .then((res) => res.json())
       .then((json) => {
         if (json.error) {
-          if (json.error === 'Unauthorized') {
+          if (json.error == 'Unauthorized') {
             setLoading(false);
             ToastAndroid.showWithGravityAndOffset('Login information is incorrect !!!', ToastAndroid.LONG, ToastAndroid.CENTER, 10, 10);
             setErrorForm2('');
-          } else if (json.error === 'Blocked') {
+          } else if (json.error == 'Blocked') {
             setLoading(false);
             ToastAndroid.showWithGravityAndOffset('Your account has been blocked !!!', ToastAndroid.LONG, ToastAndroid.CENTER, 10, 10);
             setErrorForm2("");
@@ -100,7 +100,7 @@ const LoginScreen = ({ navigation }) => {
   useEffect(() => {
     setLoading(true);
     AsyncStorage.getItem('access_token').then((value) =>
-      (value === null) ? setLoading(false) : navigation.replace('HomeScreen')
+      (value == null) ? setLoading(false) : navigation.replace('HomeScreen')
     );
   }, []);
   return (

@@ -8,12 +8,14 @@ import Loader from './Loader';
 import AccountScreen from './Account';
 import NewScreen from "./NewScreen";
 import DocumentScreen from "./DocumentScreen";
+import AttendanceScreen from "./AttendanceScreen";
+import GiftScreen from "./GiftScreen";
 
 const AccountRoute = () => <AccountScreen></AccountScreen>;
 const FolderRoute = () => <DocumentScreen></DocumentScreen>;
 const NewsRoute = () => <NewScreen></NewScreen>;
-const AttendanceRoute = () => <Text>AttendanceRoute</Text>;
-const GiftRoute = () => <Text>AccountRoute</Text>;
+const AttendanceRoute = () => <AttendanceScreen></AttendanceScreen>;
+const GiftRoute = () => <GiftScreen></GiftScreen>;
 
 const HomeScreen = ({ navigation }) => {
   const [index, setIndex] = React.useState(0);
@@ -72,19 +74,19 @@ const HomeScreen = ({ navigation }) => {
       <View style={{ flex: 1 }}>
         <Loader loading={loading} />
         <LinearGradient colors={['#312A6C', '#852D91']}>
-          <Appbar.Header>
+          <Appbar.Header style={{backgroundColor:"#2c2c2c"}}>
             <Image style={{ marginLeft: 10, width: 60, height: 60 }} source={require('../Image/logo1.png')} />
             <Text style={{ marginLeft: "auto", marginRight: 10 }} onPress={() => onClickShowButton()}>
               {
-                (avatar === "null")
+                (avatar == "null")
                   ?
-                  <Avatar.Image size={40} style={{ backgroundColor: "#edf8f1", marginLeft: "auto", marginRight: 10 }} source={{ uri: REACT_APP_FILE + '/avatar/avatar.png' }} />
+                  <Avatar.Image size={35} style={{ backgroundColor: "#edf8f1", marginLeft: "auto", marginRight: 10 }} source={{ uri: REACT_APP_FILE + '/avatar/avatar.png' }} />
                   :
                   (avatar.search('https://') != -1)
                     ?
-                    <Avatar.Image size={40} style={{ backgroundColor: "#edf8f1", marginLeft: "auto", marginRight: 10 }} source={{ uri: avatar }} />
+                    <Avatar.Image size={35} style={{ backgroundColor: "#edf8f1", marginLeft: "auto", marginRight: 10 }} source={{ uri: avatar }} />
                     :
-                    <Avatar.Image size={40} style={{ backgroundColor: "#edf8f1", marginLeft: "auto", marginRight: 10 }} source={{ uri: REACT_APP_FILE + '/avatar/' + avatar }} />
+                    <Avatar.Image size={35} style={{ backgroundColor: "#edf8f1", marginLeft: "auto", marginRight: 10 }} source={{ uri: REACT_APP_FILE + '/avatar/' + avatar }} />
               }
             </Text>
           </Appbar.Header>

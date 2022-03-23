@@ -9,13 +9,15 @@ import HomeScreen from "./Screen/HomeScreen";
 import AccountScreen from "./Screen/Account";
 import NewScreen from './Screen/NewScreen';
 import DocumentScreen from './Screen/DocumentScreen';
+import AttendanceScreen from "./Screen/AttendanceScreen"
+import GiftScreen from "./Screen/GiftScreen";
 
 const Stack = createNativeStackNavigator();
 
 const App = () => {
   return (
      <NavigationContainer>
-       <Stack.Navigator initialRouteName="Welcome">
+       <Stack.Navigator initialRouteName="HomeScreen">
         <Stack.Screen
           name="Welcome"
           component={Welcome}
@@ -51,6 +53,16 @@ const App = () => {
           component={DocumentScreen}
           options={{headerShown: false}}
         /> 
+         <Stack.Screen
+          name="AttendanceScreen"
+          component={AttendanceScreen}
+          options={{headerShown: false}}
+        /> 
+          <Stack.Screen
+          name="GiftScreen"
+          component={GiftScreen}
+          options={{headerShown: false}}
+        />
         <Stack.Screen
           name="ChangePasswordScreen"
           component={ChangePasswordScreen}

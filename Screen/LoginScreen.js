@@ -98,8 +98,9 @@ const LoginScreen = ({ navigation }) => {
     }, 3000);
   }
   useEffect(() => {
+    setLoading(true);
     AsyncStorage.getItem('access_token').then((value) =>
-      (value === null) ? null : navigation.replace('HomeScreen')
+      (value === null) ? setLoading(false) : navigation.replace('HomeScreen')
     );
   }, []);
   return (

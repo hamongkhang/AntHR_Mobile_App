@@ -136,10 +136,8 @@ const NewScreen = ({ navigation }) => {
                             marginRight: 5
                           }}
                         />
-                        <Text style={{ fontWeight: 500, fontSize: 16, color: "rgb(105, 129, 148)", marginRight: 5 }}>
-                          {new Intl.DateTimeFormat('de-DE', {
-                            year: 'numeric', month: 'long', day: 'numeric'
-                          }).format(new Date(item.updated_at))} | Admin</Text>
+                        <Text style={{fontSize: 16, color: "rgb(105, 129, 148)", marginRight: 5 }}>
+                          {item.updated_at?item.updated_at:"-"} | Admin</Text>
                       </View>
                     </View>
                   )
@@ -164,10 +162,8 @@ const NewScreen = ({ navigation }) => {
                           marginRight: 5
                         }}
                       />
-                      <Text style={{ fontWeight: 500, fontSize: 16, color: "rgb(105, 129, 148)", marginRight: 5 }}>
-                        {new Intl.DateTimeFormat('de-DE', {
-                          year: 'numeric', month: 'long', day: 'numeric'
-                        }).format(new Date(item.updated_at))} | Admin</Text>
+                      <Text style={{fontSize: 16, color: "rgb(105, 129, 148)", marginRight: 5 }}>
+                        {item.updated_at?item.updated_at:"-"} | Admin</Text>
                     </View>
                   </View>
                 )
@@ -211,10 +207,8 @@ const NewScreen = ({ navigation }) => {
                   marginRight: 5
                 }}
               />
-              <Text style={{ fontWeight: 500, fontSize: 16, color: "rgb(105, 129, 148)", marginRight: 5 }}>
-                {new Intl.DateTimeFormat('de-DE', {
-                  year: 'numeric', month: 'long', day: 'numeric'
-                }).format(new Date(detail[0].updated_at))} | Admin</Text>
+              <Text style={{fontSize: 16, color: "rgb(105, 129, 148)", marginRight: 5 }}>
+                {detail[0].updated_at?detail[0].updated_at:"-"} | Admin</Text>
             </View>
             <View style={{ flexDirection: "row", alignItems: "center", marginTop: 50 }}>
               <Text style={{ color: "rgb(14, 34, 61)" }}>{detail[0].content ? detail[0].content : "-"}</Text>

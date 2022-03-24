@@ -75,7 +75,7 @@ const HomeScreen = ({ navigation }) => {
       <View style={{ flex: 1 }}>
         <Loader loading={loading} />
         <LinearGradient colors={['#312A6C', '#852D91']}>
-          <Appbar.Header style={{backgroundColor:"black"}}>
+          <Appbar.Header style={{backgroundColor:"rgb(14, 34, 61)"}}>
             <Image style={{ marginLeft: 10, width: 60, height: 60 }} source={require('../Image/logo1.png')} />
             <Text style={{ marginLeft: "auto", marginRight: 10 }} onPress={() => onClickShowButton()}>
               {

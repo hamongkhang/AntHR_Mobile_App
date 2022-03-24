@@ -5,7 +5,10 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import { Avatar, Dialog, Searchbar, List, TextInput, Button } from 'react-native-paper';
 import { REACT_APP_API, REACT_APP_FILE } from "@env"
 import Loader from './Loader';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import {NavigationContainer} from '@react-navigation/native';
 
+const Stack = createNativeStackNavigator();
 
 const GiftScreen = ({ navigation }) => {
 //   const [loading, setLoading] = useState(false);
@@ -94,9 +97,18 @@ const GiftScreen = ({ navigation }) => {
 //   }, []);
 
   return (
-      <LinearGradient colors={['#edf8f1', '#f7f9fc']} style={styles.linearGradient}>
-      
-      </LinearGradient>
+    <Stack.Navigator initialRouteName="Welcome">
+    <Stack.Screen
+      name="Welcome"
+      component={Welcome}
+      options={{headerShown: false}}
+    /> 
+    <Stack.Screen
+      name="LoginScreen"
+      component={LoginScreen}
+      options={{headerShown: false}}
+    /> 
+ </Stack.Navigator>
   );
 };
 export default GiftScreen;

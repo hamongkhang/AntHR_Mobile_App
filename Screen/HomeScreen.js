@@ -8,13 +8,13 @@ import Loader from './Loader';
 import AccountScreen from './Account';
 import NewScreen from "./NewScreen";
 import DocumentScreen from "./DocumentScreen";
-import AttendanceScreen from "./AttendanceScreen";
 import GiftScreen from "./GiftScreen";
+import ScanScreen from './ScanScreen';
 
 const AccountRoute = () => <AccountScreen></AccountScreen>;
 const FolderRoute = () => <DocumentScreen></DocumentScreen>;
 const NewsRoute = () => <NewScreen></NewScreen>;
-const AttendanceRoute = () => <AttendanceScreen></AttendanceScreen>;
+const AttendanceRoute = () => <ScanScreen></ScanScreen>;
 const GiftRoute = () => <GiftScreen></GiftScreen>;
 
 const HomeScreen = ({ navigation }) => {
@@ -23,7 +23,7 @@ const HomeScreen = ({ navigation }) => {
   const [avatar, setAvatar] = useState('');
   const [loading, setLoading] = useState(false);
   const [showButton, setShowButton] = useState(false);
-
+  const [render, setRender] = useState(false);
   const [routes] = React.useState([
     { key: 'Gift', title: 'Gift', icon: 'gift', color: 'rgb(98, 0, 238)' },
     { key: 'Folder', title: 'Document', icon: 'folder', color: '#4caf50' },
@@ -40,6 +40,7 @@ const HomeScreen = ({ navigation }) => {
   });
   const onClickLogout = () => {
     setLoading(true);
+    setShowButton(!showButton)
     const requestOptions = {
       method: 'POST',
       headers: { "Authorization": `Bearer ` + token }
@@ -67,14 +68,14 @@ const HomeScreen = ({ navigation }) => {
       }
     }
     getToken();
-  }, []);
+  }, [render]);
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <View style={{ flex: 1 }}>
         <Loader loading={loading} />
         <LinearGradient colors={['#312A6C', '#852D91']}>
-          <Appbar.Header style={{backgroundColor:"#2c2c2c"}}>
+          <Appbar.Header style={{backgroundColor:"rgb(14, 34, 61)"}}>
             <Image style={{ marginLeft: 10, width: 60, height: 60 }} source={require('../Image/logo1.png')} />
             <Text style={{ marginLeft: "auto", marginRight: 10 }} onPress={() => onClickShowButton()}>
               {

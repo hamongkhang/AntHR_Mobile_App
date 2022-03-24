@@ -50,7 +50,7 @@ const LoginScreen = ({ navigation }) => {
           AsyncStorage.setItem('last_name', json.name.last_name);
           AsyncStorage.setItem('avatar', json.name.avatar);
           AsyncStorage.setItem('email', json.name.email);
-          AsyncStorage.setItem('role', json.name.role);
+          AsyncStorage.setItem('role', json.user.role.toString());
           AsyncStorage.setItem('id', json.user.id.toString());
           setLoading(false);
           //ToastAndroid.showWithGravityAndOffset('Logged in successfully !!!',ToastAndroid.LONG,ToastAndroid.CENTER,10,10);

@@ -104,41 +104,41 @@ const styles = StyleSheet.create({
   linearGradient: {
     flex: 1,
   },
-  mainBody: {
-    flex: 1,
-  },
-  mainBodyDetail: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  item_one_detail: {
-    backgroundColor: "white",
-    width: "100%",
-    padding: 20,
-    marginTop: 10,
-    marginBottom: 10,
-    borderTopWidth: 1,
-    borderTopColor: "rgb(227, 235, 241)",
-    borderBottomWidth: 1,
-    borderBottomColor: "rgb(227, 235, 241)",
-    height: "98%",
-    width: "96%",
-    borderRadius: 5
-  },
-  header: {
-    backgroundColor: "white",
-    width: "100%",
-    padding: 20,
-  },
-  item_one: {
-    backgroundColor: "white",
-    width: "100%",
-    padding: 20,
-    marginTop: 10,
-    borderTopWidth: 1,
-    borderTopColor: "rgb(227, 235, 241)",
-    borderBottomWidth: 1,
-    borderBottomColor: "rgb(227, 235, 241)"
-  }
+  // mainBody: {
+  //   flex: 1,
+  // },
+  // mainBodyDetail: {
+  //   flex: 1,
+  //   justifyContent: "center",
+  //   alignItems: "center",
+  // },
+  // item_one_detail: {
+  //   backgroundColor: "white",
+  //   width: "100%",
+  //   padding: 20,
+  //   marginTop: 10,
+  //   marginBottom: 10,
+  //   borderTopWidth: 1,
+  //   borderTopColor: "rgb(227, 235, 241)",
+  //   borderBottomWidth: 1,
+  //   borderBottomColor: "rgb(227, 235, 241)",
+  //   height: "98%",
+  //   width: "96%",
+  //   borderRadius: 5
+  // },
+  // header: {
+  //   backgroundColor: "white",
+  //   width: "100%",
+  //   padding: 20,
+  // },
+  // item_one: {
+  //   backgroundColor: "white",
+  //   width: "100%",
+  //   padding: 20,
+  //   marginTop: 10,
+  //   borderTopWidth: 1,
+  //   borderTopColor: "rgb(227, 235, 241)",
+  //   borderBottomWidth: 1,
+  //   borderBottomColor: "rgb(227, 235, 241)"
+  // }
 })

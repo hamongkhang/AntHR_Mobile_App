@@ -157,6 +157,7 @@ const ChangePasswordScreen = ({ navigation }) => {
               >
                 <Text style={styles.buttonTextStyle}>CHANGE PASSWORD</Text>
               </TouchableOpacity>
+              <Text style={styles.buttonTextStyleForgot2}>You want go back? <Text style={styles.buttonTextStyleForgot3} onPress={() => navigation.replace('HomeScreen')}>Home</Text></Text>
             </KeyboardAvoidingView>
           </View>
         </ScrollView>
@@ -261,5 +262,17 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     textAlign: "left",
     marginLeft: 35,
+  },
+  buttonTextStyleForgot3: {
+    color: '#ff9900',
+    fontSize: 16,
+    fontWeight: "bold",
+    textAlign: "center",
+  },
+  buttonTextStyleForgot2: {
+    color: 'white',
+    fontSize: 14,
+    marginLeft: 10,
+    textAlign: "center",
   },
 });

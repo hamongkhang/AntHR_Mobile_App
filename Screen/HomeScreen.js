@@ -8,13 +8,13 @@ import Loader from './Loader';
 import AccountScreen from './Account';
 import NewScreen from "./NewScreen";
 import DocumentScreen from "./DocumentScreen";
-import AttendanceScreen from "./AttendanceScreen";
 import GiftScreen from "./GiftScreen";
+import ScanScreen from './ScanScreen';
 
 const AccountRoute = () => <AccountScreen></AccountScreen>;
 const FolderRoute = () => <DocumentScreen></DocumentScreen>;
 const NewsRoute = () => <NewScreen></NewScreen>;
-const AttendanceRoute = () => <AttendanceScreen></AttendanceScreen>;
+const AttendanceRoute = () => <ScanScreen></ScanScreen>;
 const GiftRoute = () => <GiftScreen></GiftScreen>;
 
 const HomeScreen = ({ navigation }) => {

@@ -66,8 +66,6 @@ const ScanScreen = ({ navigation }) => {
                 { cancelable: false }
             )
         }
-
-
     };
     if (hasPermission === null) {
         return <Text style={{ color: "red", fontSize: 24, fontWeight: "bold", textAlign: "center", marginTop: "auto", marginBottom: "auto" }}>Requesting for camera permission</Text>;
@@ -115,34 +113,35 @@ const ScanScreen = ({ navigation }) => {
             :
             <LinearGradient colors={['#edf8f1', '#f7f9fc']} style={styles.linearGradient}>
                 <Loader loading={loading} />
-                <View style={{ padding: 10 }}>
-                    <View style={{ padding: 10, paddingTop: 16, backgroundColor: "white", borderColor: "rgb(227, 235, 241)", borderWidth: 1, borderRadius: 5, paddingBottom: 16 }}>
-                        <View style={{ flexDirection: "row", alignItems: "center" }}>
-                            <View style={{ backgroundColor: "#ff9900", borderRadius: "100%", marginRight: 10, marginTop: 1, padding: 6, justifyContent: "center", alignItems: "center" }}> <Image
-                                source={require('../Image/clock_icon.png')}
-                                style={{
-                                    width: 20,
-                                    height: 20,
-                                }}
-                            /></View>
-                            <Text style={{ fontSize: 18, color: "rgb(35, 54, 78)", lineHeight: 20, fontWeight: "bold" }}>My Attendance</Text>
-                        </View>
-                        <View style={{ backgroundColor: "#edf8f1", flexDirection: "row", borderRadius: 5, padding: 5, paddingTop: 10, paddingBottom: 10, marginTop: 10 }}>
-                            <Text style={{ fontSize: 14, fontWeight: "bold", color: "rgb(35, 54, 78)", lineHeight: 20, marginRight: 10 }}>Current Date: <Text style={{ fontSize: 12, fontWeight: "normal" }}>{new Date().toLocaleString()}</Text></Text>
-                            <Text style={{ fontSize: 14, fontWeight: "bold", color: "rgb(35, 54, 78)", lineHeight: 20 }}>Current Location: <Text style={{ fontSize: 12, fontWeight: "normal" }}>Viet Nam</Text></Text>
-                        </View>
-                        <View style={{ marginBottom: 20 }}>
-                            <Image
-                                source={require('../Image/qr_code.png')}
-                                style={{
-                                    flex: 1,
-                                    aspectRatio: 1.5,
-                                    resizeMode: 'contain',
-                                }}
-                            />
-                            <Text style={{ textAlign: "center", marginTop: 10, fontSize: 24, fontWeight: "bold", lineHeight: 20, color: "rgb(35, 54, 78)" }}>Scan me for Attendance</Text>
-                        </View>
-                        <ScrollView>
+                <ScrollView>
+                    <View style={{ padding: 10 }}>
+                        <View style={{ padding: 10, paddingTop: 16, backgroundColor: "white", borderColor: "rgb(227, 235, 241)", borderWidth: 1, borderRadius: 5, paddingBottom: 16 }}>
+                            <View style={{ flexDirection: "row", alignItems: "center" }}>
+                                <View style={{ backgroundColor: "#ff9900", borderRadius: 200 / 2, marginRight: 10, marginTop: 1, padding: 6, justifyContent: "center", alignItems: "center" }}>
+                                    <Image
+                                        source={require('../Image/clock_icon.png')}
+                                        style={{
+                                            width: 20,
+                                            height: 20,
+                                        }}
+                                    />
+                                </View>
+                                <Text style={{ fontSize: 18, color: "rgb(35, 54, 78)", lineHeight: 20, fontWeight: "bold" }}>My Attendance</Text>
+                            </View>
+                            <View style={{ backgroundColor: "#edf8f1", flexDirection: "row", borderRadius: 5, padding: 5, paddingTop: 10, paddingBottom: 10, marginTop: 10 }}>
+                                <Text style={{ fontSize: 14, fontWeight: "bold", color: "rgb(35, 54, 78)", lineHeight: 20, marginRight: 10, width: "50%" }}>Current Date: <Text style={{ fontSize: 12, fontWeight: "normal" }}>{new Date().toLocaleString()}</Text></Text>
+                                <Text style={{ fontSize: 14, fontWeight: "bold", color: "rgb(35, 54, 78)", lineHeight: 20, width: "50%" }}>Current Location: <Text style={{ fontSize: 12, fontWeight: "normal" }}>Viet Nam</Text></Text>
+                            </View>
+                            <View style={{ marginBottom: 20 }}>
+                                <Image
+                                    source={require('../Image/qr_code.png')}
+                                    style={{
+                                        aspectRatio: 0.8,
+                                        resizeMode: 'contain',
+                                    }}
+                                />
+                                <Text style={{ textAlign: "center", marginTop: 10, fontSize: 20, fontWeight: "bold", lineHeight: 20, color: "rgb(35, 54, 78)" }}>Scan me for Attendance</Text>
+                            </View>
                             <View style={{ borderRadius: 5, borderColor: "rgb(227, 235, 241)", borderWidth: 1, paddingTop: 20, marginBottom: 20 }}>
                                 <View style={{ flexDirection: "row", alignItems: "center", paddingLeft: 10, paddingRight: 10, paddingBottom: 10 }}>
                                     <Text style={{ fontSize: 16, lineHeight: 20, color: "rgb(35, 54, 78)", fontWeight: "bold" }}>Date</Text>
@@ -155,7 +154,7 @@ const ScanScreen = ({ navigation }) => {
                                 <View style={{ flexDirection: "row", alignItems: "center", padding: 10, borderTopColor: "rgb(227, 235, 241)", borderTopWidth: 0.2 }}>
 
                                     <Text style={{ fontSize: 16, lineHeight: 20, color: "rgb(35, 54, 78)", fontWeight: "bold" }}>Clock In Location</Text>
-                                    <Text style={{ marginLeft: "auto", fontSize: 16, lineHeight: 20, color: "rgb(14, 34, 61)" }}>{new Date().toLocaleString()}</Text>
+                                    <Text style={{ marginLeft: "auto", fontSize: 16, lineHeight: 20, color: "rgb(14, 34, 61)" }}>Da Nang, Viet Nam</Text>
                                 </View>
                                 <View style={{ flexDirection: "row", alignItems: "center", padding: 10, borderTopColor: "rgb(227, 235, 241)", borderTopWidth: 0.2 }}>
 
@@ -165,12 +164,12 @@ const ScanScreen = ({ navigation }) => {
                                 <View style={{ flexDirection: "row", alignItems: "center", padding: 10, borderTopColor: "rgb(227, 235, 241)", borderTopWidth: 0.2 }}>
 
                                     <Text style={{ fontSize: 16, lineHeight: 20, color: "rgb(35, 54, 78)", fontWeight: "bold" }}>Clock Out Location</Text>
-                                    <Text style={{ marginLeft: "auto", fontSize: 16, lineHeight: 20, color: "rgb(14, 34, 61)" }}>{new Date().toLocaleString()}</Text>
+                                    <Text style={{ marginLeft: "auto", fontSize: 16, lineHeight: 20, color: "rgb(14, 34, 61)" }}>Da Nang, Viet Nam</Text>
                                 </View>
                                 <View style={{ flexDirection: "row", alignItems: "center", padding: 10, borderTopColor: "rgb(227, 235, 241)", borderTopWidth: 0.2 }}>
 
                                     <Text style={{ fontSize: 16, lineHeight: 20, color: "rgb(35, 54, 78)", fontWeight: "bold" }}>Work Schedule</Text>
-                                    <Text style={{ marginLeft: "auto", fontSize: 16, lineHeight: 20, color: "rgb(14, 34, 61)" }}>{new Date().toLocaleString()}</Text>
+                                    <Text style={{ marginLeft: "auto", fontSize: 16, lineHeight: 20, color: "rgb(14, 34, 61)" }}>80</Text>
                                 </View>
                                 <View style={{ flexDirection: "row", alignItems: "center", padding: 10, borderTopColor: "rgb(227, 235, 241)", borderTopWidth: 0.2 }}>
 
@@ -183,49 +182,9 @@ const ScanScreen = ({ navigation }) => {
                                     <Text style={{ marginLeft: "auto", fontSize: 16, lineHeight: 20, color: "rgb(14, 34, 61)" }}>{new Date().toLocaleString()}</Text>
                                 </View>
                             </View>
-                            <View style={{ borderRadius: 5, borderColor: "rgb(227, 235, 241)", borderWidth: 1, paddingTop: 20, marginBottom: 20 }}>
-                                <View style={{ flexDirection: "row", alignItems: "center", paddingLeft: 10, paddingRight: 10, paddingBottom: 10 }}>
-                                    <Text style={{ fontSize: 16, lineHeight: 20, color: "rgb(35, 54, 78)", fontWeight: "bold" }}>Date</Text>
-                                    <Text style={{ marginLeft: "auto", fontSize: 16, lineHeight: 20, color: "rgb(14, 34, 61)" }}>{new Date().toLocaleString()}</Text>
-                                </View>
-                                <View style={{ flexDirection: "row", alignItems: "center", padding: 10, borderTopColor: "rgb(227, 235, 241)", borderTopWidth: 0.2 }}>
-                                    <Text style={{ fontSize: 16, lineHeight: 20, color: "rgb(35, 54, 78)", fontWeight: "bold" }}>Clock In</Text>
-                                    <Text style={{ marginLeft: "auto", fontSize: 16, lineHeight: 20, color: "rgb(14, 34, 61)" }}>{new Date().toLocaleString()}</Text>
-                                </View>
-                                <View style={{ flexDirection: "row", alignItems: "center", padding: 10, borderTopColor: "rgb(227, 235, 241)", borderTopWidth: 0.2 }}>
-
-                                    <Text style={{ fontSize: 16, lineHeight: 20, color: "rgb(35, 54, 78)", fontWeight: "bold" }}>Clock In Location</Text>
-                                    <Text style={{ marginLeft: "auto", fontSize: 16, lineHeight: 20, color: "rgb(14, 34, 61)" }}>{new Date().toLocaleString()}</Text>
-                                </View>
-                                <View style={{ flexDirection: "row", alignItems: "center", padding: 10, borderTopColor: "rgb(227, 235, 241)", borderTopWidth: 0.2 }}>
-
-                                    <Text style={{ fontSize: 16, lineHeight: 20, color: "rgb(35, 54, 78)", fontWeight: "bold" }}>Clock Out</Text>
-                                    <Text style={{ marginLeft: "auto", fontSize: 16, lineHeight: 20, color: "rgb(14, 34, 61)" }}>{new Date().toLocaleString()}</Text>
-                                </View>
-                                <View style={{ flexDirection: "row", alignItems: "center", padding: 10, borderTopColor: "rgb(227, 235, 241)", borderTopWidth: 0.2 }}>
-
-                                    <Text style={{ fontSize: 16, lineHeight: 20, color: "rgb(35, 54, 78)", fontWeight: "bold" }}>Clock Out Location</Text>
-                                    <Text style={{ marginLeft: "auto", fontSize: 16, lineHeight: 20, color: "rgb(14, 34, 61)" }}>{new Date().toLocaleString()}</Text>
-                                </View>
-                                <View style={{ flexDirection: "row", alignItems: "center", padding: 10, borderTopColor: "rgb(227, 235, 241)", borderTopWidth: 0.2 }}>
-
-                                    <Text style={{ fontSize: 16, lineHeight: 20, color: "rgb(35, 54, 78)", fontWeight: "bold" }}>Work Schedule</Text>
-                                    <Text style={{ marginLeft: "auto", fontSize: 16, lineHeight: 20, color: "rgb(14, 34, 61)" }}>{new Date().toLocaleString()}</Text>
-                                </View>
-                                <View style={{ flexDirection: "row", alignItems: "center", padding: 10, borderTopColor: "rgb(227, 235, 241)", borderTopWidth: 0.2 }}>
-
-                                    <Text style={{ fontSize: 16, lineHeight: 20, color: "rgb(35, 54, 78)", fontWeight: "bold" }}>Status</Text>
-                                    <Text style={{ marginLeft: "auto", fontSize: 16, lineHeight: 20, color: "rgb(14, 34, 61)" }}>{new Date().toLocaleString()}</Text>
-                                </View>
-                                <View style={{ flexDirection: "row", alignItems: "center", padding: 10, borderTopColor: "rgb(227, 235, 241)", borderTopWidth: 0.2 }}>
-
-                                    <Text style={{ fontSize: 16, lineHeight: 20, color: "rgb(35, 54, 78)", fontWeight: "bold" }}>Note</Text>
-                                    <Text style={{ marginLeft: "auto", fontSize: 16, lineHeight: 20, color: "rgb(14, 34, 61)" }}>{new Date().toLocaleString()}</Text>
-                                </View>
-                            </View>
-                        </ScrollView>
+                        </View>
                     </View>
-                </View>
+                </ScrollView>
             </LinearGradient>
     );
 }

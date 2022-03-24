@@ -23,7 +23,7 @@ const HomeScreen = ({ navigation }) => {
   const [avatar, setAvatar] = useState('');
   const [loading, setLoading] = useState(false);
   const [showButton, setShowButton] = useState(false);
-
+  const [render, setRender] = useState(false);
   const [routes] = React.useState([
     { key: 'Gift', title: 'Gift', icon: 'gift', color: 'rgb(98, 0, 238)' },
     { key: 'Folder', title: 'Document', icon: 'folder', color: '#4caf50' },
@@ -68,7 +68,7 @@ const HomeScreen = ({ navigation }) => {
       }
     }
     getToken();
-  }, []);
+  }, [render]);
 
   return (
     <SafeAreaView style={{ flex: 1 }}>

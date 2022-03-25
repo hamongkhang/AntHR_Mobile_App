@@ -12,12 +12,13 @@ import DocumentScreen from './Screen/DocumentScreen';
 import AttendanceScreen from "./Screen/AttendanceScreen"
 import GiftScreen from "./Screen/GiftScreen";
 import ScanScreen from './Screen/ScanScreen';
+
 const Stack = createNativeStackNavigator();
 
 const App = () => {
   return (
      <NavigationContainer>
-       <Stack.Navigator initialRouteName="Welcome">
+       <Stack.Navigator initialRouteName="HomeScreen">
         <Stack.Screen
           name="Welcome"
           component={Welcome}

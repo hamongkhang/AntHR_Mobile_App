@@ -15,7 +15,7 @@ const CommendationScreen = ({ navigation }) => {
     const [lastName, setLastName] = useState('');
     const [firstName, setFirstName] = useState('');
     const [render, setRender] = useState(false);
-    const [showModal, setShowModal] = useState(true);
+    const [showModal, setShowModal] = useState(false);
     const [scoreCheck, setScoreCheck] = useState(false);
     const [employeeCheck, setEmployeeCheck] = useState(false);
     const [checkWhy, setCheckWhy] = useState(0);

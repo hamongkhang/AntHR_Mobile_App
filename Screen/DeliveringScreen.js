@@ -40,66 +40,66 @@ const DeliveringScreen = ({ navigation }) => {
     return (
         <LinearGradient colors={['#edf8f1', '#f7f9fc']} style={styles.linearGradient}>
             <Loader loading={loading} />
-                <ScrollView>
-                    <View style={{ padding: 10, paddingTop: 10 }}>
-                        <View style={{ marginBottom:10,padding: 10, backgroundColor: "white", borderColor: "rgb(227, 235, 241)", borderWidth: 1, borderRadius: 5, paddingBottom: 16, boxShadow: "rgb(95 125 149 / 20%) 0px 4px 13px 0px" }}>
-                            <View style={{ alignItems: "center", flexDirection: "row", marginBottom:20}}>
-                                <View style={{ width: "20%" }}>
-                                    {
-                                        (avatar == "null")
+            <ScrollView>
+                <View style={{ padding: 10, paddingTop: 10 }}>
+                    <View style={{ marginBottom: 10, padding: 10, backgroundColor: "white", borderColor: "rgb(227, 235, 241)", borderWidth: 1, borderRadius: 5, paddingBottom: 16, boxShadow: "rgb(95 125 149 / 20%) 0px 4px 13px 0px" }}>
+                        <View style={{ alignItems: "center", flexDirection: "row", marginBottom: 20 }}>
+                            <View style={{ width: "20%" }}>
+                                {
+                                    (avatar == "null")
+                                        ?
+                                        <Avatar.Image size={45} style={{ backgroundColor: "#edf8f1" }} source={{ uri: REACT_APP_FILE + '/avatar/avatar.png' }} />
+                                        :
+                                        (avatar.search('https://') != -1)
                                             ?
-                                            <Avatar.Image size={45} style={{ backgroundColor: "#edf8f1" }} source={{ uri: REACT_APP_FILE + '/avatar/avatar.png' }} />
+                                            <Avatar.Image size={45} style={{ backgroundColor: "#edf8f1" }} source={{ uri: avatar }} />
                                             :
-                                            (avatar.search('https://') != -1)
-                                                ?
-                                                <Avatar.Image size={45} style={{ backgroundColor: "#edf8f1" }} source={{ uri: avatar }} />
-                                                :
-                                                <Avatar.Image size={45} style={{ backgroundColor: "#edf8f1" }} source={{ uri: REACT_APP_FILE + '/avatar/' + avatar }} />
-                                    }
-                                </View>
-                                <View style={{ width: "80%" }}>
-                                    <Text style={{ fontSize: 16, color: "rgb(35, 54, 78)", fontWeight: "bold" }}>Ha Mong Khang<Text style={{ fontSize: 16, fontWeight: "normal" }}> đã đổi phần thưởng </Text>Nguyen Hong Quan</Text>
-                                    <Text style={{ fontSize: 12, color: "rgb(35, 54, 78)" }}>18 hours ago</Text>
-                                </View>
+                                            <Avatar.Image size={45} style={{ backgroundColor: "#edf8f1" }} source={{ uri: REACT_APP_FILE + '/avatar/' + avatar }} />
+                                }
                             </View>
-                                     <View style={{ alignItems: "center", marginBottom: 20 }}>
-                                     <Image
+                            <View style={{ width: "80%" }}>
+                                <Text style={{ fontSize: 16, color: "rgb(35, 54, 78)", fontWeight: "bold" }}>Ha Mong Khang<Text style={{ fontSize: 16, fontWeight: "normal" }}> đã đổi phần thưởng </Text>Nguyen Hong Quan</Text>
+                                <Text style={{ fontSize: 12, color: "rgb(35, 54, 78)" }}>18 hours ago</Text>
+                            </View>
+                        </View>
+                        <View style={{ alignItems: "center", marginBottom: 20 }}>
+                            <Image
                                 source={{ uri: REACT_APP_FILE + '/present/image/33_15-03-2022-09-55-20.jpg' }}
-                                     style={{
-                                 width: '100%',
-                                 height: 100,
+                                style={{
+                                    width: '100%',
+                                    height: 100,
                                     resizeMode: 'contain',
-                                 }}
-                                    />
-                            </View>
-                            <View style={{ alignItems: "center", marginBottom: 10 }}>
-                                <Text style={{ fontSize: 24, fontWeight: "bold", color: "red" }}>5000 Points</Text>
-                            </View>
-                            <View style={{ marginBottom: 10 }}>
-                                <Text style={{ fontSize: 14, fontWeight: "italic", color: "rgb(35, 54, 78)" }}>Please confirm the employee's redemption information .</Text>
-                            </View>
-                            <View style={{ alignItems: "center", marginTop: 10 }}>
-                <TouchableOpacity
-                  activeOpacity={0.5}
-                  style={{
-                    borderWidth: 1,
-                    borderRadius: 3,
-                    borderColor: "#ff9900",
-                    backgroundColor: "#FFFF66",
-                    width: "90%",
-                    padding: 10,
-                    alignItems: "center"
-                  }}
+                                }}
+                            />
+                        </View>
+                        <View style={{ alignItems: "center", marginBottom: 10 }}>
+                            <Text style={{ fontSize: 24, fontWeight: "bold", color: "red" }}>5000 Points</Text>
+                        </View>
+                        <View style={{ marginBottom: 10 }}>
+                            <Text style={{ fontSize: 14, fontWeight: "italic", color: "rgb(35, 54, 78)" }}>Please confirm the employee's redemption information .</Text>
+                        </View>
+                        <View style={{ alignItems: "center", marginTop: 10 }}>
+                            <TouchableOpacity
+                                activeOpacity={0.5}
+                                style={{
+                                    borderWidth: 1,
+                                    borderRadius: 3,
+                                    borderColor: "#ff9900",
+                                    backgroundColor: "#FFFF66",
+                                    width: "90%",
+                                    padding: 10,
+                                    alignItems: "center"
+                                }}
 
-                //  onPress={handleCheckDomainPress}
-                >
-                  <Text style={{ color: "#ff9900", fontWeight: "bold" }}>CONFIRM RECEIPT</Text>
-                </TouchableOpacity>
-              </View>
+                            //  onPress={handleCheckDomainPress}
+                            >
+                                <Text style={{ color: "#ff9900", fontWeight: "bold" }}>CONFIRM RECEIPT</Text>
+                            </TouchableOpacity>
                         </View>
                     </View>
-                </ScrollView>
-                <Provider>
+                </View>
+            </ScrollView>
+            <Provider>
                 <Portal>
                     <FAB.Group
                         open={open}
@@ -107,7 +107,7 @@ const DeliveringScreen = ({ navigation }) => {
                         actions={[
                             {
                                 icon: 'plus',
-                                onPress:()=>setState({open:false})
+                                onPress: () => setState({ open: false })
                             },
                             {
                                 icon: 'newspaper-variant-multiple-outline',

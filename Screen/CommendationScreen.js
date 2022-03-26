@@ -134,7 +134,7 @@ const CommendationScreen = ({ navigation }) => {
                             </View>
                         </View>
                     </View>
-                    
+
                 </ScrollView>
             }
             <Modal
@@ -145,11 +145,11 @@ const CommendationScreen = ({ navigation }) => {
                 <LinearGradient colors={['#edf8f1', '#f7f9fc']} style={styles.linearGradient2}>
                     <ScrollView>
                         <View style={{ padding: 10, backgroundColor: "white", borderColor: "rgb(227, 235, 241)", borderWidth: 1, borderRadius: 5, paddingBottom: 16 }}>
-                        <IconButton
-                                    icon="close"
-                                    color={"red"}
-                                    size={25}
-                                    onPress={() => setShowModal(!showModal)} style={{ marginRight: "auto", marginBottom: 5 }}                                 />
+                            <IconButton
+                                icon="close"
+                                color={"red"}
+                                size={25}
+                                onPress={() => setShowModal(!showModal)} style={{ marginRight: "auto", marginBottom: 5 }} />
                             <View>
                                 <Text style={{ fontSize: 24, color: "#ff9900", lineHeight: 24, fontWeight: "bold", textAlign: "center" }}>Internal Reward Portal</Text>
                                 <Text style={{ fontSize: 14, marginTop: 10, color: "rgb(35, 54, 78)", lineHeight: 20, fontWeight: "bold", textAlign: "center" }}>Appreciate the positive contributions of your colleagues here!</Text>
@@ -381,7 +381,7 @@ const CommendationScreen = ({ navigation }) => {
 
                                     //  onPress={handleCheckDomainPress}
                                     >
-                                        <Text style={{color:"#ff9900",fontWeight:"bold"}}>PUBLISH</Text>
+                                        <Text style={{ color: "#ff9900", fontWeight: "bold" }}>PUBLISH</Text>
                                     </TouchableOpacity>
                                 </View>
                             </View>
@@ -397,7 +397,7 @@ const CommendationScreen = ({ navigation }) => {
                         actions={[
                             {
                                 icon: 'plus',
-                                onPress:()=>setState({open:false})
+                                onPress: () => setState({ open: false })
                             },
                             {
                                 icon: 'history',

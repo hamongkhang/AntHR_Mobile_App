@@ -1,6 +1,6 @@
 import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import {NavigationContainer} from '@react-navigation/native';
+import { NavigationContainer } from '@react-navigation/native';
 import Welcome from "./Screen/Welcom";
 import ChangePasswordScreen from "./Screen/ChangePasswordScreen";
 import ForgotPasswordScreen from "./Screen/ForgotPasswordScreen";
@@ -17,65 +17,65 @@ const Stack = createNativeStackNavigator();
 
 const App = () => {
   return (
-     <NavigationContainer>
-       <Stack.Navigator initialRouteName="Welcome">
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName="GiftScreen">
         <Stack.Screen
           name="Welcome"
           component={Welcome}
-          options={{headerShown: false}}
-        /> 
+          options={{ headerShown: false }}
+        />
         <Stack.Screen
           name="LoginScreen"
           component={LoginScreen}
-          options={{headerShown: false}}
-        /> 
+          options={{ headerShown: false }}
+        />
         <Stack.Screen
           name="ForgotPasswordScreen"
           component={ForgotPasswordScreen}
-          options={{headerShown: false}}
-        />  
+          options={{ headerShown: false }}
+        />
         <Stack.Screen
           name="HomeScreen"
           component={HomeScreen}
-          options={{headerShown: false}}
-        /> 
+          options={{ headerShown: false }}
+        />
         <Stack.Screen
           name="AccountScreen"
           component={AccountScreen}
-          options={{headerShown: false}}
-        /> 
+          options={{ headerShown: false }}
+        />
         <Stack.Screen
           name="NewScreen"
           component={NewScreen}
-          options={{headerShown: false}}
-        /> 
+          options={{ headerShown: false }}
+        />
         <Stack.Screen
           name="DocumentScreen"
           component={DocumentScreen}
-          options={{headerShown: false}}
-        /> 
-         <Stack.Screen
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
           name="AttendanceScreen"
           component={AttendanceScreen}
-          options={{headerShown: false}}
-        /> 
+          options={{ headerShown: false }}
+        />
         <Stack.Screen
           name="ScanScreen"
           component={ScanScreen}
-          options={{headerShown: false}}
-        /> 
-          <Stack.Screen
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
           name="GiftScreen"
           component={GiftScreen}
-          options={{headerShown: false}}
+          options={{ headerShown: false }}
         />
         <Stack.Screen
           name="ChangePasswordScreen"
           component={ChangePasswordScreen}
-          options={{headerShown: false}}
-        /> 
-     </Stack.Navigator>
-     </NavigationContainer>
+          options={{ headerShown: false }}
+        />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 };
 

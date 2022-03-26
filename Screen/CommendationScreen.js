@@ -7,19 +7,66 @@ import { REACT_APP_API, REACT_APP_FILE } from "@env"
 import Loader from './Loader';
 
 const CommendationScreen = ({ navigation }) => {
+    const [token,setToken] =useState('');
+    const [avatar, setAvatar] = useState('');
+    const [lastName, setLastName] = useState('');
+    const [firstName, setFirstName] = useState('');
+    const [id, setId] = useState('');
+    const [render, setRender] = useState(false);
     const [state, setState] = React.useState({ open: false });
     const onStateChange = ({ open }) => setState({ open });
     const { open } = state;
     const [loading, setLoading] = useState(false);
-    const [avatar, setAvatar] = useState('');
-    const [lastName, setLastName] = useState('');
-    const [firstName, setFirstName] = useState('');
-    const [render, setRender] = useState(false);
-    const [showModal, setShowModal] = useState(false);
+    const [showModal, setShowModal] = useState(true);
     const [scoreCheck, setScoreCheck] = useState(false);
     const [employeeCheck, setEmployeeCheck] = useState(false);
     const [checkWhy, setCheckWhy] = useState(0);
     const [text, setText] = React.useState('');
+    const [employees, setEmployees]= useState([]);
+    const [users, setUsers]= useState([]);
+    const [myScore, setMyScore] =useState([]);
+
+    const getEmployees = (token) =>{
+        setLoading(true);
+        fetch(REACT_APP_API+'/employee/getAllEmployee', {
+            method: "GET",
+            headers: {"Authorization": `Bearer `+token}
+          })
+        .then(response => response.json())
+        .then(data =>  {
+            setLoading(false);
+            setUsers(data.data[0].reverse());
+            setEmployees(data.data[1].reverse());
+        });
+    }
+    const getPoints=(token)=>{
+        setLoading(true);
+        fetch(REACT_APP_API+'/score/getOneScore', {
+            method: "GET",
+            headers: {"Authorization": `Bearer `+token}
+          })
+        .then(response => response.json())
+        .then(data =>  {
+                setLoading(false);
+              setMyScore(data.data);
+        });
+    }
+    const [praise, setPraise]=useState({
+        image:'',
+        recipient:'',
+        message:'',
+        score:'',
+        present:'',
+        cheer:''
+    });
+    const [error, setError] = useState({
+        image:null,
+        recipient:null,
+        message:null,
+        score:null,
+        present:null,
+        cheer:null
+      });
     useEffect(() => {
         const getToken = async () => {
             try {
@@ -28,9 +75,13 @@ const CommendationScreen = ({ navigation }) => {
                 const avatar_user = await AsyncStorage.getItem("avatar");
                 const last_name = await AsyncStorage.getItem("last_name");
                 const first_name = await AsyncStorage.getItem("first_name");
+                getEmployees(token);
+                getPoints(token);
                 setAvatar(avatar_user);
                 setFirstName(first_name);
                 setLastName(last_name);
+                setId(id_user);
+                setToken(token);
             } catch (err) {
                 console.log(err);
             }
@@ -171,20 +222,20 @@ const CommendationScreen = ({ navigation }) => {
                             <View style={{ marginTop: 10, flexDirection: "row", alignItems: "center" }}>
                                 <View style={{ width: "48%", backgroundColor: "#dcedc8", justifyContent: "center", marginRight: 10, padding: 5, borderRadius: 3 }}>
                                     <Text style={{ textAlign: "center", fontSize: 12 }}>Recognition Points Redeemed</Text>
-                                    <Text style={{ textAlign: "center", fontSize: 16, color: "#4caf50", fontWeight: "bold" }}>0 Points</Text>
+                                    <Text style={{ textAlign: "center", fontSize: 16, color: "#4caf50", fontWeight: "bold" }}>{myScore.gift?myScore.gift:0} Points</Text>
                                     <Text style={{ textAlign: "center", fontSize: 8 }}>Please reward your colleagues or exchange gifts.</Text>
                                     <Text style={{ textAlign: "center", fontSize: 8, color: "#ef5350" }}>Expiration Date: 31/12/2030</Text>
                                 </View>
                                 <View style={{ width: "48%", backgroundColor: "#b2ebf2", justifyContent: "center", padding: 5, borderRadius: 3 }}>
-                                    <Text style={{ textAlign: "center", fontSize: 12 }}>Recognition Points Redeemed</Text>
-                                    <Text style={{ textAlign: "center", fontSize: 16, color: "#03a9f4", fontWeight: "bold" }}>0 Points</Text>
+                                    <Text style={{ textAlign: "center", fontSize: 12 }}>Recognition Coins</Text>
+                                    <Text style={{ textAlign: "center", fontSize: 16, color: "#03a9f4", fontWeight: "bold" }}>{myScore.score?myScore.score:0} Points</Text>
                                     <Text style={{ textAlign: "center", fontSize: 8 }}>Get special offers and rewards packages, discount codes and travel packages.</Text>
                                 </View>
                             </View>
                             <View style={{ marginTop: 5, alignItems: "center" }}>
                                 <View style={{ backgroundColor: "#ffe0b2", justifyContent: "center", padding: 5, borderRadius: 3 }}>
-                                    <Text style={{ textAlign: "center", fontSize: 12 }}>Recognition Points Redeemed</Text>
-                                    <Text style={{ textAlign: "center", fontSize: 16, color: "#f4511e", fontWeight: "bold" }}>0 Points</Text>
+                                    <Text style={{ textAlign: "center", fontSize: 12 }}>Recognition Points Spent</Text>
+                                    <Text style={{ textAlign: "center", fontSize: 16, color: "#f4511e", fontWeight: "bold" }}>{myScore.score_spent?myScore.score_spent:0} Points</Text>
                                     <Text style={{ textAlign: "center", fontSize: 8 }}>This is the score you have awarded to your friends after positive contributions.</Text>
                                 </View>
                             </View>
@@ -195,12 +246,20 @@ const CommendationScreen = ({ navigation }) => {
                                         <View style={{ borderWidth: 1, borderColor: "grey", borderRadius: 5, marginBottom: 6 }}>
                                             <Picker style={{ height: 40, width: "100%", color: "rgb(35, 54, 78)" }}
                                                 selectedValue={"Employees"}
-                                            // onValueChange={(itemValue, itemPosition) =>
-                                            //     this.setState({language: itemValue, choosenIndex: itemPosition})}
+                                              //  onValueChange={(itemValue, itemPosition) =>
+                                                //this.setState({language: itemValue, choosenIndex: itemPosition})}
                                             >
-                                                <Picker.Item label="Java" value="java" />
-                                                <Picker.Item label="JavaScript" value="js" />
-                                                <Picker.Item label="React Native" value="rn" />
+                                                 {
+                                                 employees.length 
+                                                 ?
+                                                employees.map((item, index) => {
+                                                    if(item.user_id!=id){
+                                                 return (
+                                                    <Picker.Item label={item.last_name+" "+item.first_name+" ( "+item.email+" )"} value={item.user_id} />
+                                                 )}})
+                                                 :
+                                                 null
+                                                 }
                                             </Picker>
                                         </View>
                                         <View style={{ borderWidth: 1, borderColor: "grey", borderRadius: 5 }}>

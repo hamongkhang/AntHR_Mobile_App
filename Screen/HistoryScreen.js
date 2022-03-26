@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { LinearGradient } from "expo-linear-gradient";
-import { StyleSheet, View, Text, ScrollView, Image, TouchableOpacity, Modal, Picker,ToastAndroid } from 'react-native';
+import { StyleSheet, View, Text, ScrollView, Image, TouchableOpacity, ToastAndroid } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage'
-import { Avatar, Dialog, Searchbar, List, TextInput, Button, FAB, Portal, Provider, IconButton } from 'react-native-paper';
+import { Avatar, FAB, Portal, Provider } from 'react-native-paper';
 import { REACT_APP_API, REACT_APP_FILE } from "@env"
 import Loader from './Loader';
 import moment from 'moment';
@@ -18,11 +18,6 @@ const HistoryScreen = ({ navigation }) => {
     const [lastName, setLastName] = useState('');
     const [firstName, setFirstName] = useState('');
     const [render, setRender] = useState(false);
-    const [showModal, setShowModal] = useState(false);
-    const [scoreCheck, setScoreCheck] = useState(false);
-    const [employeeCheck, setEmployeeCheck] = useState(false);
-    const [checkWhy, setCheckWhy] = useState(0);
-    const [text, setText] = React.useState('');
     const [orders, setOrders] = useState([]);
     const getOrders = (token) => {
         setLoading(true);
@@ -36,24 +31,24 @@ const HistoryScreen = ({ navigation }) => {
                 setLoading(false);
             });
     }
-    const onBlockCart=(id)=>{
+    const onBlockCart = (id) => {
         setLoading(true);
-        fetch(REACT_APP_API+'/cart_present/destroyCartPresent/'+id, {
+        fetch(REACT_APP_API + '/cart_present/destroyCartPresent/' + id, {
             method: "DELETE",
-            headers: {"Authorization": `Bearer `+token}
-          })
-        .then(response => response.json())
-        .then(data =>  {
-           if(data.error){
-            setLoading(false);
-            ToastAndroid.showWithGravityAndOffset('Delete Failed !!!', ToastAndroid.LONG, ToastAndroid.CENTER, 10, 10);
-            }
-           else{
-            setLoading(false);
-                setRender(!render)
-                ToastAndroid.showWithGravityAndOffset('Delete successfully !!!', ToastAndroid.LONG, ToastAndroid.CENTER, 10, 10);
-               }
-        });
+            headers: { "Authorization": `Bearer ` + token }
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    setLoading(false);
+                    ToastAndroid.showWithGravityAndOffset('Delete Failed !!!', ToastAndroid.LONG, ToastAndroid.CENTER, 10, 10);
+                }
+                else {
+                    setLoading(false);
+                    setRender(!render)
+                    ToastAndroid.showWithGravityAndOffset('Delete successfully !!!', ToastAndroid.LONG, ToastAndroid.CENTER, 10, 10);
+                }
+            });
     }
     useEffect(() => {
         const getToken = async () => {
@@ -80,13 +75,13 @@ const HistoryScreen = ({ navigation }) => {
             <Loader loading={loading} />
             <ScrollView>
                 <View style={{ padding: 10, paddingTop: 10 }}>
-                {
-                    orders.length?
-                        orders.map((item,index)=>{
-                            if((item.status==2)&&(item.user_id==id)){
-                                return(
-                    <View style={{ marginBottom: 10, padding: 10, backgroundColor: "white", borderColor: "rgb(227, 235, 241)", borderWidth: 1, borderRadius: 5, paddingBottom: 16, boxShadow: "rgb(95 125 149 / 20%) 0px 4px 13px 0px" }}>
-                       <View style={{ alignItems: "center", flexDirection: "row", marginBottom: 20 }}>
+                    {
+                        orders.length ?
+                            orders.map((item, index) => {
+                                if ((item.status == 2) && (item.user_id == id)) {
+                                    return (
+                                        <View style={{ marginBottom: 10, padding: 10, backgroundColor: "white", borderColor: "rgb(227, 235, 241)", borderWidth: 1, borderRadius: 5, paddingBottom: 16, boxShadow: "rgb(95 125 149 / 20%) 0px 4px 13px 0px" }}>
+                                            <View style={{ alignItems: "center", flexDirection: "row", marginBottom: 20 }}>
                                                 <View style={{ width: "20%" }}>
                                                     {item.avatar ?
                                                         (item.avatar.search('https://') !== -1) ?
@@ -115,32 +110,32 @@ const HistoryScreen = ({ navigation }) => {
                                             <View style={{ alignItems: "center", marginBottom: 10 }}>
                                                 <Text style={{ fontSize: 24, fontWeight: "bold", color: "red" }}>{item.present_score ? item.present_score : null} Points</Text>
                                             </View>
-                        <View style={{ marginBottom: 10 }}>
-                            <Text style={{ fontSize: 14, fontWeight: "italic", color: "rgb(35, 54, 78)" }}>You can delete to clear up storage .</Text>
-                        </View>
-                        <View style={{ alignItems: "center", marginTop: 10 }}>
-                            <TouchableOpacity
-                                activeOpacity={0.5}
-                                style={{
-                                    borderWidth: 1,
-                                    borderRadius: 3,
-                                    borderColor: "#ff9900",
-                                    backgroundColor: "red",
-                                    width: "90%",
-                                    padding: 10,
-                                    alignItems: "center"
-                                }}
-                                            onPress={()=>onBlockCart(item.id)}
-                            >
-                                <Text style={{ color: "white", fontWeight: "bold" }}>DELETE</Text>
-                            </TouchableOpacity>
-                        </View>
-                    </View>
-                        )
+                                            <View style={{ marginBottom: 10 }}>
+                                                <Text style={{ fontSize: 14, fontWeight: "italic", color: "rgb(35, 54, 78)" }}>You can delete to clear up storage .</Text>
+                                            </View>
+                                            <View style={{ alignItems: "center", marginTop: 10 }}>
+                                                <TouchableOpacity
+                                                    activeOpacity={0.5}
+                                                    style={{
+                                                        borderWidth: 1,
+                                                        borderRadius: 3,
+                                                        borderColor: "#ff9900",
+                                                        backgroundColor: "red",
+                                                        width: "90%",
+                                                        padding: 10,
+                                                        alignItems: "center"
+                                                    }}
+                                                    onPress={() => onBlockCart(item.id)}
+                                                >
+                                                    <Text style={{ color: "white", fontWeight: "bold" }}>DELETE</Text>
+                                                </TouchableOpacity>
+                                            </View>
+                                        </View>
+                                    )
+                                }
+                            })
+                            : null
                     }
-                })
-                : null
-        }
                 </View>
             </ScrollView>
             <Provider>

@@ -17,10 +17,10 @@ const ReceivigGiftScreen = ({ navigation }) => {
   const [loading, setLoading] = useState(false);
   const onStateChange = ({ open }) => setState({ open });
   const { open } = state;
-  const [search, setSearch] = useState(false);
   const [presents, setPresents] =useState([]);
-
-
+  const [checked, setChecked] = React.useState(0);
+  const [search, setSearch] = useState(false);
+  const [searchGift, setSearchGift] = useState([]);
   const getPresents=(token)=>{
     setLoading(true);
     fetch(REACT_APP_API+'/present/getAllPresent', {
@@ -33,6 +33,44 @@ const ReceivigGiftScreen = ({ navigation }) => {
           setLoading(false);
     });
 }
+const handleChangeChecked = (mess) => {
+  var a=[];
+  if(mess==0){
+      setChecked(0);
+      setSearch(false);
+  }else if (mess==1){
+      setChecked(1);
+      setSearch(true);
+      for(var i=0;i<presents.length;i++){
+          if(presents[i].category_id==1){
+            a.push(presents[i]);
+          }else{
+            setSearchGift([]);
+        }
+      }
+  }else if (mess==2){
+    setChecked(2);
+    setSearch(true);
+    for(var i=0;i<presents.length;i++){
+        if(presents[i].category_id==2){
+          a.push(presents[i]);
+        }else{
+          setSearchGift([]);
+      }
+    }
+  }else{
+    setChecked(3);
+    setSearch(true);
+    for(var i=0;i<presents.length;i++){
+        if(presents[i].category_id==3){
+          a.push(presents[i]);
+        }else{
+          setSearchGift([]);
+      }
+    }
+}
+setSearchGift(a);
+};
 const clickExchangeGift=(id)=>{
   setLoading(true);
   fetch(REACT_APP_API+'/present/exchangePresent/'+id, {
@@ -87,28 +125,28 @@ const clickExchangeGift=(id)=>{
       <View style={{ padding: 10 }}>
           <View style={{ flexDirection: "row", marginBottom: 30, justifyContent: "center" }}>
             <View style={{ alignItems: "center", width: "24%" }}>
-              <View style={{ backgroundColor: "#e65100", borderRadius: 200 / 2, width: 55, height: 55, alignItems: "center", justifyContent: "center" }}>
-                <Avatar.Image size={50} style={{ backgroundColor: "#ffb74d" }} source={{ uri: REACT_APP_FILE + '/reward/gold.png' }} />
+              <View style={{ backgroundColor:  (checked==0)?"green":"#e65100", borderRadius: 200 / 2, width: 55, height: 55, alignItems: "center", justifyContent: "center" }}>
+                <Avatar.Image size={50} style={{ backgroundColor: (checked==0)?"rgb(42, 210, 95)":"#ffb74d" }} source={{ uri: REACT_APP_FILE + '/reward/gold.png' }} />
               </View>
-              <Text style={{ color: "rgb(35, 54, 78)", fontWeight: "bold", fontSize: 16 }}>All Gifts</Text>
+              <Text onPress={()=>handleChangeChecked(0)} style={{ color: "rgb(35, 54, 78)", fontWeight: "bold", fontSize: 16 }}>All Gifts</Text>
             </View>
             <View style={{ alignItems: "center", width: "24%" }}>
-              <View style={{ backgroundColor: "#e65100", borderRadius: 200 / 2, width: 55, height: 55, alignItems: "center", justifyContent: "center" }}>
-                <Avatar.Image size={50} style={{ backgroundColor: "#ffb74d" }} source={{ uri: REACT_APP_FILE + '/reward/food.png' }} />
+              <View style={{backgroundColor:  (checked==1)?"green":"#e65100", borderRadius: 200 / 2, width: 55, height: 55, alignItems: "center", justifyContent: "center" }}>
+                <Avatar.Image size={50} style={{ backgroundColor: (checked==1)?"rgb(42, 210, 95)":"#ffb74d" }} source={{ uri: REACT_APP_FILE + '/reward/food.png' }} />
               </View>
-              <Text style={{ color: "rgb(35, 54, 78)", fontWeight: "bold", fontSize: 16 }}>Food</Text>
+              <Text onPress={()=>handleChangeChecked(1)} style={{ color: "rgb(35, 54, 78)", fontWeight: "bold", fontSize: 16 }}>Food</Text>
             </View>
             <View style={{ alignItems: "center", width: "24%" }}>
-              <View style={{ backgroundColor: "#e65100", borderRadius: 200 / 2, width: 55, height: 55, alignItems: "center", justifyContent: "center" }}>
-                <Avatar.Image size={50} style={{ backgroundColor: "#ffb74d" }} source={{ uri: REACT_APP_FILE + '/reward/gift.png' }} />
+              <View style={{backgroundColor:  (checked==2)?"green":"#e65100", borderRadius: 200 / 2, width: 55, height: 55, alignItems: "center", justifyContent: "center" }}>
+                <Avatar.Image size={50} style={{ backgroundColor: (checked==2)?"rgb(42, 210, 95)":"#ffb74d" }} source={{ uri: REACT_APP_FILE + '/reward/gift.png' }} />
               </View>
-              <Text style={{ color: "rgb(35, 54, 78)", fontWeight: "bold", fontSize: 16 }}>Artifacts</Text>
+              <Text onPress={()=>handleChangeChecked(2)} style={{ color: "rgb(35, 54, 78)", fontWeight: "bold", fontSize: 16 }}>Artifacts</Text>
             </View>
             <View style={{ alignItems: "center", width: "24%" }}>
-              <View style={{ backgroundColor: "#e65100", borderRadius: 200 / 2, width: 55, height: 55, alignItems: "center", justifyContent: "center" }}>
-                <Avatar.Image size={50} style={{ backgroundColor: "#ffb74d" }} source={{ uri: REACT_APP_FILE + '/reward/vourcher.png' }} />
+              <View style={{backgroundColor:  (checked==3)?"green":"#e65100", borderRadius: 200 / 2, width: 55, height: 55, alignItems: "center", justifyContent: "center" }}>
+                <Avatar.Image size={50} style={{ backgroundColor: (checked==3)?"rgb(42, 210, 95)":"#ffb74d" }} source={{ uri: REACT_APP_FILE + '/reward/vourcher.png' }} />
               </View>
-              <Text style={{ color: "rgb(35, 54, 78)", fontWeight: "bold", fontSize: 16 }}>Voucher</Text>
+              <Text onPress={()=>handleChangeChecked(3)} style={{ color: "rgb(35, 54, 78)", fontWeight: "bold", fontSize: 16 }}>Voucher</Text>
             </View>
           </View>
           <View style={{ flexDirection: "row",flexWrap: 'wrap',justifyContent:"center"}}>
@@ -161,13 +199,14 @@ const clickExchangeGift=(id)=>{
                                                 </View>
                                                 )})
                                             :null
-                                    :   searchGift.length?
+                                    :   
+                                    searchGift.length?
                                     searchGift.map((item,index)=>{
                                         return(
-                                          <View style={{width:Dimensions.get('window').width/2-13, padding: 10, backgroundColor: "white", borderColor: "rgb(227, 235, 241)", borderWidth: 1, borderRadius: 3, marginRight: 6 }}>
+                                          <View style={{marginTop:6,width:Dimensions.get('window').width/2-13, padding: 10, backgroundColor: "white", borderColor: "rgb(227, 235, 241)", borderWidth: 1, borderRadius: 3, marginRight: (index%2!=0)?0:6 }}>
                                           <View style={{ alignItems: "center" }}>
                                             <Image
-                                              source={{ uri: REACT_APP_FILE + '/present/image/33_15-03-2022-09-55-20.jpg' }}
+                                              source={{ uri: REACT_APP_FILE+'/present/image/'+item.image }}
                                               style={{
                                                 width: '100%',
                                                 height: 100,
@@ -175,13 +214,18 @@ const clickExchangeGift=(id)=>{
                                                 marginBottom: 4
                                               }}
                                             />
+                                             {
+                                            (item.status==1)?
+                                            null:
                                             <View style={{ backgroundColor: "red", paddingTop: 4, paddingBottom: 4, paddingRight: 8, paddingLeft: 8, justifyContent: "center", borderRadius: 14, position: "absolute", marginLeft: 6, marginTop: 16, alignSelf: "flex-start" }}>
-                                              <Text style={{ color: "white", fontSize: 14, fontWeight: "bold" }}>Sold out</Text>
+                                            <Text style={{ color: "white", fontSize: 14, fontWeight: "bold" }}>Sold out</Text>
                                             </View>
-                                            <Text style={{ fontSize: 18, fontWeight: "bold", color: "rgb(35, 54, 78)", marginBottom: 4 }}>Cơm gà</Text>
-                                            <Text style={{ fontSize: 14, fontWeight: "normal", color: "rgb(95, 125, 149)", marginBottom: 4 }}>600000 đồng</Text>
-                                            <Text style={{ fontSize: 24, fontWeight: "bold", color: "red", marginBottom: 4 }}>400 Points</Text>
-                                            <Text style={{ fontSize: 14, fontWeight: "normal", color: "rgb(95, 125, 149)", marginBottom: 4 }}>Nóng hổi cực kỳ</Text>
+                                        }
+                                            
+                                            <Text style={{ fontSize: 18, fontWeight: "bold", color: "rgb(35, 54, 78)", marginBottom: 4,textAlign:"center" }}>{item.name?item.name:null}</Text>
+                                            <Text style={{ fontSize: 14, fontWeight: "normal", color: "rgb(95, 125, 149)", marginBottom: 4 ,textAlign:"center"}}>{item.price?item.price:null} đồng</Text>
+                                            <Text style={{ fontSize: 24, fontWeight: "bold", color: "red", marginBottom: 4 ,textAlign:"center"}}>{item.score?item.score:null} Points</Text>
+                                            <Text style={{ fontSize: 14, fontWeight: "normal", color: "rgb(95, 125, 149)", marginBottom: 4,textAlign:"center" }}>{item.description?item.description:null}</Text>
                                           </View>
                                           <View style={{ alignItems: "center", marginTop: 10 }}>
                                             <TouchableOpacity
@@ -195,8 +239,7 @@ const clickExchangeGift=(id)=>{
                                                 padding: 10,
                                                 alignItems: "center"
                                               }}
-                            
-                                            //  onPress={handleCheckDomainPress}
+                                              onPress={()=>clickExchangeGift(item.id)}
                                             >
                                               <Text style={{ color: "#ff9900", fontWeight: "bold" }}>EXCHANGE</Text>
                                             </TouchableOpacity>
@@ -208,33 +251,8 @@ const clickExchangeGift=(id)=>{
                                     <Text style={{fontSize:32,fontWeight:"bold"}}>No data found</Text>
                                   </View>
                                     }
-
           </View>
         </View>
-     
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-       
       </ScrollView>
       <Provider>
         <Portal>

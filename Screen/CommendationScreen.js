@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { LinearGradient } from "expo-linear-gradient";
 import { StyleSheet, View, Text, ScrollView, Image, TouchableOpacity, Modal, Picker, ToastAndroid, Dimensions } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage'
-import { Avatar, Dialog, Searchbar, List, TextInput, Button, FAB, Portal, Provider, IconButton } from 'react-native-paper';
+import { Avatar, TextInput, FAB, Portal, Provider, IconButton } from 'react-native-paper';
 import { REACT_APP_API, REACT_APP_FILE } from "@env"
 import Loader from './Loader';
 
@@ -18,18 +18,13 @@ const CommendationScreen = ({ navigation }) => {
     const { open } = state;
     const [loading, setLoading] = useState(false);
     const [showModal, setShowModal] = useState(false);
-    const [scoreCheck, setScoreCheck] = useState(false);
-    const [employeeCheck, setEmployeeCheck] = useState(false);
     const [checkWhy, setCheckWhy] = useState(0);
-    const [text, setText] = React.useState('');
     const [employees, setEmployees] = useState([]);
     const [users, setUsers] = useState([]);
     const [myScore, setMyScore] = useState([]);
-    const [employeeSelect, setEmployeeSelect] = useState();
     const [praiseGet, setPraiseGet] = useState([]);
     const [like, setLike] = useState([]);
     const [comment, setComment] = useState([]);
-    const [praise1, setPraise1] = useState([]);
     const [showComment, setShowComment] = useState(false);
     const [addComment, setAddComment] = useState({ praise_id: "", messeger: "" });
     const getEmployees = (token) => {
@@ -179,7 +174,6 @@ const CommendationScreen = ({ navigation }) => {
         var kt = false;
         like.map((item, index) => {
             if ((item.user_id == id) && (item.praise_id == idGet)) {
-                // console.log("khang")
                 kt = true;
             }
         })
@@ -228,9 +222,6 @@ const CommendationScreen = ({ navigation }) => {
     };
     const onClickAddComment = (id) => {
         setAddComment({ ...addComment, ["praise_id"]: id });
-        setShowComment(!showComment);
-    }
-    const clickShowComment = () => {
         setShowComment(!showComment);
     }
     useEffect(() => {

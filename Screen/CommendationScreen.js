@@ -397,7 +397,7 @@ const CommendationScreen = ({ navigation }) => {
                         actions={[
                             {
                                 icon: 'plus',
-                                onPress: () => setShowModal(!showModal),
+                                onPress:()=>setState({open:false})
                             },
                             {
                                 icon: 'history',
@@ -412,7 +412,7 @@ const CommendationScreen = ({ navigation }) => {
                             {
                                 icon: 'crown',
                                 label: 'Praise Sending',
-                                onPress: () => navigation.replace('PraiseScreen'),
+                                onPress: () => setShowModal(!showModal),
                             },
                             {
                                 icon: 'gift',

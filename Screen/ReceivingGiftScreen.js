@@ -345,42 +345,40 @@ const ReceivigGiftScreen = ({ navigation }) => {
         </View>
       </ScrollView>
       <Provider>
-        <Portal>
-          <FAB.Group
-            open={open}
-            icon={open ? 'newspaper-variant-multiple-outline' : 'plus'}
-            actions={[
-              {
-                icon: 'history',
-                label: 'History',
-                onPress: () => navigation.navigate('HistoryScreen'),
-              },
-              {
-                icon: 'car',
-                label: 'Delivering',
-                onPress: () => navigation.navigate('DeliveringScreen'),
-              },
-              {
-                icon: 'crown',
-                label: 'Praise Sending',
-                onPress: () => navigation.navigate('PraiseScreen'),
-              },
-              {
-                icon: 'gift',
-                label: 'Gift Receiving',
-                onPress: () => navigation.navigate('ReceivingGiftScreen'),
-                small: false,
-              },
-            ]}
-            onStateChange={onStateChange}
-            onPress={() => {
-              if (open) {
-                // do something if the speed dial is open
-              }
-            }}
-          />
-        </Portal>
-      </Provider>
+                <Portal>
+                    <FAB.Group
+                        open={open}
+                        icon={open ? 'gift' : 'plus'}
+                        actions={[
+                            {
+                                icon: 'plus',
+                                onPress:()=>setState({open:false})
+                            },
+                            {
+                                icon: 'newspaper-variant-multiple-outline',
+                                label: 'Portal',
+                                onPress: () => navigation.replace('CommendationScreen'),
+                            },
+                            {
+                                icon: 'history',
+                                label: 'History',
+                                onPress: () => navigation.replace('HistoryScreen'),
+                            },
+                            {
+                              icon: 'car',
+                              label: 'Delivering',
+                              onPress: () => navigation.replace('DeliveringScreen'),
+                          },
+                        ]}
+                        onStateChange={onStateChange}
+                        onPress={() => {
+                            if (open) {
+                                // do something if the speed dial is open
+                            }
+                        }}
+                    />
+                </Portal>
+            </Provider>
     </LinearGradient>
   );
 };

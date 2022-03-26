@@ -99,30 +99,25 @@ const DeliveringScreen = ({ navigation }) => {
                         </View>
                     </View>
                 </ScrollView>
-            <Provider>
+                <Provider>
                 <Portal>
                     <FAB.Group
                         open={open}
-                        icon={open ? 'newspaper-variant-multiple-outline' : 'plus'}
+                        icon={open ? 'car' : 'plus'}
                         actions={[
                             {
                                 icon: 'plus',
-                                onPress: () => setShowModal(!showModal),
+                                onPress:()=>setState({open:false})
+                            },
+                            {
+                                icon: 'newspaper-variant-multiple-outline',
+                                label: 'Portal',
+                                onPress: () => navigation.replace('CommendationScreen'),
                             },
                             {
                                 icon: 'history',
                                 label: 'History',
                                 onPress: () => navigation.replace('HistoryScreen'),
-                            },
-                            {
-                                icon: 'car',
-                                label: 'Delivering',
-                                onPress: () => navigation.replace('DeliveringScreen'),
-                            },
-                            {
-                                icon: 'crown',
-                                label: 'Praise Sending',
-                                onPress: () => navigation.replace('PraiseScreen'),
                             },
                             {
                                 icon: 'gift',

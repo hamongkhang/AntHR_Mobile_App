@@ -99,30 +99,25 @@ const HistoryScreen = ({ navigation }) => {
                         </View>
                     </View>
                 </ScrollView>
-            <Provider>
+                <Provider>
                 <Portal>
                     <FAB.Group
                         open={open}
-                        icon={open ? 'newspaper-variant-multiple-outline' : 'plus'}
+                        icon={open ? 'history' : 'plus'}
                         actions={[
                             {
                                 icon: 'plus',
-                                onPress: () => setShowModal(!showModal),
+                                onPress:()=>setState({open:false})
                             },
                             {
-                                icon: 'history',
-                                label: 'History',
-                                onPress: () => navigation.replace('HistoryScreen'),
+                                icon: 'newspaper-variant-multiple-outline',
+                                label: 'Portal',
+                                onPress: () => navigation.replace('CommendationScreen'),
                             },
                             {
                                 icon: 'car',
                                 label: 'Delivering',
                                 onPress: () => navigation.replace('DeliveringScreen'),
-                            },
-                            {
-                                icon: 'crown',
-                                label: 'Praise Sending',
-                                onPress: () => navigation.replace('PraiseScreen'),
                             },
                             {
                                 icon: 'gift',

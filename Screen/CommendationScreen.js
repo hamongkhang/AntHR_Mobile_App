@@ -381,7 +381,7 @@ const CommendationScreen = ({ navigation }) => {
 
                                     //  onPress={handleCheckDomainPress}
                                     >
-                                        <Text>PUBLISH</Text>
+                                        <Text style={{color:"#ff9900",fontWeight:"bold"}}>PUBLISH</Text>
                                     </TouchableOpacity>
                                 </View>
                             </View>

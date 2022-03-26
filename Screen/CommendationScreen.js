@@ -326,7 +326,7 @@ const CommendationScreen = ({ navigation }) => {
                                                                 : null
                                                             }
                                                         </Text>
-                                                        <Text style={{ fontSize: 12, color: "rgb(35, 54, 78)" }}>18 hours ago</Text>
+                                                        <Text style={{ fontSize: 12, color: "rgb(35, 54, 78)" }}>{new Date().toLocaleString()-item.updated_at}</Text>
                                                     </View>
                                                 </View>
                                                 <View style={{ alignItems: "center", flexDirection: "row", marginTop: 10, marginBottom: 10 }}>

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { LinearGradient } from "expo-linear-gradient";
-import { StyleSheet, View, Text, ScrollView, Image, TouchableOpacity, Modal, Picker, ToastAndroid,Dimensions} from 'react-native';
+import { StyleSheet, View, Text, ScrollView, Image, TouchableOpacity, Modal, Picker, ToastAndroid, Dimensions } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { Avatar, Dialog, Searchbar, List, TextInput, Button, FAB, Portal, Provider, IconButton } from 'react-native-paper';
 import { REACT_APP_API, REACT_APP_FILE } from "@env"
@@ -31,7 +31,7 @@ const CommendationScreen = ({ navigation }) => {
     const [comment, setComment] = useState([]);
     const [praise1, setPraise1] = useState([]);
     const [showComment, setShowComment] = useState(false);
-    const [addComment, setAddComment] = useState({praise_id:"",messeger:""});
+    const [addComment, setAddComment] = useState({ praise_id: "", messeger: "" });
     const getEmployees = (token) => {
         setLoading(true);
         fetch(REACT_APP_API + '/employee/getAllEmployee', {
@@ -226,11 +226,11 @@ const CommendationScreen = ({ navigation }) => {
                 }
             });
     };
-    const onClickAddComment=(id)=>{
-        setAddComment({...addComment,["praise_id"]:id});
+    const onClickAddComment = (id) => {
+        setAddComment({ ...addComment, ["praise_id"]: id });
         setShowComment(!showComment);
     }
-    const clickShowComment=()=>{
+    const clickShowComment = () => {
         setShowComment(!showComment);
     }
     useEffect(() => {
@@ -260,7 +260,7 @@ const CommendationScreen = ({ navigation }) => {
     return (
         <LinearGradient colors={['#edf8f1', '#f7f9fc']} style={styles.linearGradient}>
             <Loader loading={loading} />
-            {(showModal||showComment)
+            {(showModal || showComment)
                 ?
                 null :
                 <ScrollView>
@@ -773,70 +773,72 @@ const CommendationScreen = ({ navigation }) => {
             >
                 <LinearGradient colors={['#edf8f1', '#f7f9fc']} style={styles.linearGradient2}>
                     <ScrollView>
-                        <View style={{ padding: 10, backgroundColor: "white", borderColor: "rgb(227, 235, 241)", borderWidth: 1, borderRadius: 5, paddingBottom: 16,height:Dimensions.get('window').height }}>
+                        <View style={{ padding: 10, backgroundColor: "white", borderColor: "rgb(227, 235, 241)", borderWidth: 1, borderRadius: 5, paddingBottom: 16, height: Dimensions.get('window').height }}>
                             <IconButton
                                 icon="close"
                                 color={"red"}
                                 size={25}
                                 onPress={() => setShowComment(!showComment)} style={{ marginRight: "auto", marginBottom: 5 }} />
-                                  {
-                            comment.length
-                        ?
-                            comment.map((itemComment,index)=>{
-                                if(itemComment.praise_id==addComment.praise_id){
-                                return(
-                                    <View style={{ marginTop: 15, flexDirection: "row", alignItems: "center",paddingLeft:20,paddingRight:20 }}>
-                                            <View style={{ marginRight: 10,justifyContent: "center",width:"15%"}}>
-                                            {employees.map((itemEmployee,index)=>{
-                                                if(itemComment.user_id==itemEmployee.user_id){
-                                                    if(itemEmployee.avatar){
-                                                        if(itemEmployee.avatar.search('https://') !== -1){
-                                                            return(
-                                                                <Avatar.Image size={40} style={{ backgroundColor: "#edf8f1", marginRight: 10 }} source={{ uri: itemEmployee.avatar }} />
-                                                            );
-                                                        }else{
-                                                            return(
-                                                                <Avatar.Image size={40} style={{ backgroundColor: "#edf8f1", marginRight: 10 }} source={{ uri:REACT_APP_FILE+'/avatar/'+itemEmployee.avatar }} />
-                                                               );
-                                                        }
-                                                    }
-                                                    else{
-                                                        return(
-                                                            <Avatar.Image size={40} style={{ backgroundColor: "#edf8f1", marginRight: 10 }} source={{ uri:REACT_APP_FILE+'/avatar/avatar.png' }} />
-                                                        );
-                                                    }
-                                                }else{
-                                                    return(
-                                                        null
-                                                    )
-                                                }
-                                            })}
-                                            </View>
-                                            <View style={{width:"80%", marginRight: 10,justifyContent: "center",borderRadius:5,backgroundColor:"#eeeeee",padding:5,borderColor:"#e0e0e0",borderWidth:1}}>
-                                            <Text style={{ fontSize: 14, color: "rgb(79, 94, 113)" }}>{itemComment.messeger}</Text>
+                            {
+                                comment.length
+                                    ?
+                                    comment.map((itemComment, index) => {
+                                        if (itemComment.praise_id == addComment.praise_id) {
+                                            return (
+                                                <View style={{ marginTop: 15, flexDirection: "row", alignItems: "center", paddingLeft: 20, paddingRight: 20 }}>
+                                                    <View style={{ marginRight: 10, justifyContent: "center", width: "15%" }}>
+                                                        {employees.map((itemEmployee, index) => {
+                                                            if (itemComment.user_id == itemEmployee.user_id) {
+                                                                if (itemEmployee.avatar) {
+                                                                    if (itemEmployee.avatar.search('https://') !== -1) {
+                                                                        return (
+                                                                            <Avatar.Image size={40} style={{ backgroundColor: "#edf8f1", marginRight: 10 }} source={{ uri: itemEmployee.avatar }} />
+                                                                        );
+                                                                    } else {
+                                                                        return (
+                                                                            <Avatar.Image size={40} style={{ backgroundColor: "#edf8f1", marginRight: 10 }} source={{ uri: REACT_APP_FILE + '/avatar/' + itemEmployee.avatar }} />
+                                                                        );
+                                                                    }
+                                                                }
+                                                                else {
+                                                                    return (
+                                                                        <Avatar.Image size={40} style={{ backgroundColor: "#edf8f1", marginRight: 10 }} source={{ uri: REACT_APP_FILE + '/avatar/avatar.png' }} />
+                                                                    );
+                                                                }
+                                                            } else {
+                                                                return (
+                                                                    null
+                                                                )
+                                                            }
+                                                        })}
+                                                    </View>
+                                                    <View style={{ width: "80%", marginRight: 10, justifyContent: "center", borderRadius: 5, backgroundColor: "#eeeeee", padding: 5, borderColor: "#e0e0e0", borderWidth: 1 }}>
+                                                        <Text style={{ fontSize: 14, color: "rgb(79, 94, 113)" }}>{itemComment.messeger}</Text>
+                                                    </View>
                                                 </View>
+                                            )
+                                        }
+                                    })
+                                    : null
+                            }
+                            <View style={{ marginTop: "auto", marginBottom: 40, flexDirection: "row", alignItems: "center" }}>
+                                <View style={{ width: "80%" }}>
+                                    <TextInput
+                                        mode="outlined"
+                                        label="Message"
+                                        placeholder="Message..."
+                                        onChangeText={(text) => setAddComment({ ...addComment, ['messeger']: text })}
+                                    />
                                 </View>
-                            )}})
-                        :null
-                        }
-                            <View style={{ marginTop: "auto",marginBottom:40,flexDirection:"row",alignItems:"center" }}>    
-                            <View style={{width:"80%"}}>
-                            <TextInput
-                                            mode="outlined"
-                                            label="Message"
-                                            placeholder="Message..."
-                                            onChangeText={(text) => setAddComment({ ...addComment, ['messeger']: text })} 
-                                            />    
-                            </View>
-                                            <View style={{width:"18%"}}>
-                                            <IconButton
-                                icon="send"
-                                color={"#ff9900"}
-                                size={50}
-                                onPress={() => onAddComment()} 
-                                style={{ marginRight: "auto", marginBottom: 5 }}
-                                />
-</View>        
+                                <View style={{ width: "18%" }}>
+                                    <IconButton
+                                        icon="send"
+                                        color={"#ff9900"}
+                                        size={50}
+                                        onPress={() => onAddComment()}
+                                        style={{ marginRight: "auto", marginBottom: 5 }}
+                                    />
+                                </View>
                             </View>
                         </View>
                     </ScrollView>

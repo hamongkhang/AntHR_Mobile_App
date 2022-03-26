@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { LinearGradient } from "expo-linear-gradient";
-import { StyleSheet, View, Text, ScrollView, Image, TouchableOpacity, Modal, Picker, ToastAndroid } from 'react-native';
+import { StyleSheet, View, Text, ScrollView, Image, TouchableOpacity, Modal, Picker, ToastAndroid, Dimensions } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { Avatar, Dialog, Searchbar, List, TextInput, Button, FAB, Portal, Provider, IconButton } from 'react-native-paper';
 import { REACT_APP_API, REACT_APP_FILE } from "@env"
@@ -17,7 +17,7 @@ const CommendationScreen = ({ navigation }) => {
     const onStateChange = ({ open }) => setState({ open });
     const { open } = state;
     const [loading, setLoading] = useState(false);
-    const [showModal, setShowModal] = useState(true);
+    const [showModal, setShowModal] = useState(false);
     const [scoreCheck, setScoreCheck] = useState(false);
     const [employeeCheck, setEmployeeCheck] = useState(false);
     const [checkWhy, setCheckWhy] = useState(0);
@@ -26,7 +26,12 @@ const CommendationScreen = ({ navigation }) => {
     const [users, setUsers] = useState([]);
     const [myScore, setMyScore] = useState([]);
     const [employeeSelect, setEmployeeSelect] = useState();
-
+    const [praiseGet, setPraiseGet] = useState([]);
+    const [like, setLike] = useState([]);
+    const [comment, setComment] = useState([]);
+    const [praise1, setPraise1] = useState([]);
+    const [showComment, setShowComment] = useState(false);
+    const [addComment, setAddComment] = useState({ praise_id: "", messeger: "" });
     const getEmployees = (token) => {
         setLoading(true);
         fetch(REACT_APP_API + '/employee/getAllEmployee', {
@@ -35,9 +40,9 @@ const CommendationScreen = ({ navigation }) => {
         })
             .then(response => response.json())
             .then(data => {
-                setLoading(false);
                 setUsers(data.data[0].reverse());
                 setEmployees(data.data[1].reverse());
+                setLoading(false);
             });
     }
     const getPoints = (token) => {
@@ -48,8 +53,8 @@ const CommendationScreen = ({ navigation }) => {
         })
             .then(response => response.json())
             .then(data => {
-                setLoading(false);
                 setMyScore(data.data);
+                setLoading(false);
             });
     }
     const [praise, setPraise] = useState({
@@ -115,7 +120,119 @@ const CommendationScreen = ({ navigation }) => {
                     setShowModal(false);
                 }
             });
-    }; 
+    };
+    const getLike = (token) => {
+        setLoading(true);
+        fetch(REACT_APP_API + '/praise/getAllLike', {
+            method: "GET",
+            headers: { "Authorization": `Bearer ` + token }
+        })
+            .then(response => response.json())
+            .then(data => {
+                setLike(data.data.reverse());
+                setLoading(false);
+            });
+    }
+    const getComment = (token) => {
+        setLoading(true);
+        fetch(REACT_APP_API + '/praise/getAllComment', {
+            method: "GET",
+            headers: { "Authorization": `Bearer ` + token }
+        })
+            .then(response => response.json())
+            .then(data => {
+                setComment(data.data);
+                setLoading(false);
+            });
+    }
+    const getPraise = (token) => {
+        setLoading(true);
+        fetch(REACT_APP_API + '/praise/getAllPraise', {
+            method: "GET",
+            headers: { "Authorization": `Bearer ` + token }
+        })
+            .then(response => response.json())
+            .then(data => {
+                setPraiseGet(data.data.reverse());
+                setLoading(false);
+            });
+    }
+    const sumLike = (id) => {
+        var sum = 0;
+        like.map((item, index) => {
+            if (item.praise_id == id) {
+                sum = sum + 1;
+            }
+        })
+        return sum;
+    }
+    const sumComment = (id) => {
+        var sum = 0;
+        comment.map((item, index) => {
+            if (item.praise_id == id) {
+                sum = sum + 1;
+            }
+        })
+        return sum;
+    }
+    const checkLike = (idGet) => {
+        var kt = false;
+        like.map((item, index) => {
+            if ((item.user_id == id) && (item.praise_id == idGet)) {
+                // console.log("khang")
+                kt = true;
+            }
+        })
+        return kt;
+    }
+    const onChangeAddLike = (id) => {
+        setLoading(true);
+        const _formData = new FormData();
+        _formData.append('praise_id', id);
+        const requestOptions = {
+            method: 'POST',
+            body: _formData,
+            headers: { "Authorization": `Bearer ` + token }
+        };
+        fetch(REACT_APP_API + '/praise/createLike', requestOptions)
+            .then((res) => res.json())
+            .then((json) => {
+                if (json.error) {
+                    setLoading(false);
+                } else {
+                    setRender(!render);
+                    setLoading(false);
+                }
+            });
+    };
+    const onAddComment = (id) => {
+        setLoading(true);
+        const _formData = new FormData();
+        _formData.append('praise_id', addComment.praise_id);
+        _formData.append('messeger', addComment.messeger);
+        const requestOptions = {
+            method: 'POST',
+            body: _formData,
+            headers: { "Authorization": `Bearer ` + token }
+        };
+        fetch(REACT_APP_API + '/praise/createComment', requestOptions)
+            .then((res) => res.json())
+            .then((json) => {
+                if (json.error) {
+                    setLoading(false);
+                } else {
+                    setRender(!render);
+                    setLoading(false);
+                }
+            });
+    };
+    const onClickAddComment = (id) => {
+        setAddComment({ ...addComment, ["praise_id"]: id });
+        setShowComment(!showComment);
+    }
+    const clickShowComment = () => {
+        setShowComment(!showComment);
+    }
     useEffect(() => {
         const getToken = async () => {
             try {
@@ -126,6 +243,9 @@ const CommendationScreen = ({ navigation }) => {
                 const first_name = await AsyncStorage.getItem("first_name");
                 getEmployees(token);
                 getPoints(token);
+                getComment(token);
+                getLike(token);
+                getPraise(token);
                 setAvatar(avatar_user);
                 setFirstName(first_name);
                 setLastName(last_name);
@@ -140,101 +260,233 @@ const CommendationScreen = ({ navigation }) => {
     return (
         <LinearGradient colors={['#edf8f1', '#f7f9fc']} style={styles.linearGradient}>
             <Loader loading={loading} />
-            {showModal
+            {(showModal || showComment)
                 ?
                 null :
                 <ScrollView>
-                    <View style={{ padding: 10, paddingTop: 10 }}>
-                        <View style={{ padding: 10, backgroundColor: "white", borderColor: "rgb(227, 235, 241)", borderWidth: 1, borderRadius: 5, paddingBottom: 16, boxShadow: "rgb(95 125 149 / 20%) 0px 4px 13px 0px" }}>
-                            <View style={{ alignItems: "center", flexDirection: "row" }}>
-                                <View style={{ width: "20%" }}>
-                                    {
-                                        (avatar == "null")
-                                            ?
-                                            <Avatar.Image size={45} style={{ backgroundColor: "#edf8f1" }} source={{ uri: REACT_APP_FILE + '/avatar/avatar.png' }} />
-                                            :
-                                            (avatar.search('https://') != -1)
-                                                ?
-                                                <Avatar.Image size={45} style={{ backgroundColor: "#edf8f1" }} source={{ uri: avatar }} />
-                                                :
-                                                <Avatar.Image size={45} style={{ backgroundColor: "#edf8f1" }} source={{ uri: REACT_APP_FILE + '/avatar/' + avatar }} />
-                                    }
-                                </View>
-                                <View style={{ width: "80%" }}>
-                                    <Text style={{ fontSize: 16, color: "rgb(35, 54, 78)", fontWeight: "bold" }}>Ha Mong Khang<Text style={{ fontSize: 16, fontWeight: "normal" }}> đã khen thưởng </Text>Nguyen Hong Quan</Text>
-                                    <Text style={{ fontSize: 12, color: "rgb(35, 54, 78)" }}>18 hours ago</Text>
-                                </View>
-                            </View>
-                            <View style={{ alignItems: "center", flexDirection: "row", marginTop: 10, marginBottom: 10 }}>
-                                <View style={{ alignItems: "center", width: "40%" }}>
-                                    {
-                                        (avatar == "null")
-                                            ?
-                                            <Avatar.Image size={70} style={{ backgroundColor: "#edf8f1" }} source={{ uri: REACT_APP_FILE + '/avatar/avatar.png' }} />
-                                            :
-                                            (avatar.search('https://') != -1)
-                                                ?
-                                                <Avatar.Image size={70} style={{ backgroundColor: "#edf8f1" }} source={{ uri: avatar }} />
-                                                :
-                                                <Avatar.Image size={70} style={{ backgroundColor: "#edf8f1" }} source={{ uri: REACT_APP_FILE + '/avatar/' + avatar }} />
-                                    }
-                                    <Text style={{ textAlign: "center", fontSize: 16, fontWeight: "bold", color: "rgb(35, 54, 78)", marginTop: 10 }}>Ha Mong Khang</Text>
-                                    <Text style={{ textAlign: "center", fontSize: 12, color: "rgb(35, 54, 78)", marginTop: 5 }}>Executive Cum Legal Assistant Consultant Employee</Text>
-                                </View>
-                                <View style={{ alignItems: "center", width: "16%", marginLeft: 10, marginRight: 10 }}>
-                                    <Avatar.Image size={70} style={{ backgroundColor: "white" }} source={{ uri: REACT_APP_FILE + '/reward/gold.png' }} />
-                                </View>
-                                <View style={{ alignItems: "center", width: "40%" }}>
-                                    {
-                                        (avatar == "null")
-                                            ?
-                                            <Avatar.Image size={70} style={{ backgroundColor: "#edf8f1" }} source={{ uri: REACT_APP_FILE + '/avatar/avatar.png' }} />
-                                            :
-                                            (avatar.search('https://') != -1)
-                                                ?
-                                                <Avatar.Image size={70} style={{ backgroundColor: "#edf8f1" }} source={{ uri: avatar }} />
-                                                :
-                                                <Avatar.Image size={70} style={{ backgroundColor: "#edf8f1" }} source={{ uri: REACT_APP_FILE + '/avatar/' + avatar }} />
-                                    }
-                                    <Text style={{ textAlign: "center", fontSize: 16, fontWeight: "bold", color: "rgb(35, 54, 78)", marginTop: 10 }}>Ha Mong Khang</Text>
-                                    <Text style={{ textAlign: "center", fontSize: 12, color: "rgb(35, 54, 78)", marginTop: 5 }}>Manager Programme Development(Partnership)</Text>
-                                </View>
-                            </View>
-                            <View style={{ alignItems: "center", marginBottom: 10 }}>
-                                <Text style={{ fontSize: 18, fontWeight: "bold", color: "green" }}>+ 5000 Points</Text>
-                                <Text style={{ fontSize: 18, fontWeight: "bold", color: "green" }}>+ Bup Be</Text>
-                            </View>
-                            <View style={{ marginBottom: 10 }}>
-                                <Text style={{ fontSize: 16, fontWeight: "bold", color: "rgb(35, 54, 78)" }}>Ban lam viec rat tot, chuc mung ban</Text>
-                            </View>
-                            <View style={{ marginBottom: 10, alignItems: "center", flexDirection: "row" }}>
-                                <View style={{ width: "30%", marginRight: 10 }}>
-                                    <Text style={{ fontSize: 12, fontWeight: "bold", color: "rgb(35, 54, 78)", backgroundColor: "#a7ffeb", padding: 7, borderRadius: 5 }}>Achievements</Text>
-                                </View>
-                                <View style={{ flexDirection: "row", width: "60%", alignItems: "center" }}>
-                                    <Avatar.Image size={28} style={{ backgroundColor: "white" }} source={{ uri: REACT_APP_FILE + '/reward/value.png' }} />
-                                    <Text style={{ fontSize: 12, color: "rgb(35, 54, 78)", marginLeft: 5 }}>hahdg ajhdab ajhdjka  jahdjka jahdkja  jahdja  hadjh jahdja  ahdjka d hdjka</Text>
-                                </View>
-                            </View>
-                            <View style={{ flexDirection: "row", alignItems: "center" }}>
-                                <IconButton
-                                    icon="hand"
-                                    color={"grey"}
-                                    size={30}
-                                    onPress={() => console.log('Pressed')}
-                                />
-                                <Text style={{ marginLeft: -10, marginRight: 10 }}>0 like</Text>
-                                <IconButton
-                                    icon="comment"
-                                    color={"grey"}
-                                    size={30}
-                                    onPress={() => console.log('Pressed')}
-                                />
-                                <Text style={{ marginLeft: -10, marginRight: 10 }}>0 comment</Text>
-                            </View>
-                        </View>
-                    </View>
-
+                    {
+                        praiseGet.length
+                            ?
+                            praiseGet.map((item, index) => {
+                                if (item.status == 1) {
+                                    return (
+                                        <View style={{ padding: 10, paddingTop: 10 }}>
+                                            <View style={{ padding: 10, backgroundColor: "white", borderColor: "rgb(227, 235, 241)", borderWidth: 1, borderRadius: 5, paddingBottom: 16, boxShadow: "rgb(95 125 149 / 20%) 0px 4px 13px 0px" }}>
+                                                <View style={{ alignItems: "center", flexDirection: "row" }}>
+                                                    <View style={{ width: "20%" }}>
+                                                        {employees.length ?
+                                                            employees.map((itemUser, index) => {
+                                                                if (itemUser.user_id == item.author) {
+                                                                    if (itemUser.avatar) {
+                                                                        if (itemUser.avatar.search('https://') != -1) {
+                                                                            return (
+                                                                                <Avatar.Image size={45} style={{ backgroundColor: "#edf8f1" }} source={{ uri: itemUser.avatar }} />
+                                                                            );
+                                                                        } else {
+                                                                            return (
+                                                                                <Avatar.Image size={45} style={{ backgroundColor: "#edf8f1" }} source={{ uri: REACT_APP_FILE + '/avatar/' + itemUser.avatar }} />
+                                                                            );
+                                                                        }
+                                                                    }
+                                                                    else {
+                                                                        return (
+                                                                            <Avatar.Image size={45} style={{ backgroundColor: "#edf8f1" }} source={{ uri: REACT_APP_FILE + '/avatar/avatar.png' }} />
+                                                                        );
+                                                                    }
+                                                                } else {
+                                                                    return (
+                                                                        null
+                                                                    );
+                                                                }
+                                                            }
+                                                            )
+                                                            : null
+                                                        }
+                                                    </View>
+                                                    <View style={{ width: "80%" }}>
+                                                        <Text style={{ fontSize: 16, color: "rgb(35, 54, 78)", fontWeight: "bold" }}>
+                                                            {employees.length ?
+                                                                employees.map((itemUser, index) => {
+                                                                    if (itemUser.user_id == item.author) {
+                                                                        return (
+                                                                            itemUser.last_name + " " + itemUser.first_name + " "
+                                                                        )
+                                                                    } else {
+                                                                        return (
+                                                                            null
+                                                                        )
+                                                                    }
+                                                                })
+                                                                : null
+                                                            }
+                                                            <Text style={{ fontSize: 16, fontWeight: "normal" }}> đã khen thưởng </Text>
+                                                            {employees.length ?
+                                                                employees.map((itemUser, index) => {
+                                                                    if (itemUser.user_id == item.recipient) {
+                                                                        return (
+                                                                            " " + itemUser.last_name + " " + itemUser.first_name
+                                                                        )
+                                                                    } else {
+                                                                        return (
+                                                                            null
+                                                                        )
+                                                                    }
+                                                                })
+                                                                : null
+                                                            }
+                                                        </Text>
+                                                        <Text style={{ fontSize: 12, color: "rgb(35, 54, 78)" }}>18 hours ago</Text>
+                                                    </View>
+                                                </View>
+                                                <View style={{ alignItems: "center", flexDirection: "row", marginTop: 10, marginBottom: 10 }}>
+                                                    <View style={{ alignItems: "center", width: "40%" }}>
+                                                        {employees.length ?
+                                                            employees.map((itemUser, index) => {
+                                                                if (itemUser.user_id == item.author) {
+                                                                    if (itemUser.avatar) {
+                                                                        if (itemUser.avatar.search('https://') != -1) {
+                                                                            return (
+                                                                                <Avatar.Image size={45} style={{ backgroundColor: "#edf8f1" }} source={{ uri: itemUser.avatar }} />
+                                                                            );
+                                                                        } else {
+                                                                            return (
+                                                                                <Avatar.Image size={45} style={{ backgroundColor: "#edf8f1" }} source={{ uri: REACT_APP_FILE + '/avatar/' + itemUser.avatar }} />
+                                                                            );
+                                                                        }
+                                                                    }
+                                                                    else {
+                                                                        return (
+                                                                            <Avatar.Image size={45} style={{ backgroundColor: "#edf8f1" }} source={{ uri: REACT_APP_FILE + '/avatar/avatar.png' }} />
+                                                                        );
+                                                                    }
+                                                                } else {
+                                                                    return (
+                                                                        null
+                                                                    );
+                                                                }
+                                                            }
+                                                            )
+                                                            : null
+                                                        }
+                                                        <Text style={{ textAlign: "center", fontSize: 16, fontWeight: "bold", color: "rgb(35, 54, 78)", marginTop: 10 }}>
+                                                            {employees.length ?
+                                                                employees.map((itemUser, index) => {
+                                                                    if (itemUser.user_id == item.author) {
+                                                                        return (
+                                                                            itemUser.last_name + " " + itemUser.first_name + " "
+                                                                        )
+                                                                    } else {
+                                                                        return (
+                                                                            null
+                                                                        )
+                                                                    }
+                                                                })
+                                                                : null
+                                                            }
+                                                        </Text>
+                                                        <Text style={{ textAlign: "center", fontSize: 12, color: "rgb(35, 54, 78)", marginTop: 5 }}>Executive Cum Legal Assistant Consultant Employee</Text>
+                                                    </View>
+                                                    <View style={{ alignItems: "center", width: "16%", marginLeft: 10, marginRight: 10 }}>
+                                                        <Avatar.Image size={70} style={{ backgroundColor: "white" }} source={{ uri: REACT_APP_FILE + '/reward/gold.png' }} />
+                                                    </View>
+                                                    <View style={{ alignItems: "center", width: "40%" }}>
+                                                        {employees.length ?
+                                                            employees.map((itemUser, index) => {
+                                                                if (itemUser.user_id == item.recipient) {
+                                                                    if (itemUser.avatar) {
+                                                                        if (itemUser.avatar.search('https://') != -1) {
+                                                                            return (
+                                                                                <Avatar.Image size={45} style={{ backgroundColor: "#edf8f1" }} source={{ uri: itemUser.avatar }} />
+                                                                            );
+                                                                        } else {
+                                                                            return (
+                                                                                <Avatar.Image size={45} style={{ backgroundColor: "#edf8f1" }} source={{ uri: REACT_APP_FILE + '/avatar/' + itemUser.avatar }} />
+                                                                            );
+                                                                        }
+                                                                    }
+                                                                    else {
+                                                                        return (
+                                                                            <Avatar.Image size={45} style={{ backgroundColor: "#edf8f1" }} source={{ uri: REACT_APP_FILE + '/avatar/avatar.png' }} />
+                                                                        );
+                                                                    }
+                                                                } else {
+                                                                    return (
+                                                                        null
+                                                                    );
+                                                                }
+                                                            }
+                                                            )
+                                                            : null
+                                                        }
+                                                        <Text style={{ textAlign: "center", fontSize: 16, fontWeight: "bold", color: "rgb(35, 54, 78)", marginTop: 10 }}>
+                                                            {employees.length ?
+                                                                employees.map((itemUser, index) => {
+                                                                    if (itemUser.user_id == item.recipient) {
+                                                                        return (
+                                                                            itemUser.last_name + " " + itemUser.first_name + " "
+                                                                        )
+                                                                    } else {
+                                                                        return (
+                                                                            null
+                                                                        )
+                                                                    }
+                                                                })
+                                                                : null
+                                                            }
+                                                        </Text>
+                                                        <Text style={{ textAlign: "center", fontSize: 12, color: "rgb(35, 54, 78)", marginTop: 5 }}>Manager Programme Development(Partnership)</Text>
+                                                    </View>
+                                                </View>
+                                                <View style={{ alignItems: "center", marginBottom: 10 }}>
+                                                    <Text style={{ fontSize: 18, fontWeight: "bold", color: "green" }}>+ {item.score ? item.score : null} Points</Text>
+                                                    <Text style={{ fontSize: 18, fontWeight: "bold", color: "green" }}>+ {item.present ? item.present : null}</Text>
+                                                </View>
+                                                <View style={{ marginBottom: 10 }}>
+                                                    <Text style={{ fontSize: 16, fontWeight: "bold", color: "rgb(35, 54, 78)" }}>{item.message ? item.message : null}</Text>
+                                                </View>
+                                                <View style={{ marginBottom: 10, alignItems: "center", flexDirection: "row" }}>
+                                                    <View style={{ width: "30%", marginRight: 10 }}>
+                                                        <Text style={{ fontSize: 12, fontWeight: "bold", color: "rgb(35, 54, 78)", backgroundColor: "#a7ffeb", padding: 7, borderRadius: 5 }}>Achievements</Text>
+                                                    </View>
+                                                    <View style={{ flexDirection: "row", width: "60%", alignItems: "center" }}>
+                                                        <Avatar.Image size={28} style={{ backgroundColor: "white" }} source={{ uri: REACT_APP_FILE + '/reward/value.png' }} />
+                                                        <Text style={{ fontSize: 12, color: "rgb(35, 54, 78)", marginLeft: 5 }}>{item.cheer ? item.cheer : " - "}</Text>
+                                                    </View>
+                                                </View>
+                                                <View style={{ flexDirection: "row", alignItems: "center" }}>
+                                                    {
+                                                        (checkLike(item.id) == true)
+                                                            ?
+                                                            <IconButton
+                                                                icon="hand"
+                                                                color={"blue"}
+                                                                size={30}
+                                                            />
+                                                            :
+                                                            <IconButton
+                                                                icon="hand"
+                                                                color={"grey"}
+                                                                size={30}
+                                                                onPress={() => onChangeAddLike(item.id)}
+                                                            />
+                                                    }
+                                                    <Text style={{ marginLeft: -10, marginRight: 10 }}>{(sumLike(item.id) != 0) ? sumLike(item.id) + " Likes" : "0 Like"}</Text>
+                                                    <IconButton
+                                                        icon="comment"
+                                                        color={"grey"}
+                                                        size={30}
+                                                        onPress={() => onClickAddComment(item.id)}
+                                                    />
+                                                    <Text style={{ marginLeft: -10, marginRight: 10 }}>{(sumComment(item.id) != 0) ? sumComment(item.id) + " Comments" : "0 Comment"}</Text>
+                                                </View>
+                                            </View>
+                                        </View>
+                                    )
+                                }
+                            })
+                            :
+                            null
+                    }
                 </ScrollView>
             }
             <Modal
@@ -312,10 +564,10 @@ const CommendationScreen = ({ navigation }) => {
                                             </Picker>
                                         </View>
                                         {error.recipient != '' ? (
-                                                <Text style={{  color: 'red',textAlign: 'center',fontSize: 14,marginBottom:10}}>
-                                                    {error.recipient}
-                                                </Text>
-                                            ) : null}
+                                            <Text style={{ color: 'red', textAlign: 'center', fontSize: 14, marginBottom: 10 }}>
+                                                {error.recipient}
+                                            </Text>
+                                        ) : null}
                                         <View style={{ borderWidth: 1, borderColor: "grey", borderRadius: 5 }}>
                                             <Picker style={{ height: 40, width: "100%", color: "rgb(35, 54, 78)" }}
                                                 onValueChange={(itemValue, itemLabel) => setPraise({ ...praise, ['score']: itemValue })}
@@ -332,10 +584,10 @@ const CommendationScreen = ({ navigation }) => {
                                             </Picker>
                                         </View>
                                         {error.score != '' ? (
-                                                <Text style={{  color: 'red',textAlign: 'center',fontSize: 14,marginBottom:10}}>
-                                                    {error.score}
-                                                </Text>
-                                            ) : null}
+                                            <Text style={{ color: 'red', textAlign: 'center', fontSize: 14, marginBottom: 10 }}>
+                                                {error.score}
+                                            </Text>
+                                        ) : null}
                                         <TextInput
                                             mode="outlined"
                                             label="Present *"
@@ -343,11 +595,11 @@ const CommendationScreen = ({ navigation }) => {
                                             placeholder="Present *"
                                             onChangeText={(text) => setPraise({ ...praise, ['present']: text })}
                                         />
-                                         {error.present != '' ? (
-                                                <Text style={{  color: 'red',textAlign: 'center',fontSize: 14,marginBottom:10}}>
-                                                    {error.present}
-                                                </Text>
-                                            ) : null}
+                                        {error.present != '' ? (
+                                            <Text style={{ color: 'red', textAlign: 'center', fontSize: 14, marginBottom: 10 }}>
+                                                {error.present}
+                                            </Text>
+                                        ) : null}
                                         <TextInput
                                             multiline
                                             mode="outlined"
@@ -355,11 +607,11 @@ const CommendationScreen = ({ navigation }) => {
                                             numberOfLines={4}
                                             placeholder="Message..."
                                             onChangeText={(text) => setPraise({ ...praise, ['message']: text })} />
-                                              {error.message != '' ? (
-                                                <Text style={{  color: 'red',textAlign: 'center',fontSize: 14,marginBottom:10}}>
-                                                    {error.message}
-                                                </Text>
-                                            ) : null}
+                                        {error.message != '' ? (
+                                            <Text style={{ color: 'red', textAlign: 'center', fontSize: 14, marginBottom: 10 }}>
+                                                {error.message}
+                                            </Text>
+                                        ) : null}
                                     </View>
                                 </View>
                             </View>
@@ -486,10 +738,10 @@ const CommendationScreen = ({ navigation }) => {
                                         </TouchableOpacity>
                                     </View>
                                     {error.cheer != '' ? (
-                                                <Text style={{  color: 'red',textAlign: 'center',fontSize: 14,marginBottom:10}}>
-                                                    {error.cheer}
-                                                </Text>
-                                            ) : null}
+                                        <Text style={{ color: 'red', textAlign: 'center', fontSize: 14, marginBottom: 10 }}>
+                                            {error.cheer}
+                                        </Text>
+                                    ) : null}
                                     <Text style={{ textAlign: "center", color: "rgb(35, 54, 78)", fontSize: 14, padding: 10 }}>Your compliments will be approved by the admin and made visible to everyone</Text>
                                 </View>
                                 <View style={{ alignItems: "center", marginTop: 20 }}>
@@ -508,6 +760,84 @@ const CommendationScreen = ({ navigation }) => {
                                     >
                                         <Text style={{ color: "#ff9900", fontWeight: "bold" }}>PUBLISH</Text>
                                     </TouchableOpacity>
+                                </View>
+                            </View>
+                        </View>
+                    </ScrollView>
+                </LinearGradient>
+            </Modal>
+            <Modal
+                animationType={'slide'}
+                transparent={true}
+                visible={showComment}
+            >
+                <LinearGradient colors={['#edf8f1', '#f7f9fc']} style={styles.linearGradient2}>
+                    <ScrollView>
+                        <View style={{ padding: 10, backgroundColor: "white", borderColor: "rgb(227, 235, 241)", borderWidth: 1, borderRadius: 5, paddingBottom: 16, height: Dimensions.get('window').height }}>
+                            <IconButton
+                                icon="close"
+                                color={"red"}
+                                size={25}
+                                onPress={() => setShowComment(!showComment)} style={{ marginRight: "auto", marginBottom: 5 }} />
+                            {
+                                comment.length
+                                    ?
+                                    comment.map((itemComment, index) => {
+                                        if (itemComment.praise_id == addComment.praise_id) {
+                                            return (
+                                                <View style={{ marginTop: 15, flexDirection: "row", alignItems: "center", paddingLeft: 20, paddingRight: 20 }}>
+                                                    <View style={{ marginRight: 10, justifyContent: "center", width: "15%" }}>
+                                                        {employees.map((itemEmployee, index) => {
+                                                            if (itemComment.user_id == itemEmployee.user_id) {
+                                                                if (itemEmployee.avatar) {
+                                                                    if (itemEmployee.avatar.search('https://') !== -1) {
+                                                                        return (
+                                                                            <Avatar.Image size={40} style={{ backgroundColor: "#edf8f1", marginRight: 10 }} source={{ uri: itemEmployee.avatar }} />
+                                                                        );
+                                                                    } else {
+                                                                        return (
+                                                                            <Avatar.Image size={40} style={{ backgroundColor: "#edf8f1", marginRight: 10 }} source={{ uri: REACT_APP_FILE + '/avatar/' + itemEmployee.avatar }} />
+                                                                        );
+                                                                    }
+                                                                }
+                                                                else {
+                                                                    return (
+                                                                        <Avatar.Image size={40} style={{ backgroundColor: "#edf8f1", marginRight: 10 }} source={{ uri: REACT_APP_FILE + '/avatar/avatar.png' }} />
+                                                                    );
+                                                                }
+                                                            } else {
+                                                                return (
+                                                                    null
+                                                                )
+                                                            }
+                                                        })}
+                                                    </View>
+                                                    <View style={{ width: "80%", marginRight: 10, justifyContent: "center", borderRadius: 5, backgroundColor: "#eeeeee", padding: 5, borderColor: "#e0e0e0", borderWidth: 1 }}>
+                                                        <Text style={{ fontSize: 14, color: "rgb(79, 94, 113)" }}>{itemComment.messeger}</Text>
+                                                    </View>
+                                                </View>
+                                            )
+                                        }
+                                    })
+                                    : null
+                            }
+                            <View style={{ marginTop: "auto", marginBottom: 40, flexDirection: "row", alignItems: "center" }}>
+                                <View style={{ width: "80%" }}>
+                                    <TextInput
+                                        mode="outlined"
+                                        label="Message"
+                                        placeholder="Message..."
+                                        onChangeText={(text) => setAddComment({ ...addComment, ['messeger']: text })}
+                                    />
+                                </View>
+                                <View style={{ width: "18%" }}>
+                                    <IconButton
+                                        icon="send"
+                                        color={"#ff9900"}
+                                        size={50}
+                                        onPress={() => onAddComment()}
+                                        style={{ marginRight: "auto", marginBottom: 5 }}
+                                    />
                                 </View>
                             </View>
                         </View>

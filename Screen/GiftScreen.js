@@ -12,7 +12,7 @@ const Stack = createNativeStackNavigator();
 const GiftScreen = ({ navigation }) => {
 
   return (
-    <Stack.Navigator initialRouteName="CommendationScreen">
+    <Stack.Navigator initialRouteName="ReceivingGiftScreen">
       <Stack.Screen
         name="CommendationScreen"
         component={CommendationScreen}

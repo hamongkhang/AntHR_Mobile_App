@@ -51,7 +51,7 @@ const HomeScreen = ({ navigation }) => {
       });
     setLoading(false);
     AsyncStorage.clear();
-    navigation.navigate('LoginScreen')
+    navigation.replace('LoginScreen')
   }
   const onClickShowButton = () => {
     setShowButton(!showButton)

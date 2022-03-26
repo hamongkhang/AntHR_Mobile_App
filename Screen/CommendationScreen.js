@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { LinearGradient } from "expo-linear-gradient";
-import { StyleSheet, View, Text, ScrollView, Image, TouchableOpacity, Modal, Picker } from 'react-native';
+import { StyleSheet, View, Text, ScrollView, Image, TouchableOpacity, Modal, Picker, ToastAndroid } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { Avatar, Dialog, Searchbar, List, TextInput, Button, FAB, Portal, Provider, IconButton } from 'react-native-paper';
 import { REACT_APP_API, REACT_APP_FILE } from "@env"
 import Loader from './Loader';
 
 const CommendationScreen = ({ navigation }) => {
-    const [token,setToken] =useState('');
+    const [token, setToken] = useState('');
     const [avatar, setAvatar] = useState('');
     const [lastName, setLastName] = useState('');
     const [firstName, setFirstName] = useState('');
@@ -22,51 +22,100 @@ const CommendationScreen = ({ navigation }) => {
     const [employeeCheck, setEmployeeCheck] = useState(false);
     const [checkWhy, setCheckWhy] = useState(0);
     const [text, setText] = React.useState('');
-    const [employees, setEmployees]= useState([]);
-    const [users, setUsers]= useState([]);
-    const [myScore, setMyScore] =useState([]);
+    const [employees, setEmployees] = useState([]);
+    const [users, setUsers] = useState([]);
+    const [myScore, setMyScore] = useState([]);
+    const [employeeSelect, setEmployeeSelect] = useState();
 
-    const getEmployees = (token) =>{
+    const getEmployees = (token) => {
         setLoading(true);
-        fetch(REACT_APP_API+'/employee/getAllEmployee', {
+        fetch(REACT_APP_API + '/employee/getAllEmployee', {
             method: "GET",
-            headers: {"Authorization": `Bearer `+token}
-          })
-        .then(response => response.json())
-        .then(data =>  {
-            setLoading(false);
-            setUsers(data.data[0].reverse());
-            setEmployees(data.data[1].reverse());
-        });
-    }
-    const getPoints=(token)=>{
-        setLoading(true);
-        fetch(REACT_APP_API+'/score/getOneScore', {
-            method: "GET",
-            headers: {"Authorization": `Bearer `+token}
-          })
-        .then(response => response.json())
-        .then(data =>  {
+            headers: { "Authorization": `Bearer ` + token }
+        })
+            .then(response => response.json())
+            .then(data => {
                 setLoading(false);
-              setMyScore(data.data);
-        });
+                setUsers(data.data[0].reverse());
+                setEmployees(data.data[1].reverse());
+            });
     }
-    const [praise, setPraise]=useState({
-        image:'',
-        recipient:'',
-        message:'',
-        score:'',
-        present:'',
-        cheer:''
+    const getPoints = (token) => {
+        setLoading(true);
+        fetch(REACT_APP_API + '/score/getOneScore', {
+            method: "GET",
+            headers: { "Authorization": `Bearer ` + token }
+        })
+            .then(response => response.json())
+            .then(data => {
+                setLoading(false);
+                setMyScore(data.data);
+            });
+    }
+    const [praise, setPraise] = useState({
+        image: '',
+        recipient: '',
+        message: '',
+        score: '',
+        present: '',
+        cheer: ''
     });
     const [error, setError] = useState({
-        image:null,
-        recipient:null,
-        message:null,
-        score:null,
-        present:null,
-        cheer:null
-      });
+        image: null,
+        recipient: null,
+        message: null,
+        score: null,
+        present: null,
+        cheer: null
+    });
+    const onSelectEmployees = (id) => {
+        setPraise({ ...praise, ['recipient']: id });
+    }
+    const onSelectCheer = (mess) => {
+        setPraise({ ...praise, ["cheer"]: mess });
+        if (mess == "Great Inspirational Leadership,Growth Mindset") {
+            setCheckWhy(1);
+        } else if (mess == "Expressing and contributing yourself,Challenging development") {
+            setCheckWhy(2);
+        } else if (mess == "Helping people grow together,Excellent communication") {
+            setCheckWhy(3);
+        }
+    }
+    const onAddPraises = (e) => {
+        setLoading(true);
+        const _formData = new FormData();
+        _formData.append('image', praise.image);
+        _formData.append('recipient', praise.recipient);
+        _formData.append('message', praise.message);
+        _formData.append('score', praise.score);
+        _formData.append('present', praise.present);
+        _formData.append('cheer', praise.cheer);
+        const requestOptions = {
+            method: 'POST',
+            body: _formData,
+            headers: { "Authorization": `Bearer ` + token }
+        };
+        fetch(REACT_APP_API + '/praise/createPraise', requestOptions)
+            .then((res) => res.json())
+            .then((json) => {
+                if (json.error) {
+                    if (json.error == 'Score not found!!!') {
+                        ToastAndroid.showWithGravityAndOffset('Your score is still not enough !!!', ToastAndroid.LONG, ToastAndroid.CENTER, 10, 10);
+                        setError('');
+                        setLoading(false);
+                    } else {
+                        setError(json.error);
+                        setLoading(false);
+                    }
+                } else {
+                    ToastAndroid.showWithGravityAndOffset('Congratulations, Successfully !!!', ToastAndroid.LONG, ToastAndroid.CENTER, 10, 10);
+                    setError('');
+                    setRender(!render);
+                    setLoading(false);
+                    setShowModal(false);
+                }
+            });
+    }; 
     useEffect(() => {
         const getToken = async () => {
             try {
@@ -222,20 +271,20 @@ const CommendationScreen = ({ navigation }) => {
                             <View style={{ marginTop: 10, flexDirection: "row", alignItems: "center" }}>
                                 <View style={{ width: "48%", backgroundColor: "#dcedc8", justifyContent: "center", marginRight: 10, padding: 5, borderRadius: 3 }}>
                                     <Text style={{ textAlign: "center", fontSize: 12 }}>Recognition Points Redeemed</Text>
-                                    <Text style={{ textAlign: "center", fontSize: 16, color: "#4caf50", fontWeight: "bold" }}>{myScore.gift?myScore.gift:0} Points</Text>
+                                    <Text style={{ textAlign: "center", fontSize: 16, color: "#4caf50", fontWeight: "bold" }}>{myScore.gift ? myScore.gift : 0} Points</Text>
                                     <Text style={{ textAlign: "center", fontSize: 8 }}>Please reward your colleagues or exchange gifts.</Text>
                                     <Text style={{ textAlign: "center", fontSize: 8, color: "#ef5350" }}>Expiration Date: 31/12/2030</Text>
                                 </View>
                                 <View style={{ width: "48%", backgroundColor: "#b2ebf2", justifyContent: "center", padding: 5, borderRadius: 3 }}>
                                     <Text style={{ textAlign: "center", fontSize: 12 }}>Recognition Coins</Text>
-                                    <Text style={{ textAlign: "center", fontSize: 16, color: "#03a9f4", fontWeight: "bold" }}>{myScore.score?myScore.score:0} Points</Text>
+                                    <Text style={{ textAlign: "center", fontSize: 16, color: "#03a9f4", fontWeight: "bold" }}>{myScore.score ? myScore.score : 0} Points</Text>
                                     <Text style={{ textAlign: "center", fontSize: 8 }}>Get special offers and rewards packages, discount codes and travel packages.</Text>
                                 </View>
                             </View>
                             <View style={{ marginTop: 5, alignItems: "center" }}>
                                 <View style={{ backgroundColor: "#ffe0b2", justifyContent: "center", padding: 5, borderRadius: 3 }}>
                                     <Text style={{ textAlign: "center", fontSize: 12 }}>Recognition Points Spent</Text>
-                                    <Text style={{ textAlign: "center", fontSize: 16, color: "#f4511e", fontWeight: "bold" }}>{myScore.score_spent?myScore.score_spent:0} Points</Text>
+                                    <Text style={{ textAlign: "center", fontSize: 16, color: "#f4511e", fontWeight: "bold" }}>{myScore.score_spent ? myScore.score_spent : 0} Points</Text>
                                     <Text style={{ textAlign: "center", fontSize: 8 }}>This is the score you have awarded to your friends after positive contributions.</Text>
                                 </View>
                             </View>
@@ -245,56 +294,72 @@ const CommendationScreen = ({ navigation }) => {
                                     <View style={{ padding: 10 }}>
                                         <View style={{ borderWidth: 1, borderColor: "grey", borderRadius: 5, marginBottom: 6 }}>
                                             <Picker style={{ height: 40, width: "100%", color: "rgb(35, 54, 78)" }}
-                                                selectedValue={"Employees"}
-                                              //  onValueChange={(itemValue, itemPosition) =>
-                                                //this.setState({language: itemValue, choosenIndex: itemPosition})}
+                                                onValueChange={(itemValue, itemLabel) => onSelectEmployees(itemValue)}
                                             >
-                                                 {
-                                                 employees.length 
-                                                 ?
-                                                employees.map((item, index) => {
-                                                    if(item.user_id!=id){
-                                                 return (
-                                                    <Picker.Item label={item.last_name+" "+item.first_name+" ( "+item.email+" )"} value={item.user_id} />
-                                                 )}})
-                                                 :
-                                                 null
-                                                 }
+                                                {
+                                                    employees.length
+                                                        ?
+                                                        employees.map((item, index) => {
+                                                            if (item.user_id != id) {
+                                                                return (
+                                                                    <Picker.Item label={item.last_name + " " + item.first_name + " ( " + item.email + " ) "} value={item.user_id} />
+                                                                )
+                                                            }
+                                                        })
+                                                        :
+                                                        null
+                                                }
                                             </Picker>
                                         </View>
+                                        {error.recipient != '' ? (
+                                                <Text style={{  color: 'red',textAlign: 'center',fontSize: 14,marginBottom:10}}>
+                                                    {error.recipient}
+                                                </Text>
+                                            ) : null}
                                         <View style={{ borderWidth: 1, borderColor: "grey", borderRadius: 5 }}>
                                             <Picker style={{ height: 40, width: "100%", color: "rgb(35, 54, 78)" }}
-                                                selectedValue={"Scores"}
-                                            // selectedValue={this.state.language}
-                                            // onValueChange={(itemValue, itemPosition) =>
-                                            //     this.setState({language: itemValue, choosenIndex: itemPosition})}
+                                                onValueChange={(itemValue, itemLabel) => setPraise({ ...praise, ['score']: itemValue })}
                                             >
-                                                <Picker.Item label="10 points" value="10" />
-                                                <Picker.Item label="50 points" value="50" />
-                                                <Picker.Item label="100 points" value="100" />
-                                                <Picker.Item label="200 points" value="200" />
-                                                <Picker.Item label="500 points" value="500" />
-                                                <Picker.Item label="1000 points" value="1000" />
-                                                <Picker.Item label="2000 points" value="2000" />
-                                                <Picker.Item label="5000 points" value="5000" />
-                                                <Picker.Item label="10000 points" value="10000" />
+                                                <Picker.Item label="10 points" value={10} />
+                                                <Picker.Item label="50 points" value={50} />
+                                                <Picker.Item label="100 points" value={100} />
+                                                <Picker.Item label="200 points" value={200} />
+                                                <Picker.Item label="500 points" value={500} />
+                                                <Picker.Item label="1000 points" value={1000} />
+                                                <Picker.Item label="2000 points" value={2000} />
+                                                <Picker.Item label="5000 points" value={5000} />
+                                                <Picker.Item label="10000 points" value={10000} />
                                             </Picker>
                                         </View>
+                                        {error.score != '' ? (
+                                                <Text style={{  color: 'red',textAlign: 'center',fontSize: 14,marginBottom:10}}>
+                                                    {error.score}
+                                                </Text>
+                                            ) : null}
                                         <TextInput
                                             mode="outlined"
                                             label="Present *"
                                             numberOfLines={4}
                                             placeholder="Present *"
-                                            onChangeText={text => setText(text)}
+                                            onChangeText={(text) => setPraise({ ...praise, ['present']: text })}
                                         />
+                                         {error.present != '' ? (
+                                                <Text style={{  color: 'red',textAlign: 'center',fontSize: 14,marginBottom:10}}>
+                                                    {error.present}
+                                                </Text>
+                                            ) : null}
                                         <TextInput
                                             multiline
                                             mode="outlined"
                                             label="Message"
                                             numberOfLines={4}
                                             placeholder="Message..."
-                                            onChangeText={text => setText(text)}
-                                        />
+                                            onChangeText={(text) => setPraise({ ...praise, ['message']: text })} />
+                                              {error.message != '' ? (
+                                                <Text style={{  color: 'red',textAlign: 'center',fontSize: 14,marginBottom:10}}>
+                                                    {error.message}
+                                                </Text>
+                                            ) : null}
                                     </View>
                                 </View>
                             </View>
@@ -308,13 +373,12 @@ const CommendationScreen = ({ navigation }) => {
                                                 width: "48%",
                                                 borderWidth: 1,
                                                 borderRadius: 3,
-                                                borderColor: (checkWhy == 2) ? "#ff9900" : "#5c6bc0",
-                                                backgroundColor: (checkWhy == 2) ? "#FFFF66" : "none",
+                                                borderColor: (checkWhy == 1) ? "#ff9900" : "#5c6bc0",
+                                                backgroundColor: (checkWhy == 1) ? "#FFFF66" : "none",
                                                 padding: 10,
                                                 marginRight: 10
                                             }}
-
-                                        //  onPress={handleCheckDomainPress}
+                                            onPress={() => onSelectCheer("Great Inspirational Leadership,Growth Mindset")}
                                         >
                                             <View style={{ padding: 5, borderBottomColor: "#5c6bc0", borderBottomWidth: 1 }}>
                                                 <Text style={{ textAlign: "center", fontWeight: "bold", fontSize: 18, color: "rgb(35, 54, 78)" }}>Clarity</Text>
@@ -348,12 +412,11 @@ const CommendationScreen = ({ navigation }) => {
                                                 width: "48%",
                                                 borderWidth: 1,
                                                 borderRadius: 3,
-                                                borderColor: (checkWhy == 1) ? "#ff9900" : "#5c6bc0",
-                                                backgroundColor: (checkWhy == 1) ? "#FFFF66" : "none",
+                                                borderColor: (checkWhy == 2) ? "#ff9900" : "#5c6bc0",
+                                                backgroundColor: (checkWhy == 2) ? "#FFFF66" : "none",
                                                 padding: 10
                                             }}
-
-                                        //  onPress={handleCheckDomainPress}
+                                            onPress={() => onSelectCheer("Expressing and contributing yourself,Challenging development")}
                                         >
                                             <View style={{ padding: 5, borderBottomColor: "#5c6bc0", borderBottomWidth: 1 }}>
                                                 <Text style={{ textAlign: "center", fontWeight: "bold", fontSize: 18, color: "rgb(35, 54, 78)" }}>Courage</Text>
@@ -393,8 +456,7 @@ const CommendationScreen = ({ navigation }) => {
                                                 backgroundColor: (checkWhy == 3) ? "#FFFF66" : "none",
                                                 padding: 10,
                                             }}
-
-                                        //  onPress={handleCheckDomainPress}
+                                            onPress={() => onSelectCheer("Helping people grow together,Excellent communication")}
                                         >
                                             <View style={{ padding: 5, borderBottomColor: "#5c6bc0", borderBottomWidth: 1 }}>
                                                 <Text style={{ textAlign: "center", fontWeight: "bold", fontSize: 18, color: "rgb(35, 54, 78)" }}>Humanity</Text>
@@ -423,6 +485,11 @@ const CommendationScreen = ({ navigation }) => {
                                             <Text style={{ fontSize: 14, textAlign: "center", color: "rgb(35, 54, 78)" }}>Excellent communication</Text>
                                         </TouchableOpacity>
                                     </View>
+                                    {error.cheer != '' ? (
+                                                <Text style={{  color: 'red',textAlign: 'center',fontSize: 14,marginBottom:10}}>
+                                                    {error.cheer}
+                                                </Text>
+                                            ) : null}
                                     <Text style={{ textAlign: "center", color: "rgb(35, 54, 78)", fontSize: 14, padding: 10 }}>Your compliments will be approved by the admin and made visible to everyone</Text>
                                 </View>
                                 <View style={{ alignItems: "center", marginTop: 20 }}>
@@ -437,8 +504,7 @@ const CommendationScreen = ({ navigation }) => {
                                             padding: 10,
                                             alignItems: "center"
                                         }}
-
-                                    //  onPress={handleCheckDomainPress}
+                                        onPress={() => onAddPraises()}
                                     >
                                         <Text style={{ color: "#ff9900", fontWeight: "bold" }}>PUBLISH</Text>
                                     </TouchableOpacity>

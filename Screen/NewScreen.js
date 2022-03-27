@@ -80,7 +80,6 @@ const NewScreen = ({ navigation }) => {
     }
     setDetail(a);
   }
-  console.log(detail);
   useEffect(() => {
     const getToken = async () => {
       try {

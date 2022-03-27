@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { LinearGradient } from "expo-linear-gradient";
-import { StyleSheet, View, Text, ScrollView, Image, TouchableOpacity } from 'react-native';
+import { StyleSheet, View, Text, ScrollView, Image } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { Avatar, Dialog } from 'react-native-paper';
 import { REACT_APP_API, REACT_APP_FILE } from "@env"

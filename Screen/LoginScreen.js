@@ -53,7 +53,7 @@ const LoginScreen = ({ navigation }) => {
           AsyncStorage.setItem('role', json.user.role.toString());
           AsyncStorage.setItem('id', json.user.id.toString());
           setLoading(false);
-          //ToastAndroid.showWithGravityAndOffset('Logged in successfully !!!',ToastAndroid.LONG,ToastAndroid.CENTER,10,10);
+          ToastAndroid.showWithGravityAndOffset('Logged in successfully !!!',ToastAndroid.LONG,ToastAndroid.CENTER,10,10);
           navigation.navigate('HomeScreen');
         }
       });
@@ -80,7 +80,7 @@ const LoginScreen = ({ navigation }) => {
           }
         } else {
           setLoading(false);
-          //ToastAndroid.showWithGravityAndOffset('Successfully!!!',ToastAndroid.LONG,ToastAndroid.CENTER,10,10);
+          ToastAndroid.showWithGravityAndOffset('Successfully!!!',ToastAndroid.LONG,ToastAndroid.CENTER,10,10);
           if (!showForm) {
             setShowForm(true);
           } else {

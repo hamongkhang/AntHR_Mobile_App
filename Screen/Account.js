@@ -44,6 +44,7 @@ const AccountScreen = ({ navigation }) => {
     getToken();
   }, []);
   return (
+    !loading?
     <LinearGradient colors={['#edf8f1', '#f7f9fc']} style={styles.linearGradient}>
       <View style={styles.mainBody}>
         <Loader loading={loading} />
@@ -411,6 +412,7 @@ const AccountScreen = ({ navigation }) => {
         }
       </View>
     </LinearGradient>
+    : <Loader loading={loading} />
   );
 };
 export default AccountScreen;

@@ -435,10 +435,10 @@ const CommendationScreen = ({ navigation }) => {
                                                     <Text style={{ fontSize: 16, fontWeight: "bold", color: "rgb(35, 54, 78)" }}>{item.message ? item.message : null}</Text>
                                                 </View>
                                                 <View style={{ marginBottom: 10, alignItems: "center", flexDirection: "row" }}>
-                                                    <View style={{ width: "30%", marginRight: 10 }}>
+                                                    <View style={{ width: "26%", marginRight: 10 }}>
                                                         <Text style={{ fontSize: 12, fontWeight: "bold", color: "rgb(35, 54, 78)", backgroundColor: "#a7ffeb", padding: 7, borderRadius: 5 }}>Achievements</Text>
                                                     </View>
-                                                    <View style={{ flexDirection: "row", width: "60%", alignItems: "center" }}>
+                                                    <View style={{ flexDirection: "row", width: "65%", alignItems: "center" }}>
                                                         <Avatar.Image size={28} style={{ backgroundColor: "white" }} source={{ uri: REACT_APP_FILE + '/reward/value.png' }} />
                                                         <Text style={{ fontSize: 12, color: "rgb(35, 54, 78)", marginLeft: 5 }}>{item.cheer ? item.cheer : " - "}</Text>
                                                     </View>
@@ -514,7 +514,7 @@ const CommendationScreen = ({ navigation }) => {
                                 <View style={{ width: "48%", backgroundColor: "#dcedc8", justifyContent: "center", marginRight: 10, padding: 5, borderRadius: 3 }}>
                                     <Text style={{ textAlign: "center", fontSize: 12 }}>Recognition Points Redeemed</Text>
                                     <Text style={{ textAlign: "center", fontSize: 16, color: "#4caf50", fontWeight: "bold" }}>{myScore.gift ? myScore.gift : 0} Points</Text>
-                                    <Text style={{ textAlign: "center", fontSize: 8 }}>Please reward your colleagues or exchange gifts.</Text>
+                                    <Text style={{ textAlign: "center", fontSize: 8 }}>Please reward colleagues or exchange gifts.</Text>
                                     <Text style={{ textAlign: "center", fontSize: 8, color: "#ef5350" }}>Expiration Date: 31/12/2030</Text>
                                 </View>
                                 <View style={{ width: "48%", backgroundColor: "#b2ebf2", justifyContent: "center", padding: 5, borderRadius: 3 }}>
@@ -768,7 +768,7 @@ const CommendationScreen = ({ navigation }) => {
                                 icon="close"
                                 color={"red"}
                                 size={25}
-                                onPress={() => setShowComment(!showComment)} style={{ marginRight: "auto", marginBottom: 5 }} />
+                                onPress={() => setShowComment(!showComment)} style={{ marginRight: "auto", marginBottom: 5}} />
                             {
                                 comment.length
                                     ?
@@ -811,7 +811,7 @@ const CommendationScreen = ({ navigation }) => {
                                     })
                                     : null
                             }
-                            <View style={{ marginTop: "auto", marginBottom: 40, flexDirection: "row", alignItems: "center" }}>
+                            <View style={{ marginTop: "auto", marginBottom: 10, flexDirection: "row", alignItems: "center" }}>
                                 <View style={{ width: "80%" }}>
                                     <TextInput
                                         mode="outlined"

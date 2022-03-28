@@ -38,7 +38,6 @@ const CommendationScreen = ({ navigation }) => {
             .then(data => {
                 setUsers(data.data[0].reverse());
                 setEmployees(data.data[1].reverse());
-                setLoading(false);
             });
     }
     const getPoints = (token) => {
@@ -50,7 +49,6 @@ const CommendationScreen = ({ navigation }) => {
             .then(response => response.json())
             .then(data => {
                 setMyScore(data.data);
-                setLoading(false);
             });
     }
     const [praise, setPraise] = useState({
@@ -126,7 +124,6 @@ const CommendationScreen = ({ navigation }) => {
             .then(response => response.json())
             .then(data => {
                 setLike(data.data.reverse());
-                setLoading(false);
             });
     }
     const getComment = (token) => {
@@ -138,7 +135,6 @@ const CommendationScreen = ({ navigation }) => {
             .then(response => response.json())
             .then(data => {
                 setComment(data.data);
-                setLoading(false);
             });
     }
     const getPraise = (token) => {
@@ -150,7 +146,6 @@ const CommendationScreen = ({ navigation }) => {
             .then(response => response.json())
             .then(data => {
                 setPraiseGet(data.data.reverse());
-                setLoading(false);
             });
     }
     const sumLike = (id) => {
@@ -248,6 +243,9 @@ const CommendationScreen = ({ navigation }) => {
             }
         }
         getToken();
+        setTimeout(() => {
+            setLoading(false)
+        }, 3000);
     }, [render]);
     return (
         <LinearGradient colors={['#edf8f1', '#f7f9fc']} style={styles.linearGradient}>

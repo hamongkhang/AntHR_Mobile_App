@@ -12,7 +12,7 @@ import DocumentScreen from './Screen/DocumentScreen';
 import AttendanceScreen from "./Screen/AttendanceScreen"
 import GiftScreen from "./Screen/GiftScreen";
 import ScanScreen from './Screen/ScanScreen';
-
+import CheckUserScreen from './Screen/CheckUserScreen';
 const Stack = createNativeStackNavigator();
 
 const App = () => {
@@ -22,6 +22,11 @@ const App = () => {
         <Stack.Screen
           name="Welcome"
           component={Welcome}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="CheckUserScreen"
+          component={CheckUserScreen}
           options={{ headerShown: false }}
         />
         <Stack.Screen

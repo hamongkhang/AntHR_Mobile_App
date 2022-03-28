@@ -107,7 +107,7 @@ const ForgotPasswordScreen = ({ navigation }) => {
         } else {
           setLoading(false);
           ToastAndroid.showWithGravityAndOffset('Change password in successfully !!!', ToastAndroid.LONG, ToastAndroid.CENTER, 10, 10);
-          navigation.navigate('LoginScreen');
+          navigation.replace('LoginScreen');
         }
       });
   };
@@ -251,7 +251,7 @@ const ForgotPasswordScreen = ({ navigation }) => {
                     <Text style={styles.buttonTextStyle}>CONTINUE</Text>
                   </TouchableOpacity>
               }
-              <Text style={styles.buttonTextStyleForgot2}>You want to login? <Text style={styles.buttonTextStyleForgot3} onPress={() => navigation.navigate('LoginScreen')}>Login</Text></Text>
+              <Text style={styles.buttonTextStyleForgot2}>You want to login? <Text style={styles.buttonTextStyleForgot3} onPress={() => navigation.replace('LoginScreen')}>Login</Text></Text>
             </KeyboardAvoidingView>
           </View>
         </ScrollView>

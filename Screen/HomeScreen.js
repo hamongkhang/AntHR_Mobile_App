@@ -51,7 +51,7 @@ const HomeScreen = ({ navigation }) => {
       });
     setLoading(false);
     AsyncStorage.clear();
-    navigation.replace('LoginScreen')
+    navigation.replace('CheckUserScreen')
   }
   const onClickShowButton = () => {
     setShowButton(!showButton)
@@ -63,6 +63,7 @@ const HomeScreen = ({ navigation }) => {
         const id_user = await AsyncStorage.getItem("id");
         const avatar_user = await AsyncStorage.getItem("avatar");
         setAvatar(avatar_user);
+        setToken(token);
       } catch (err) {
         console.log(err);
       }

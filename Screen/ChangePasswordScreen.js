@@ -46,7 +46,7 @@ const ChangePasswordScreen = ({ navigation }) => {
         } else {
           setLoading(false);
           ToastAndroid.showWithGravityAndOffset('User successfully changed password !!!', ToastAndroid.LONG, ToastAndroid.CENTER, 10, 10);
-          navigation.navigate('HomeScreen');
+          navigation.replace('HomeScreen');
         }
       });
   };

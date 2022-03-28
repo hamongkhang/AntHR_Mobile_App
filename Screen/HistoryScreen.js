@@ -71,6 +71,7 @@ const HistoryScreen = ({ navigation }) => {
         getToken();
     }, [render]);
     return (
+        !loading?
         <LinearGradient colors={['#edf8f1', '#f7f9fc']} style={styles.linearGradient}>
             <Loader loading={loading} />
             <ScrollView>
@@ -175,6 +176,7 @@ const HistoryScreen = ({ navigation }) => {
                 </Portal>
             </Provider>
         </LinearGradient>
+          : <Loader loading={loading} />
     );
 };
 export default HistoryScreen;

@@ -57,11 +57,6 @@ const DocumentScreen = ({ navigation }) => {
 
   }
 
-
-
-
-
-
   const getFolder = (token) => {
     setLoading(true);
     fetch(REACT_APP_API + '/document/getAllFolder', {
@@ -105,6 +100,7 @@ const DocumentScreen = ({ navigation }) => {
     setPage(0);
   }, [itemsPerPage]);
   return (
+    !loading?
     checkDocuments ?
       <LinearGradient colors={['#edf8f1', '#f7f9fc']} style={styles.linearGradient}>
         <View style={styles.mainBody}>
@@ -258,6 +254,8 @@ const DocumentScreen = ({ navigation }) => {
 
         </View>
       </LinearGradient>
+    :
+    <Loader loading={loading} />
   );
 };
 export default DocumentScreen;

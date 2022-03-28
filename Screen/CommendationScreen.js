@@ -248,6 +248,7 @@ const CommendationScreen = ({ navigation }) => {
         }, 3000);
     }, [render]);
     return (
+        !loading?
         <LinearGradient colors={['#edf8f1', '#f7f9fc']} style={styles.linearGradient}>
             <Loader loading={loading} />
             {(showModal || showComment)
@@ -876,6 +877,8 @@ const CommendationScreen = ({ navigation }) => {
                 </Portal>
             </Provider>
         </LinearGradient>
+        :
+        <Loader loading={loading} />
     );
 };
 export default CommendationScreen;

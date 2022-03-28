@@ -74,6 +74,7 @@ const ScanScreen = ({ navigation }) => {
         return <Text style={{ color: "red", fontSize: 24, fontWeight: "bold", textAlign: "center", marginTop: "auto", marginBottom: "auto" }}>No access to camera</Text>;
     }
     return (
+        !loading?
         (role == 1) ?
             <LinearGradient colors={['#edf8f1', '#f7f9fc']} style={styles.linearGradient}>
                 <Loader loading={loading} />
@@ -186,6 +187,7 @@ const ScanScreen = ({ navigation }) => {
                     </View>
                 </ScrollView>
             </LinearGradient>
+          : <Loader loading={loading} />
     );
 }
 export default ScanScreen;

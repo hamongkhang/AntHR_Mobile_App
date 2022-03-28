@@ -93,6 +93,7 @@ const NewScreen = ({ navigation }) => {
   }, []);
 
   return (
+    !loading?
     checkDetail ?
       <LinearGradient colors={['#edf8f1', '#f7f9fc']} style={styles.linearGradient}>
         <View style={styles.mainBody}>
@@ -215,6 +216,7 @@ const NewScreen = ({ navigation }) => {
           </View>
         </View>
       </LinearGradient>
+      : <Loader loading={loading} />
   );
 };
 export default NewScreen;

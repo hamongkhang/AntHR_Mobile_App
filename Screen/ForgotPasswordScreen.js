@@ -112,6 +112,7 @@ const ForgotPasswordScreen = ({ navigation }) => {
       });
   };
   return (
+    !loading?
     <LinearGradient colors={['#312A6C', '#852D91']} style={styles.linearGradient}>
       <View style={styles.mainBody}>
         <Loader loading={loading} />
@@ -257,6 +258,7 @@ const ForgotPasswordScreen = ({ navigation }) => {
         </ScrollView>
       </View>
     </LinearGradient>
+    : <Loader loading={loading} />
   );
 };
 export default ForgotPasswordScreen;

@@ -32,7 +32,7 @@ const ForgotPasswordScreen = ({ navigation }) => {
       method: 'POST',
       body: _formData,
     };
-    fetch(REACT_APP_API + '/user/getCodeForgotPassword', requestOptions)
+    fetch('http://localhost:8000/api/user/getCodeForgotPassword', requestOptions)
       .then((res) => res.json())
       .then((json) => {
         if (json.error) {
@@ -65,7 +65,7 @@ const ForgotPasswordScreen = ({ navigation }) => {
       method: 'POST',
       body: _formData,
     };
-    fetch(REACT_APP_API + '/user/getCodeForgotPassword', requestOptions)
+    fetch('http://localhost:8000/api/user/getCodeForgotPassword', requestOptions)
       .then((res) => res.json())
       .then((json) => {
         if (json.error) {
@@ -92,7 +92,7 @@ const ForgotPasswordScreen = ({ navigation }) => {
       method: 'POST',
       body: _formData,
     };
-    fetch(REACT_APP_API + '/user/changePasswordForgot', requestOptions)
+    fetch('http://localhost:8000/api/user/changePasswordForgot', requestOptions)
       .then((res) => res.json())
       .then((json) => {
         if (json.error) {

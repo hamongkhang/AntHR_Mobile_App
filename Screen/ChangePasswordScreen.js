@@ -31,7 +31,7 @@ const ChangePasswordScreen = ({ navigation }) => {
       body: _formData,
       headers: { "Authorization": `Bearer ` + token }
     };
-    fetch(REACT_APP_API + '/user/changePassword', requestOptions)
+    fetch('http://localhost:8000/api/user/changePassword', requestOptions)
       .then((res) => res.json())
       .then((json) => {
         if (json.error) {

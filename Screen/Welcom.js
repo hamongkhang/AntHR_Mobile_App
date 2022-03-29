@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { LinearGradient } from "expo-linear-gradient";
 import { StyleSheet, View, Text, ScrollView, Image, TouchableOpacity, KeyboardAvoidingView, } from 'react-native';
 import Loader from "./Loader";
-
+import AsyncStorage from '@react-native-async-storage/async-storage'
 const Welcome = ({ navigation }) => {
   const [loading, setLoading] = useState(false);
   const getStart = () => {
@@ -10,7 +10,7 @@ const Welcome = ({ navigation }) => {
     setTimeout(() => {
       setLoading(false);
       navigation.navigate('CheckUserScreen');
-    }, 3000);
+    }, 2000);
   }
   return (
     <LinearGradient colors={['#f5fdf8', '#f7f9fc']} style={styles.linearGradient}>

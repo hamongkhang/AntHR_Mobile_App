@@ -20,7 +20,7 @@ const NewScreen = ({ navigation }) => {
 
   const getNews = (token) => {
     setLoading(true);
-    fetch(REACT_APP_API + '/new/getAllNew', {
+    fetch('http://localhost:8000/api/new/getAllNew', {
       method: "GET",
       headers: { "Authorization": `Bearer ` + token }
     })

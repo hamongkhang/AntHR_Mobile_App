@@ -15,7 +15,7 @@ const AccountScreen = ({ navigation }) => {
   const [id, setId] = useState('');
   const getInforEmployee = (token, id) => {
     setLoading(true);
-    fetch(REACT_APP_API + '/employee/getAllEmployee', {
+    fetch('http://localhost:8000/api/employee/getAllEmployee', {
       method: "GET",
       headers: { "Authorization": `Bearer ` + token }
     })
@@ -63,9 +63,9 @@ const AccountScreen = ({ navigation }) => {
                           ?
                           <Avatar.Image size={80} source={{ uri: item.avatar }} />
                           :
-                          <Avatar.Image size={80} source={{ uri: REACT_APP_FILE + '/avatar/' + item.avatar }} />
+                          <Avatar.Image size={80} source={{ uri: 'http://localhost:8000/upload' + '/avatar/' + item.avatar }} />
                         :
-                        <Avatar.Image size={80} source={{ uri: REACT_APP_FILE + '/avatar/avatar.png' }} />
+                        <Avatar.Image size={80} source={{ uri: 'http://localhost:8000/upload'+ '/avatar/avatar.png' }} />
                       }
                       <Text style={styles.name_header}>{item.last_name + " " + item.first_name}</Text>
                       <Text style={styles.email_header}>{item.email}</Text>

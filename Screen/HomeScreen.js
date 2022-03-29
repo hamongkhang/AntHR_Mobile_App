@@ -45,7 +45,7 @@ const HomeScreen = ({ navigation }) => {
       method: 'POST',
       headers: { "Authorization": `Bearer ` + token }
     };
-    fetch(REACT_APP_API + '/user/logout', requestOptions)
+    fetch('http://localhost:8000/api/user/logout', requestOptions)
       .then((res) => res.json())
       .then((json) => {
       });
@@ -82,13 +82,13 @@ const HomeScreen = ({ navigation }) => {
               {
                 (avatar == "null")
                   ?
-                  <Avatar.Image size={35} style={{ backgroundColor: "#edf8f1", marginLeft: "auto", marginRight: 10 }} source={{ uri: REACT_APP_FILE + '/avatar/avatar.png' }} />
+                  <Avatar.Image size={35} style={{ backgroundColor: "#edf8f1", marginLeft: "auto", marginRight: 10 }} source={{ uri: 'http://localhost:8000/upload'+ '/avatar/avatar.png' }} />
                   :
                   (avatar.search('https://') != -1)
                     ?
                     <Avatar.Image size={35} style={{ backgroundColor: "#edf8f1", marginLeft: "auto", marginRight: 10 }} source={{ uri: avatar }} />
                     :
-                    <Avatar.Image size={35} style={{ backgroundColor: "#edf8f1", marginLeft: "auto", marginRight: 10 }} source={{ uri: REACT_APP_FILE + '/avatar/' + avatar }} />
+                    <Avatar.Image size={35} style={{ backgroundColor: "#edf8f1", marginLeft: "auto", marginRight: 10 }} source={{ uri: 'http://localhost:8000/upload'+ '/avatar/' + avatar }} />
               }
             </Text>
           </Appbar.Header>

@@ -16,7 +16,7 @@ const ScanScreen = ({ navigation }) => {
 
     const getEmployees = (token) => {
         setLoading(true);
-        fetch(REACT_APP_API + '/employee/getAllEmployee', {
+        fetch('http://localhost:8000/api/employee/getAllEmployee', {
             method: "GET",
             headers: { "Authorization": `Bearer ` + token }
         })

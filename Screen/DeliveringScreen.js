@@ -21,7 +21,7 @@ const DeliveringScreen = ({ navigation }) => {
     const [orders, setOrders] = useState([]);
     const getOrders = (token) => {
         setLoading(true);
-        fetch('http://localhost:8000/api/cart_present/getAllCartPresent', {
+        fetch('http://192.168.43.97:8000/api/cart_present/getAllCartPresent', {
             method: "GET",
             headers: { "Authorization": `Bearer ` + token }
         })
@@ -33,7 +33,7 @@ const DeliveringScreen = ({ navigation }) => {
     }
     const onConfirmEmployee = (id) => {
         setLoading(true);
-        fetch('http://localhost:8000/api/cart_present/changeStatusClient/' + id, {
+        fetch('http://192.168.43.97:8000/api/cart_present/changeStatusClient/' + id, {
             method: "GET",
             headers: { "Authorization": `Bearer ` + token }
         })
@@ -88,9 +88,9 @@ const DeliveringScreen = ({ navigation }) => {
                                                         (item.avatar.search('https://') !== -1) ?
                                                             <Avatar.Image size={45} style={{ backgroundColor: "#edf8f1" }} source={{ uri: item.avatar }} />
                                                             :
-                                                            <Avatar.Image size={45} style={{ backgroundColor: "#edf8f1" }} source={{ uri: 'http://localhost:8000/upload'+ '/avatar/' + item.avatar }} />
+                                                            <Avatar.Image size={45} style={{ backgroundColor: "#edf8f1" }} source={{ uri: 'http://192.168.43.97:8000/upload'+ '/avatar/' + item.avatar }} />
                                                         :
-                                                        <Avatar.Image size={45} style={{ backgroundColor: "#edf8f1" }} source={{ uri: 'http://localhost:8000/upload'+ '/avatar/avatar.png' }} />
+                                                        <Avatar.Image size={45} style={{ backgroundColor: "#edf8f1" }} source={{ uri: 'http://192.168.43.97:8000/upload'+ '/avatar/avatar.png' }} />
                                                     }
                                                 </View>
                                                 <View style={{ width: "80%" }}>
@@ -100,7 +100,7 @@ const DeliveringScreen = ({ navigation }) => {
                                             </View>
                                             <View style={{ alignItems: "center", marginBottom: 20 }}>
                                                 <Image
-                                                    source={{ uri: 'http://localhost:8000/upload'+ '/present/image/' + item.present_image }}
+                                                    source={{ uri: 'http://192.168.43.97:8000/upload'+ '/present/image/' + item.present_image }}
                                                     style={{
                                                         width: '100%',
                                                         height: 100,

@@ -31,7 +31,7 @@ const ChangePasswordScreen = ({ navigation }) => {
       body: _formData,
       headers: { "Authorization": `Bearer ` + token }
     };
-    fetch('http://localhost:8000/api/user/changePassword', requestOptions)
+    fetch('http://192.168.43.97:8000/api/user/changePassword', requestOptions)
       .then((res) => res.json())
       .then((json) => {
         if (json.error) {

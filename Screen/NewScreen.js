@@ -116,11 +116,11 @@ const NewScreen = ({ navigation }) => {
           <ScrollView>
             {!check ?
               news.length ?
-                news.map((item, index) => {
+                news.map((item,index) => {
                   return (
-                    <View style={styles.item_one}>
+                    <View key={index} style={styles.item_one}>
                       <View style={{ flexDirection: "row", alignItems: "center" }}>
-                        <Text onPress={() => onChangeNewDetail(item.id)} style={{width:"65%", fontSize: 18, fontHeight: 20, color: "rgb(35, 54, 78)", fontWeight: "bold" }}>{item.title ? item.title : "-"}</Text>
+                        <Text onPress={() => onChangeNewDetail(item.id)} style={{width:"65%", fontSize: 18, color: "rgb(35, 54, 78)", fontWeight: "bold" }}>{item.title ? item.title : "-"}</Text>
                         {(item.important == 1)
                           ?
                           <Text style={{fontSize: 17, paddingTop: 4, paddingBottom: 4, paddingRight: 7, paddingLeft: 7, backgroundColor: "rgb(216, 246, 226)", color: "rgb(31, 153, 70)", borderRadius: 3, marginLeft: 10 }}>IMPORTANT</Text>
@@ -142,11 +142,11 @@ const NewScreen = ({ navigation }) => {
                     </View>
                   )
                 }) : null
-              : result.length ? result.map((item, index) => {
+              : result.length ? result.map((item,index) => {
                 return (
-                  <View style={styles.item_one}>
+                  <View  key={index} style={styles.item_one}>
                     <View style={{ flexDirection: "row", alignItems: "center" }}>
-                      <Text onPress={() => onChangeNewDetail(item.id)} style={{width:"65%",fontSize: 18, fontHeight: 20, color: "rgb(35, 54, 78)", fontWeight: "bold" }}>{item.title ? item.title : "-"}</Text>
+                      <Text onPress={() => onChangeNewDetail(item.id)} style={{width:"65%",fontSize: 18, color: "rgb(35, 54, 78)", fontWeight: "bold" }}>{item.title ? item.title : "-"}</Text>
                       {(item.important == 1)
                         ?
                         <Text style={{ fontSize: 17, paddingTop: 4, paddingBottom: 4, paddingRight: 7, paddingLeft: 7, backgroundColor: "rgb(216, 246, 226)", color: "rgb(31, 153, 70)", borderRadius: 3, marginLeft: 10 }}>IMPORTANT</Text>
@@ -186,10 +186,10 @@ const NewScreen = ({ navigation }) => {
                   marginRight: 5
                 }}
               />
-              <Text style={{ fontSize: 14, fontHeight: 20, color: "rgb(79, 94, 113)", fontWeight: "bold", marginLeft: 5 }} onPress={() => setCheckDetail(true)}>Back</Text>
+              <Text style={{ fontSize: 14, color: "rgb(79, 94, 113)", fontWeight: "bold", marginLeft: 5 }} onPress={() => setCheckDetail(true)}>Back</Text>
             </View>
             <View style={{ flexDirection: "row", alignItems: "center" }}>
-              <Text style={{ fontSize: 18, fontHeight: 20, color: "rgb(35, 54, 78)", fontWeight: "bold" }}>
+              <Text style={{ fontSize: 18, color: "rgb(35, 54, 78)", fontWeight: "bold" }}>
                 {detail[0].title ? detail[0].title : "-"}
               </Text>
               {(detail[0].important == 1)

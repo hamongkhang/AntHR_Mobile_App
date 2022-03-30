@@ -156,7 +156,7 @@ const ReceivigGiftScreen = ({ navigation }) => {
                 presents.length ?
                   presents.map((item, index) => {
                     return (
-                      <View style={{ marginTop: 6, width: Dimensions.get('window').width / 2 - 13, padding: 10, backgroundColor: "white", borderColor: "rgb(227, 235, 241)", borderWidth: 1, borderRadius: 3, marginRight: (index % 2 != 0) ? 0 : 6 }}>
+                      <View  key={index} style={{ marginTop: 6, width: Dimensions.get('window').width / 2 - 13, padding: 10, backgroundColor: "white", borderColor: "rgb(227, 235, 241)", borderWidth: 1, borderRadius: 3, marginRight: (index % 2 != 0) ? 0 : 6 }}>
                         <View style={{ alignItems: "center" }}>
                           <Image
                             source={{ uri: 'http://192.168.43.97:8000/upload'+ '/present/image/' + item.image }}
@@ -205,7 +205,7 @@ const ReceivigGiftScreen = ({ navigation }) => {
                 searchGift.length ?
                   searchGift.map((item, index) => {
                     return (
-                      <View style={{ marginTop: 6, width: Dimensions.get('window').width / 2 - 13, padding: 10, backgroundColor: "white", borderColor: "rgb(227, 235, 241)", borderWidth: 1, borderRadius: 3, marginRight: (index % 2 != 0) ? 0 : 6 }}>
+                      <View key={index} style={{ marginTop: 6, width: Dimensions.get('window').width / 2 - 13, padding: 10, backgroundColor: "white", borderColor: "rgb(227, 235, 241)", borderWidth: 1, borderRadius: 3, marginRight: (index % 2 != 0) ? 0 : 6 }}>
                         <View style={{ alignItems: "center" }}>
                           <Image
                             source={{ uri: 'http://192.168.43.97:8000/upload'+ '/present/image/' + item.image }}

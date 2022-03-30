@@ -81,7 +81,7 @@ const DeliveringScreen = ({ navigation }) => {
                             orders.map((item, index) => {
                                 if ((item.status == 1) && (item.user_id == id)) {
                                     return (
-                                        <View style={{ marginBottom: 10, padding: 10, backgroundColor: "white", borderColor: "rgb(227, 235, 241)", borderWidth: 1, borderRadius: 5, paddingBottom: 16, boxShadow: "rgb(95 125 149 / 20%) 0px 4px 13px 0px" }}>
+                                        <View key={index} style={{ marginBottom: 10, padding: 10, backgroundColor: "white", borderColor: "rgb(227, 235, 241)", borderWidth: 1, borderRadius: 5, paddingBottom: 16, boxShadow: "rgb(95 125 149 / 20%) 0px 4px 13px 0px" }}>
                                             <View style={{ alignItems: "center", flexDirection: "row", marginBottom: 20 }}>
                                                 <View style={{ width: "20%" }}>
                                                     {item.avatar ?
@@ -112,7 +112,7 @@ const DeliveringScreen = ({ navigation }) => {
                                                 <Text style={{ fontSize: 24, fontWeight: "bold", color: "red" }}>{item.present_score ? item.present_score : null} Points</Text>
                                             </View>
                                             <View style={{ marginBottom: 10 }}>
-                                                <Text style={{ fontSize: 14, fontWeight: "italic", color: "rgb(35, 54, 78)" }}>Please confirm the employee's redemption information .</Text>
+                                                <Text style={{ fontSize: 14, color: "rgb(35, 54, 78)" }}>Please confirm the employee's redemption information .</Text>
                                             </View>
                                             <View style={{ alignItems: "center", marginTop: 10 }}>
                                                 <TouchableOpacity

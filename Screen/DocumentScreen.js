@@ -130,10 +130,10 @@ const tableData = [];
               <ScrollView>
                 {!check ?
                   folders.length ?
-                    folders.map((item, index) => {
+                    folders.map((item,index) => {
                       if (item.share == 1) {
                         return (
-                          <DataTable.Row>
+                          <DataTable.Row key={index}>
                             <DataTable.Cell style={{width:250}} onPress={() => getOneDocumentFolders(item.id)}>{item.name ? item.name : "-"}</DataTable.Cell>
                             <DataTable.Cell style={{width:200}}>{item.author ? item.author : "-"}</DataTable.Cell>
                             <DataTable.Cell style={{width:300}}>{item.description ? item.description : "-"}</DataTable.Cell>
@@ -145,10 +145,10 @@ const tableData = [];
                         )
                       }
                     }) : null
-                  : result.length ? result.map((item, index) => {
+                  : result.length ? result.map((item,index) => {
                     if (item.share == 1) {
                       return (
-                        <DataTable.Row>
+                        <DataTable.Row key={index}>
                           <DataTable.Cell style={{width:250}} onPress={() => getOneDocumentFolders(item.id)}>{item.name ? item.name : "-"}</DataTable.Cell>
                           <DataTable.Cell style={{width:200}}>{item.author ? item.author : "-"}</DataTable.Cell>
                           <DataTable.Cell style={{width:300}}>{item.description ? item.description : "-"}</DataTable.Cell>
@@ -195,7 +195,7 @@ const tableData = [];
                   marginRight: 5
                 }}
               />
-              <Text style={{ fontSize: 14, fontHeight: 20, color: "rgb(79, 94, 113)", fontWeight: "bold", marginLeft: 5 }} onPress={() => setCheckDocuments(true)}>Back</Text>
+              <Text style={{ fontSize: 14, color: "rgb(79, 94, 113)", fontWeight: "bold", marginLeft: 5 }} onPress={() => setCheckDocuments(true)}>Back</Text>
             </View>
             <Searchbar
               style={{ borderColor: "rgb(212, 223, 231)", borderWidth: 1, boxShadow: "rgb(0 0 0 / 24%) 0px 3px 4px", height: 60, marginBottom: 10 }}
@@ -215,9 +215,9 @@ const tableData = [];
               <ScrollView>
                 {!check2 ?
                   documents.length ?
-                    documents.map((item, index) => {
+                    documents.map((item,index) => {
                       return (
-                        <DataTable.Row>
+                        <DataTable.Row key={index}>
                           <DataTable.Cell style={{width:250}}>{item.name_show ? item.name_show : "-"}</DataTable.Cell>
                           <DataTable.Cell style={{width:120}}>{item.size ? item.size : "-"}</DataTable.Cell>
                           <DataTable.Cell style={{width:150}}>
@@ -227,9 +227,9 @@ const tableData = [];
                       )
 
                     }) : null
-                  : result2.length ? result2.map((item, index) => {
+                  : result2.length ? result2.map((item,index) => {
                     return (
-                      <DataTable.Row>
+                      <DataTable.Row key={index}>
                         <DataTable.Cell style={{width:250}}>{item.name_show ? item.name_show : "-"}</DataTable.Cell>
                         <DataTable.Cell style={{width:120}}>{item.size ? item.size : "-"}</DataTable.Cell>
                         <DataTable.Cell style={{width:150}}>

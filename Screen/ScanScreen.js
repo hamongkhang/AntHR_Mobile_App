@@ -221,7 +221,7 @@ const ScanScreen = ({ navigation }) => {
                                 }
                                 {
                                     mapMonth.length ?
-                                        mapMonth.map((item, index) => {
+                                        mapMonth.map((item) => {
                                             var check=false;
                                             return (
                                                 <View style={{ borderRadius: 5, borderColor: "rgb(227, 235, 241)", borderWidth: 1, paddingTop: 20, marginBottom: 20 }}>
@@ -233,7 +233,7 @@ const ScanScreen = ({ navigation }) => {
                                                     </View>
                                                             {
                                                                 tableData.length ?
-                                                                    tableData.map((itemData, index) => {
+                                                                    tableData.map((itemData) => {
                                                                         if(moment(new Date(itemData.date)).date()==moment(new Date(item)).date()){
                                                                             return(
                                                                                 <>

@@ -150,7 +150,7 @@ const CommendationScreen = ({ navigation }) => {
     }
     const sumLike = (id) => {
         var sum = 0;
-        like.map((item, index) => {
+        like.map((item) => {
             if (item.praise_id == id) {
                 sum = sum + 1;
             }
@@ -159,7 +159,7 @@ const CommendationScreen = ({ navigation }) => {
     }
     const sumComment = (id) => {
         var sum = 0;
-        comment.map((item, index) => {
+        comment.map((item) => {
             if (item.praise_id == id) {
                 sum = sum + 1;
             }
@@ -168,7 +168,7 @@ const CommendationScreen = ({ navigation }) => {
     }
     const checkLike = (idGet) => {
         var kt = false;
-        like.map((item, index) => {
+        like.map((item) => {
             if ((item.user_id == id) && (item.praise_id == idGet)) {
                 kt = true;
             }
@@ -257,30 +257,30 @@ const CommendationScreen = ({ navigation }) => {
                     {
                         praiseGet.length
                             ?
-                            praiseGet.map((item, index) => {
+                            praiseGet.map((item,index) => {
                                 if (item.status == 1) {
                                     return (
-                                        <View style={{ padding: 10, paddingTop: 10 }}>
+                                        <View key={index} style={{ padding: 10, paddingTop: 10 }}>
                                             <View style={{ padding: 10, backgroundColor: "white", borderColor: "rgb(227, 235, 241)", borderWidth: 1, borderRadius: 5, paddingBottom: 16, boxShadow: "rgb(95 125 149 / 20%) 0px 4px 13px 0px" }}>
                                                 <View style={{ alignItems: "center", flexDirection: "row" }}>
                                                     <View style={{ width: "20%" }}>
                                                         {employees.length ?
-                                                            employees.map((itemUser, index) => {
+                                                            employees.map((itemUser,index2) => {
                                                                 if (itemUser.user_id == item.author) {
                                                                     if (itemUser.avatar) {
                                                                         if (itemUser.avatar.search('https://') != -1) {
                                                                             return (
-                                                                                <Avatar.Image size={45} style={{ backgroundColor: "#edf8f1" }} source={{ uri: itemUser.avatar }} />
+                                                                                <Avatar.Image key={index2}  size={45} style={{ backgroundColor: "#edf8f1" }} source={{ uri: itemUser.avatar }} />
                                                                             );
                                                                         } else {
                                                                             return (
-                                                                                <Avatar.Image size={45} style={{ backgroundColor: "#edf8f1" }} source={{ uri: 'http://192.168.43.97:8000/upload'+ '/avatar/' + itemUser.avatar }} />
+                                                                                <Avatar.Image key={index2+1} size={45} style={{ backgroundColor: "#edf8f1" }} source={{ uri: 'http://192.168.43.97:8000/upload'+ '/avatar/' + itemUser.avatar }} />
                                                                             );
                                                                         }
                                                                     }
                                                                     else {
                                                                         return (
-                                                                            <Avatar.Image size={45} style={{ backgroundColor: "#edf8f1" }} source={{ uri: 'http://192.168.43.97:8000/upload'+ '/avatar/avatar.png' }} />
+                                                                            <Avatar.Image key={index2+2} size={45} style={{ backgroundColor: "#edf8f1" }} source={{ uri: 'http://192.168.43.97:8000/upload'+ '/avatar/avatar.png' }} />
                                                                         );
                                                                     }
                                                                 } else {
@@ -296,7 +296,7 @@ const CommendationScreen = ({ navigation }) => {
                                                     <View style={{ width: "80%" }}>
                                                         <Text style={{ fontSize: 16, color: "rgb(35, 54, 78)", fontWeight: "bold" }}>
                                                             {employees.length ?
-                                                                employees.map((itemUser, index) => {
+                                                                employees.map((itemUser,index2) => {
                                                                     if (itemUser.user_id == item.author) {
                                                                         return (
                                                                             itemUser.last_name + " " + itemUser.first_name + " "
@@ -311,7 +311,7 @@ const CommendationScreen = ({ navigation }) => {
                                                             }
                                                             <Text style={{ fontSize: 16, fontWeight: "normal" }}> đã khen thưởng </Text>
                                                             {employees.length ?
-                                                                employees.map((itemUser, index) => {
+                                                                employees.map((itemUser) => {
                                                                     if (itemUser.user_id == item.recipient) {
                                                                         return (
                                                                             " " + itemUser.last_name + " " + itemUser.first_name
@@ -331,22 +331,22 @@ const CommendationScreen = ({ navigation }) => {
                                                 <View style={{ alignItems: "center", flexDirection: "row", marginTop: 10, marginBottom: 10 }}>
                                                     <View style={{ alignItems: "center", width: "40%" }}>
                                                         {employees.length ?
-                                                            employees.map((itemUser, index) => {
+                                                            employees.map((itemUser,index3) => {
                                                                 if (itemUser.user_id == item.author) {
                                                                     if (itemUser.avatar) {
                                                                         if (itemUser.avatar.search('https://') != -1) {
                                                                             return (
-                                                                                <Avatar.Image size={45} style={{ backgroundColor: "#edf8f1" }} source={{ uri: itemUser.avatar }} />
+                                                                                <Avatar.Image key={index3} size={45} style={{ backgroundColor: "#edf8f1" }} source={{ uri: itemUser.avatar }} />
                                                                             );
                                                                         } else {
                                                                             return (
-                                                                                <Avatar.Image size={45} style={{ backgroundColor: "#edf8f1" }} source={{ uri: 'http://192.168.43.97:8000/upload'+ '/avatar/' + itemUser.avatar }} />
+                                                                                <Avatar.Image key={index3+1} size={45} style={{ backgroundColor: "#edf8f1" }} source={{ uri: 'http://192.168.43.97:8000/upload'+ '/avatar/' + itemUser.avatar }} />
                                                                             );
                                                                         }
                                                                     }
                                                                     else {
                                                                         return (
-                                                                            <Avatar.Image size={45} style={{ backgroundColor: "#edf8f1" }} source={{ uri: 'http://192.168.43.97:8000/upload'+ '/avatar/avatar.png' }} />
+                                                                            <Avatar.Image key={index3+2} size={45} style={{ backgroundColor: "#edf8f1" }} source={{ uri: 'http://192.168.43.97:8000/upload'+ '/avatar/avatar.png' }} />
                                                                         );
                                                                     }
                                                                 } else {
@@ -360,7 +360,7 @@ const CommendationScreen = ({ navigation }) => {
                                                         }
                                                         <Text style={{ textAlign: "center", fontSize: 16, fontWeight: "bold", color: "rgb(35, 54, 78)", marginTop: 10 }}>
                                                             {employees.length ?
-                                                                employees.map((itemUser, index) => {
+                                                                employees.map((itemUser) => {
                                                                     if (itemUser.user_id == item.author) {
                                                                         return (
                                                                             itemUser.last_name + " " + itemUser.first_name + " "
@@ -381,22 +381,22 @@ const CommendationScreen = ({ navigation }) => {
                                                     </View>
                                                     <View style={{ alignItems: "center", width: "40%" }}>
                                                         {employees.length ?
-                                                            employees.map((itemUser, index) => {
+                                                            employees.map((itemUser,index4) => {
                                                                 if (itemUser.user_id == item.recipient) {
                                                                     if (itemUser.avatar) {
                                                                         if (itemUser.avatar.search('https://') != -1) {
                                                                             return (
-                                                                                <Avatar.Image size={45} style={{ backgroundColor: "#edf8f1" }} source={{ uri: itemUser.avatar }} />
+                                                                                <Avatar.Image key={index4+1} size={45} style={{ backgroundColor: "#edf8f1" }} source={{ uri: itemUser.avatar }} />
                                                                             );
                                                                         } else {
                                                                             return (
-                                                                                <Avatar.Image size={45} style={{ backgroundColor: "#edf8f1" }} source={{ uri: 'http://192.168.43.97:8000/upload'+ '/avatar/' + itemUser.avatar }} />
+                                                                                <Avatar.Image key={index4+2} size={45} style={{ backgroundColor: "#edf8f1" }} source={{ uri: 'http://192.168.43.97:8000/upload'+ '/avatar/' + itemUser.avatar }} />
                                                                             );
                                                                         }
                                                                     }
                                                                     else {
                                                                         return (
-                                                                            <Avatar.Image size={45} style={{ backgroundColor: "#edf8f1" }} source={{ uri: 'http://192.168.43.97:8000/upload'+ '/avatar/avatar.png' }} />
+                                                                            <Avatar.Image key={index4+3} size={45} style={{ backgroundColor: "#edf8f1" }} source={{ uri: 'http://192.168.43.97:8000/upload'+ '/avatar/avatar.png' }} />
                                                                         );
                                                                     }
                                                                 } else {
@@ -410,7 +410,7 @@ const CommendationScreen = ({ navigation }) => {
                                                         }
                                                         <Text style={{ textAlign: "center", fontSize: 16, fontWeight: "bold", color: "rgb(35, 54, 78)", marginTop: 10 }}>
                                                             {employees.length ?
-                                                                employees.map((itemUser, index) => {
+                                                                employees.map((itemUser) => {
                                                                     if (itemUser.user_id == item.recipient) {
                                                                         return (
                                                                             itemUser.last_name + " " + itemUser.first_name + " "
@@ -541,10 +541,10 @@ const CommendationScreen = ({ navigation }) => {
                                                 {
                                                     employees.length
                                                         ?
-                                                        employees.map((item, index) => {
+                                                        employees.map((item,index) => {
                                                             if (item.user_id != id) {
                                                                 return (
-                                                                    <Picker.Item label={item.last_name + " " + item.first_name + " ( " + item.email + " ) "} value={item.user_id} />
+                                                                    <Picker.Item key={index} label={item.last_name + " " + item.first_name + " ( " + item.email + " ) "} value={item.user_id} />
                                                                 )
                                                             }
                                                         })
@@ -772,27 +772,27 @@ const CommendationScreen = ({ navigation }) => {
                             {
                                 comment.length
                                     ?
-                                    comment.map((itemComment, index) => {
+                                    comment.map((itemComment,index) => {
                                         if (itemComment.praise_id == addComment.praise_id) {
                                             return (
-                                                <View style={{ marginTop: 15, flexDirection: "row", alignItems: "center", paddingLeft: 20, paddingRight: 20 }}>
+                                                <View key={index} style={{ marginTop: 15, flexDirection: "row", alignItems: "center", paddingLeft: 20, paddingRight: 20 }}>
                                                     <View style={{ marginRight: 10, justifyContent: "center", width: "15%" }}>
-                                                        {employees.map((itemEmployee, index) => {
+                                                        {employees.map((itemEmployee,index2) => {
                                                             if (itemComment.user_id == itemEmployee.user_id) {
                                                                 if (itemEmployee.avatar) {
                                                                     if (itemEmployee.avatar.search('https://') !== -1) {
                                                                         return (
-                                                                            <Avatar.Image size={40} style={{ backgroundColor: "#edf8f1", marginRight: 10 }} source={{ uri: itemEmployee.avatar }} />
+                                                                            <Avatar.Image key={index2+1} size={40} style={{ backgroundColor: "#edf8f1", marginRight: 10 }} source={{ uri: itemEmployee.avatar }} />
                                                                         );
                                                                     } else {
                                                                         return (
-                                                                            <Avatar.Image size={40} style={{ backgroundColor: "#edf8f1", marginRight: 10 }} source={{ uri: 'http://192.168.43.97:8000/upload'+ '/avatar/' + itemEmployee.avatar }} />
+                                                                            <Avatar.Image key={index2+2} size={40} style={{ backgroundColor: "#edf8f1", marginRight: 10 }} source={{ uri: 'http://192.168.43.97:8000/upload'+ '/avatar/' + itemEmployee.avatar }} />
                                                                         );
                                                                     }
                                                                 }
                                                                 else {
                                                                     return (
-                                                                        <Avatar.Image size={40} style={{ backgroundColor: "#edf8f1", marginRight: 10 }} source={{ uri: 'http://192.168.43.97:8000/upload'+ '/avatar/avatar.png' }} />
+                                                                        <Avatar.Image key={index2+3} size={40} style={{ backgroundColor: "#edf8f1", marginRight: 10 }} source={{ uri: 'http://192.168.43.97:8000/upload'+ '/avatar/avatar.png' }} />
                                                                     );
                                                                 }
                                                             } else {

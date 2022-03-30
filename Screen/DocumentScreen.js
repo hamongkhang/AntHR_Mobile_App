@@ -121,11 +121,11 @@ const tableData = [];
           <ScrollView horizontal={true}>
             <DataTable>
               <DataTable.Header>
-                <DataTable.Title>Name</DataTable.Title>
-                <DataTable.Title>Author</DataTable.Title>
-                <DataTable.Title>Description</DataTable.Title>
-                <DataTable.Title>Number Of Files</DataTable.Title>
-                <DataTable.Title>Created At</DataTable.Title>
+                <DataTable.Title style={{width:250}}>Name</DataTable.Title>
+                <DataTable.Title style={{width:200}}>Author</DataTable.Title>
+                <DataTable.Title style={{width:300}}>Description</DataTable.Title>
+                <DataTable.Title style={{width:120}}>Number Of Files</DataTable.Title>
+                <DataTable.Title style={{width:180}}>Created At</DataTable.Title>
               </DataTable.Header>
               <ScrollView>
                 {!check ?
@@ -134,11 +134,11 @@ const tableData = [];
                       if (item.share == 1) {
                         return (
                           <DataTable.Row>
-                            <DataTable.Cell onPress={() => getOneDocumentFolders(item.id)}>{item.name ? item.name : "-"}</DataTable.Cell>
-                            <DataTable.Cell>{item.author ? item.author : "-"}</DataTable.Cell>
-                            <DataTable.Cell>{item.description ? item.description : "-"}</DataTable.Cell>
-                            <DataTable.Cell>{item.sum ? item.sum : "-"}</DataTable.Cell>
-                            <DataTable.Cell>
+                            <DataTable.Cell style={{width:250}} onPress={() => getOneDocumentFolders(item.id)}>{item.name ? item.name : "-"}</DataTable.Cell>
+                            <DataTable.Cell style={{width:200}}>{item.author ? item.author : "-"}</DataTable.Cell>
+                            <DataTable.Cell style={{width:300}}>{item.description ? item.description : "-"}</DataTable.Cell>
+                            <DataTable.Cell style={{width:120}}>{item.sum ? item.sum : "-"}</DataTable.Cell>
+                            <DataTable.Cell style={{width:180}}>
                               {item.updated_at}
                             </DataTable.Cell>
                           </DataTable.Row>
@@ -149,11 +149,11 @@ const tableData = [];
                     if (item.share == 1) {
                       return (
                         <DataTable.Row>
-                          <DataTable.Cell onPress={() => getOneDocumentFolders(item.id)}>{item.name ? item.name : "-"}</DataTable.Cell>
-                          <DataTable.Cell>{item.author ? item.author : "-"}</DataTable.Cell>
-                          <DataTable.Cell>{item.description ? item.description : "-"}</DataTable.Cell>
-                          <DataTable.Cell>{item.sum ? item.sum : "-"}</DataTable.Cell>
-                          <DataTable.Cell>
+                          <DataTable.Cell style={{width:250}} onPress={() => getOneDocumentFolders(item.id)}>{item.name ? item.name : "-"}</DataTable.Cell>
+                          <DataTable.Cell style={{width:200}}>{item.author ? item.author : "-"}</DataTable.Cell>
+                          <DataTable.Cell style={{width:300}}>{item.description ? item.description : "-"}</DataTable.Cell>
+                          <DataTable.Cell style={{width:120}}>{item.sum ? item.sum : "-"}</DataTable.Cell>
+                          <DataTable.Cell style={{width:180}}>
                             {item.updated_at}
                           </DataTable.Cell>
                         </DataTable.Row>
@@ -208,9 +208,9 @@ const tableData = [];
           <ScrollView horizontal={true}>
             <DataTable>
               <DataTable.Header>
-                <DataTable.Title>Name</DataTable.Title>
-                <DataTable.Title>Size</DataTable.Title>
-                <DataTable.Title>Created At</DataTable.Title>
+                <DataTable.Title style={{width:250}}>Name</DataTable.Title>
+                <DataTable.Title style={{width:120}}>Size</DataTable.Title>
+                <DataTable.Title style={{width:150}}>Created At</DataTable.Title>
               </DataTable.Header>
               <ScrollView>
                 {!check2 ?
@@ -218,9 +218,9 @@ const tableData = [];
                     documents.map((item, index) => {
                       return (
                         <DataTable.Row>
-                          <DataTable.Cell>{item.name_show ? item.name_show : "-"}</DataTable.Cell>
-                          <DataTable.Cell>{item.size ? item.size : "-"}</DataTable.Cell>
-                          <DataTable.Cell>
+                          <DataTable.Cell style={{width:250}}>{item.name_show ? item.name_show : "-"}</DataTable.Cell>
+                          <DataTable.Cell style={{width:120}}>{item.size ? item.size : "-"}</DataTable.Cell>
+                          <DataTable.Cell style={{width:150}}>
                             {item.updated_at}
                           </DataTable.Cell>
                         </DataTable.Row>
@@ -230,9 +230,9 @@ const tableData = [];
                   : result2.length ? result2.map((item, index) => {
                     return (
                       <DataTable.Row>
-                        <DataTable.Cell>{item.name_show ? item.name_show : "-"}</DataTable.Cell>
-                        <DataTable.Cell>{item.size ? item.size : "-"}</DataTable.Cell>
-                        <DataTable.Cell>
+                        <DataTable.Cell style={{width:250}}>{item.name_show ? item.name_show : "-"}</DataTable.Cell>
+                        <DataTable.Cell style={{width:120}}>{item.size ? item.size : "-"}</DataTable.Cell>
+                        <DataTable.Cell style={{width:150}}>
                           {item.updated_at}
                         </DataTable.Cell>
                       </DataTable.Row>

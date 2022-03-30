@@ -28,7 +28,7 @@ const LoginScreen = ({ navigation }) => {
       method: 'POST',
       body: _formData,
     };
-    fetch('http://localhost:8000/api/user/login', requestOptions)
+    fetch('http://192.168.43.97:8000/api/user/login', requestOptions)
       .then((res) => res.json())
       .then((json) => {
         if (json.error) {
@@ -66,7 +66,7 @@ const LoginScreen = ({ navigation }) => {
       method: 'POST',
       body: _formData,
     };
-    fetch('http://localhost:8000/api/user/checkDomain', requestOptions)
+    fetch('http://192.168.43.97:8000/api/user/checkDomain', requestOptions)
       .then((res) => res.json())
       .then((json) => {
         if (json.error) {

@@ -20,19 +20,19 @@ const ScanScreen = ({ navigation }) => {
     const [loading, setLoading] = useState(false);
     const [id, setId] = useState('');
     const [checkButton, setCheckButton] = useState(false);
-    const [mapMonthMax, setMapMonthMax] = useState([]);
-    const [mapMonthMin, setMapMonthMin] = useState([]);
+    const [mapMonth, setMapMonth] = useState([]);
+    const [checkShow, setCheckShow] = useState(false);
     const [infor, setInfor] = useState({
         work_schedule: '0h',
         paid_time: '0h',
         logged_time: '0h',
         deficit: '0h'
     });
-
+    
     const [tableData, setTableData] = useState([]);
     const getEmployees = (token) => {
         setLoading(true);
-        fetch('http://localhost:8000/api/employee/getAllEmployee', {
+        fetch('http://192.168.43.97:8000/api/employee/getAllEmployee', {
             method: "GET",
             headers: { "Authorization": `Bearer ` + token }
         })
@@ -45,7 +45,7 @@ const ScanScreen = ({ navigation }) => {
     }
     const getMyAttendance = (token) => {
         setLoading(true)
-        fetch("http://localhost:8000/api/attendance/getMyAttendance", {
+        fetch("http://192.168.43.97:8000/api/attendance/getMyAttendance", {
             method: "GET",
             headers: { "Authorization": `Bearer ` + token }
         })
@@ -53,14 +53,16 @@ const ScanScreen = ({ navigation }) => {
             .then(data => {
                 if (data.error) {
                     setTableData(rows);
-                    setLoading(false)
+                    setLoading(false);
                 }
                 else {
-                    setTableData(data.attendances);
-                    setLoading(false)
+                    setTableData(data.attendances.reverse());
+                    setLoading(false);
+                    ((moment(new Date(data.attendances[0].date)).date()==moment(new Date()).date())&&(!data.attendances[0].clock_out))?setCheckButton(true):setCheckButton(false);
                 }
             });
     };
+    console.log(checkButton)
     useEffect(() => {
         (async () => {
             const role = await AsyncStorage.getItem("role");
@@ -72,22 +74,32 @@ const ScanScreen = ({ navigation }) => {
             getEmployees(token);
             const { status } = await BarCodeScanner.requestPermissionsAsync();
             setHasPermission(status === 'granted');
-            if((moment(new Date()).month()==0)||(moment(new Date()).month()==2)||(moment(new Date()).month()==4)||(moment(new Date()).month()==6)||(moment(new Date()).month()==7)||(moment(new Date()).month()==9)||(moment(new Date()).month()==11)){
-                var a=[];
-                for(var i=1;i<32;i++){
-                    var year=moment(new Date()).year();
-                    var month=moment(new Date()).month()+1;
-                    a.push(new Date(year+"-"+month+"-"+i));
+            if ((moment(new Date()).month() == 0) || (moment(new Date()).month() == 2) || (moment(new Date()).month() == 4) || (moment(new Date()).month() == 6) || (moment(new Date()).month() == 7) || (moment(new Date()).month() == 9) || (moment(new Date()).month() == 11)) {
+                var a = [];
+                for (var i = 1; i < 32; i++) {
+                    var year = moment(new Date()).year();
+                    var month = moment(new Date()).month() + 1;
+                    a.push(new Date(year + "-" + month + "-" + i));
                 }
-                setMapMonthMax(a);
-            }else{
-                var a=[];
-                for(var i=1;i<31;i++){
-                    var year=moment(new Date()).year();
-                    var month=moment(new Date()).month()+1;
-                    a.push(new Date(year+"-"+month+"-"+i));
+                setMapMonth(a);
+            } else {
+                var a = [];
+                for (var i = 1; i < 31; i++) {
+                    var year = moment(new Date()).year();
+                    var month = moment(new Date()).month() + 1;
+                    a.push(new Date(year + "-" + month + "-" + i));
                 }
-                setMapMonthMin(a);
+                setMapMonth(a);
+            }
+            if(tableData.length){
+                if(tableData[0].clock_out){
+                    //setCheckButton(true);
+                    console.log("khang")
+                }
+                else{
+                  //  setCheckButton(false);
+                  console.log("khang2")
+                }
             }
         })();
     }, []);
@@ -195,7 +207,7 @@ const ScanScreen = ({ navigation }) => {
                                                 size={220}
                                                 logoBackgroundColor='transparent'
                                             />
-                                            <Text style={{ textAlign: "center", marginTop: 10, fontSize: 20, fontWeight: "bold", lineHeight: 20, color: "rgb(35, 54, 78)" }}>Scan me for Attendance</Text>
+                                            <Text style={{ textAlign: "center", marginTop: 10, fontSize: 20, fontWeight: "bold", lineHeight: 20, color: "rgb(35, 54, 78)" }}>Scan me for clock in</Text>
                                         </View>
                                         :
                                         <View style={{ marginBottom: 20, padding: 5, marginTop: 20, alignItems: "center" }}>
@@ -204,51 +216,89 @@ const ScanScreen = ({ navigation }) => {
                                                 size={220}
                                                 logoBackgroundColor='transparent'
                                             />
-                                            <Text style={{ textAlign: "center", marginTop: 10, fontSize: 20, fontWeight: "bold", lineHeight: 20, color: "rgb(35, 54, 78)" }}>Scan me for Attendance</Text>
+                                            <Text style={{ textAlign: "center", marginTop: 10, fontSize: 20, fontWeight: "bold", lineHeight: 20, color: "rgb(35, 54, 78)" }}>Scan me for clock out</Text>
                                         </View>
                                 }
-                                <View style={{ borderRadius: 5, borderColor: "rgb(227, 235, 241)", borderWidth: 1, paddingTop: 20, marginBottom: 20 }}>
-                                    <View style={{ flexDirection: "row", alignItems: "center", paddingLeft: 10, paddingRight: 10, paddingBottom: 10 }}>
-                                        <Text style={{ fontSize: 16, lineHeight: 20, color: "rgb(35, 54, 78)", fontWeight: "bold" }}>Date</Text>
-                                        <Text style={{ marginLeft: "auto", fontSize: 16, lineHeight: 20, color: "rgb(14, 34, 61)" }}>
-                                            {new Date().toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })}
-                                        </Text>
-                                    </View>
-                                    <View style={{ flexDirection: "row", alignItems: "center", padding: 10, borderTopColor: "rgb(227, 235, 241)", borderTopWidth: 0.2 }}>
-                                        <Text style={{ fontSize: 16, lineHeight: 20, color: "rgb(35, 54, 78)", fontWeight: "bold" }}>Clock In</Text>
-                                        <Text style={{ marginLeft: "auto", fontSize: 16, lineHeight: 20, color: "rgb(14, 34, 61)", backgroundColor: "#edf8f1", padding: 10, borderRadius: 5 }}>{new Date().toLocaleString()}</Text>
-                                    </View>
-                                    <View style={{ flexDirection: "row", alignItems: "center", padding: 10, borderTopColor: "rgb(227, 235, 241)", borderTopWidth: 0.2 }}>
-
-                                        <Text style={{ fontSize: 16, lineHeight: 20, color: "rgb(35, 54, 78)", fontWeight: "bold" }}>Clock In Location</Text>
-                                        <Text style={{ marginLeft: "auto", fontSize: 16, lineHeight: 20, color: "rgb(14, 34, 61)" }}>Da Nang, Viet Nam</Text>
-                                    </View>
-                                    <View style={{ flexDirection: "row", alignItems: "center", padding: 10, borderTopColor: "rgb(227, 235, 241)", borderTopWidth: 0.2 }}>
-
-                                        <Text style={{ fontSize: 16, lineHeight: 20, color: "rgb(35, 54, 78)", fontWeight: "bold" }}>Clock Out</Text>
-                                        <Text style={{ marginLeft: "auto", fontSize: 16, lineHeight: 20, color: "rgb(14, 34, 61)", backgroundColor: "#edf8f1", padding: 10, borderRadius: 5 }}>{new Date().toLocaleString()}</Text>
-                                    </View>
-                                    <View style={{ flexDirection: "row", alignItems: "center", padding: 10, borderTopColor: "rgb(227, 235, 241)", borderTopWidth: 0.2 }}>
-
-                                        <Text style={{ fontSize: 16, lineHeight: 20, color: "rgb(35, 54, 78)", fontWeight: "bold" }}>Clock Out Location</Text>
-                                        <Text style={{ marginLeft: "auto", fontSize: 16, lineHeight: 20, color: "rgb(14, 34, 61)" }}>Da Nang, Viet Nam</Text>
-                                    </View>
-                                    <View style={{ flexDirection: "row", alignItems: "center", padding: 10, borderTopColor: "rgb(227, 235, 241)", borderTopWidth: 0.2 }}>
-
-                                        <Text style={{ fontSize: 16, lineHeight: 20, color: "rgb(35, 54, 78)", fontWeight: "bold" }}>Work Schedule</Text>
-                                        <Text style={{ marginLeft: "auto", fontSize: 16, lineHeight: 20, color: "rgb(14, 34, 61)" }}>80</Text>
-                                    </View>
-                                    <View style={{ flexDirection: "row", alignItems: "center", padding: 10, borderTopColor: "rgb(227, 235, 241)", borderTopWidth: 0.2 }}>
-
-                                        <Text style={{ fontSize: 16, lineHeight: 20, color: "rgb(35, 54, 78)", fontWeight: "bold" }}>Status</Text>
-                                        <Text style={{ marginLeft: "auto", fontSize: 16, lineHeight: 20, color: "rgb(14, 34, 61)" }}>{new Date().toLocaleString()}</Text>
-                                    </View>
-                                    <View style={{ flexDirection: "row", alignItems: "center", padding: 10, borderTopColor: "rgb(227, 235, 241)", borderTopWidth: 0.2 }}>
-
-                                        <Text style={{ fontSize: 16, lineHeight: 20, color: "rgb(35, 54, 78)", fontWeight: "bold" }}>Note</Text>
-                                        <Text style={{ marginLeft: "auto", fontSize: 16, lineHeight: 20, color: "rgb(14, 34, 61)" }}>{new Date().toLocaleString()}</Text>
-                                    </View>
-                                </View>
+                                {
+                                    mapMonth.length ?
+                                        mapMonth.map((item, index) => {
+                                            var check=false;
+                                            return (
+                                                <View style={{ borderRadius: 5, borderColor: "rgb(227, 235, 241)", borderWidth: 1, paddingTop: 20, marginBottom: 20 }}>
+                                                    <View style={{ flexDirection: "row", alignItems: "center", paddingLeft: 10, paddingRight: 10, paddingBottom: 10 }}>
+                                                        <Text style={{ fontSize: 16, lineHeight: 20, color: "rgb(35, 54, 78)", fontWeight: "bold" }}>Date</Text>
+                                                        <Text style={{ marginLeft: "auto", fontSize: 16, lineHeight: 20, color: "rgb(14, 34, 61)" }}>
+                                                            {item.toLocaleString('en-US', { day: 'numeric', month: 'numeric', year: "numeric" })}
+                                                        </Text>
+                                                    </View>
+                                                            {
+                                                                tableData.length ?
+                                                                    tableData.map((itemData, index) => {
+                                                                        if(moment(new Date(itemData.date)).date()==moment(new Date(item)).date()){
+                                                                            return(
+                                                                                <>
+                                                                                <View style={{ flexDirection: "row", alignItems: "center", padding: 10, borderTopColor: "rgb(227, 235, 241)", borderTopWidth: 0.2 }}>
+                                                                                <Text style={{ fontSize: 16, lineHeight: 20, color: "rgb(35, 54, 78)", fontWeight: "bold" }}>Clock In</Text>
+                                                                                <Text style={{ marginLeft: "auto", fontSize: 16, lineHeight: 20, color: "rgb(14, 34, 61)", backgroundColor: "#edf8f1", padding: 10, borderRadius: 5 }}>
+                                                                                  {itemData.clock_in}
+                                                                                  </Text>
+                                                                                </View>
+                                                                                 <View style={{ flexDirection: "row", alignItems: "center", padding: 10, borderTopColor: "rgb(227, 235, 241)", borderTopWidth: 0.2 }}>
+                                                                                 <Text style={{ fontSize: 16, lineHeight: 20, color: "rgb(35, 54, 78)", fontWeight: "bold" }}>Clock In Location</Text>
+                                                                                 <Text style={{ marginLeft: "auto", fontSize: 16, lineHeight: 20, color: "rgb(14, 34, 61)" }}>Da Nang, Viet Nam</Text>
+                                                                             </View>
+                                                                             <View style={{ flexDirection: "row", alignItems: "center", padding: 10, borderTopColor: "rgb(227, 235, 241)", borderTopWidth: 0.2 }}>
+                                                                                 <Text style={{ fontSize: 16, lineHeight: 20, color: "rgb(35, 54, 78)", fontWeight: "bold" }}>Clock Out</Text>
+                                                                                 <Text style={{ marginLeft: "auto", fontSize: 16, lineHeight: 20, color: "rgb(14, 34, 61)", backgroundColor: "#edf8f1", padding: 10, borderRadius: 5 }}>{new Date().toLocaleString()}</Text>
+                                                                             </View>
+                                                                             <View style={{ flexDirection: "row", alignItems: "center", padding: 10, borderTopColor: "rgb(227, 235, 241)", borderTopWidth: 0.2 }}>
+                                                                                 <Text style={{ fontSize: 16, lineHeight: 20, color: "rgb(35, 54, 78)", fontWeight: "bold" }}>Clock Out Location</Text>
+                                                                                 <Text style={{ marginLeft: "auto", fontSize: 16, lineHeight: 20, color: "rgb(14, 34, 61)" }}>Da Nang, Viet Nam</Text>
+                                                                             </View>
+                                                                             <View style={{ flexDirection: "row", alignItems: "center", padding: 10, borderTopColor: "rgb(227, 235, 241)", borderTopWidth: 0.2 }}>
+                                                        <Text style={{ fontSize: 16, lineHeight: 20, color: "rgb(35, 54, 78)", fontWeight: "bold" }}>Status</Text>
+                                                        <Text style={{ marginLeft: "auto", fontSize: 16, lineHeight: 20, color: "rgb(14, 34, 61)" }}>{itemData.status}</Text>
+                                                    </View>
+                                                    <View style={{ flexDirection: "row", alignItems: "center", padding: 10, borderTopColor: "rgb(227, 235, 241)", borderTopWidth: 0.2 }}>
+                                                        <Text style={{ fontSize: 16, lineHeight: 20, color: "rgb(35, 54, 78)", fontWeight: "bold" }}>Note</Text>
+                                                        <Text style={{ marginLeft: "auto", fontSize: 16, lineHeight: 20, color: "rgb(14, 34, 61)" }}>{itemData.note}</Text>
+                                                    </View>
+                                                                                  </>
+                                                                            )
+                                                                        }
+                                                                    }) : null
+                                                            }                                                               
+                
+                                                            <View style={{ flexDirection: "row", alignItems: "center", padding: 10, borderTopColor: "rgb(227, 235, 241)", borderTopWidth: 0.2 }}>
+                                                            <Text style={{ fontSize: 16, lineHeight: 20, color: "rgb(35, 54, 78)", fontWeight: "bold" }}>Clock In</Text>
+                                                            <Text style={{ marginLeft: "auto", fontSize: 16, lineHeight: 20, color: "rgb(14, 34, 61)", backgroundColor: "#edf8f1", padding: 10, borderRadius: 5 }}>
+                                                              --:--
+                                                              </Text>
+                                                            </View>
+                                                             <View style={{ flexDirection: "row", alignItems: "center", padding: 10, borderTopColor: "rgb(227, 235, 241)", borderTopWidth: 0.2 }}>
+                                                             <Text style={{ fontSize: 16, lineHeight: 20, color: "rgb(35, 54, 78)", fontWeight: "bold" }}>Clock In Location</Text>
+                                                             <Text style={{ marginLeft: "auto", fontSize: 16, lineHeight: 20, color: "rgb(14, 34, 61)" }}>--:--</Text>
+                                                         </View>
+                                                         <View style={{ flexDirection: "row", alignItems: "center", padding: 10, borderTopColor: "rgb(227, 235, 241)", borderTopWidth: 0.2 }}>
+                                                             <Text style={{ fontSize: 16, lineHeight: 20, color: "rgb(35, 54, 78)", fontWeight: "bold" }}>Clock Out</Text>
+                                                             <Text style={{ marginLeft: "auto", fontSize: 16, lineHeight: 20, color: "rgb(14, 34, 61)", backgroundColor: "#edf8f1", padding: 10, borderRadius: 5 }}>--:--</Text>
+                                                         </View>
+                                                         <View style={{ flexDirection: "row", alignItems: "center", padding: 10, borderTopColor: "rgb(227, 235, 241)", borderTopWidth: 0.2 }}>
+                                                             <Text style={{ fontSize: 16, lineHeight: 20, color: "rgb(35, 54, 78)", fontWeight: "bold" }}>Clock Out Location</Text>
+                                                             <Text style={{ marginLeft: "auto", fontSize: 16, lineHeight: 20, color: "rgb(14, 34, 61)" }}>--:--</Text>
+                                                         </View>
+                                                    <View style={{ flexDirection: "row", alignItems: "center", padding: 10, borderTopColor: "rgb(227, 235, 241)", borderTopWidth: 0.2 }}>
+                                                        <Text style={{ fontSize: 16, lineHeight: 20, color: "rgb(35, 54, 78)", fontWeight: "bold" }}>Status</Text>
+                                                        <Text style={{ marginLeft: "auto", fontSize: 16, lineHeight: 20, color: "rgb(14, 34, 61)" }}></Text>
+                                                    </View>
+                                                    <View style={{ flexDirection: "row", alignItems: "center", padding: 10, borderTopColor: "rgb(227, 235, 241)", borderTopWidth: 0.2 }}>
+                                                        <Text style={{ fontSize: 16, lineHeight: 20, color: "rgb(35, 54, 78)", fontWeight: "bold" }}>Note</Text>
+                                                        <Text style={{ marginLeft: "auto", fontSize: 16, lineHeight: 20, color: "rgb(14, 34, 61)" }}>{new Date().toLocaleString()}</Text>
+                                                    </View>
+                                                </View>
+                                            )
+                                        }) : null
+                                }
                             </View>
                         </View>
                     </ScrollView>

@@ -38,7 +38,7 @@ const tableData = [];
   const getOneDocumentFolders = (id) => {
     setLoading(true);
     setCheckDocuments()
-    fetch('http://localhost:8000/api/document/getOneFolder/' + id, {
+    fetch('http://192.168.43.97:8000/api/document/getOneFolder/' + id, {
       method: "GET",
       headers: { "Authorization": `Bearer ` + token }
     })
@@ -66,7 +66,7 @@ const tableData = [];
 
   const getFolder = (token) => {
     setLoading(true);
-    fetch('http://localhost:8000/api/document/getAllFolder', {
+    fetch('http://192.168.43.97:8000/api/document/getAllFolder', {
       method: "GET",
       headers: { "Authorization": `Bearer ` + token }
     })

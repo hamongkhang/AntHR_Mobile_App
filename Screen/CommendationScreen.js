@@ -30,7 +30,7 @@ const CommendationScreen = ({ navigation }) => {
     const [addComment, setAddComment] = useState({ praise_id: "", messeger: "" });
     const getEmployees = (token) => {
         setLoading(true);
-        fetch('http://localhost:8000/api/employee/getAllEmployee', {
+        fetch('http://192.168.43.97:8000/api/employee/getAllEmployee', {
             method: "GET",
             headers: { "Authorization": `Bearer ` + token }
         })
@@ -42,7 +42,7 @@ const CommendationScreen = ({ navigation }) => {
     }
     const getPoints = (token) => {
         setLoading(true);
-        fetch('http://localhost:8000/api/score/getOneScore', {
+        fetch('http://192.168.43.97:8000/api/score/getOneScore', {
             method: "GET",
             headers: { "Authorization": `Bearer ` + token }
         })
@@ -94,7 +94,7 @@ const CommendationScreen = ({ navigation }) => {
             body: _formData,
             headers: { "Authorization": `Bearer ` + token }
         };
-        fetch('http://localhost:8000/api/praise/createPraise', requestOptions)
+        fetch('http://192.168.43.97:8000/api/praise/createPraise', requestOptions)
             .then((res) => res.json())
             .then((json) => {
                 if (json.error) {
@@ -117,7 +117,7 @@ const CommendationScreen = ({ navigation }) => {
     };
     const getLike = (token) => {
         setLoading(true);
-        fetch('http://localhost:8000/api/praise/getAllLike', {
+        fetch('http://192.168.43.97:8000/api/praise/getAllLike', {
             method: "GET",
             headers: { "Authorization": `Bearer ` + token }
         })
@@ -128,7 +128,7 @@ const CommendationScreen = ({ navigation }) => {
     }
     const getComment = (token) => {
         setLoading(true);
-        fetch('http://localhost:8000/api/praise/getAllComment', {
+        fetch('http://192.168.43.97:8000/api/praise/getAllComment', {
             method: "GET",
             headers: { "Authorization": `Bearer ` + token }
         })
@@ -139,7 +139,7 @@ const CommendationScreen = ({ navigation }) => {
     }
     const getPraise = (token) => {
         setLoading(true);
-        fetch('http://localhost:8000/api/praise/getAllPraise', {
+        fetch('http://192.168.43.97:8000/api/praise/getAllPraise', {
             method: "GET",
             headers: { "Authorization": `Bearer ` + token }
         })
@@ -184,7 +184,7 @@ const CommendationScreen = ({ navigation }) => {
             body: _formData,
             headers: { "Authorization": `Bearer ` + token }
         };
-        fetch('http://localhost:8000/api/praise/createLike', requestOptions)
+        fetch('http://192.168.43.97:8000/api/praise/createLike', requestOptions)
             .then((res) => res.json())
             .then((json) => {
                 if (json.error) {
@@ -204,7 +204,7 @@ const CommendationScreen = ({ navigation }) => {
             body: _formData,
             headers: { "Authorization": `Bearer ` + token }
         };
-        fetch('http://localhost:8000/api/praise/createComment', requestOptions)
+        fetch('http://192.168.43.97:8000/api/praise/createComment', requestOptions)
             .then((res) => res.json())
             .then((json) => {
                 if (json.error) {
@@ -274,13 +274,13 @@ const CommendationScreen = ({ navigation }) => {
                                                                             );
                                                                         } else {
                                                                             return (
-                                                                                <Avatar.Image size={45} style={{ backgroundColor: "#edf8f1" }} source={{ uri: 'http://localhost:8000/upload'+ '/avatar/' + itemUser.avatar }} />
+                                                                                <Avatar.Image size={45} style={{ backgroundColor: "#edf8f1" }} source={{ uri: 'http://192.168.43.97:8000/upload'+ '/avatar/' + itemUser.avatar }} />
                                                                             );
                                                                         }
                                                                     }
                                                                     else {
                                                                         return (
-                                                                            <Avatar.Image size={45} style={{ backgroundColor: "#edf8f1" }} source={{ uri: 'http://localhost:8000/upload'+ '/avatar/avatar.png' }} />
+                                                                            <Avatar.Image size={45} style={{ backgroundColor: "#edf8f1" }} source={{ uri: 'http://192.168.43.97:8000/upload'+ '/avatar/avatar.png' }} />
                                                                         );
                                                                     }
                                                                 } else {
@@ -340,13 +340,13 @@ const CommendationScreen = ({ navigation }) => {
                                                                             );
                                                                         } else {
                                                                             return (
-                                                                                <Avatar.Image size={45} style={{ backgroundColor: "#edf8f1" }} source={{ uri: 'http://localhost:8000/upload'+ '/avatar/' + itemUser.avatar }} />
+                                                                                <Avatar.Image size={45} style={{ backgroundColor: "#edf8f1" }} source={{ uri: 'http://192.168.43.97:8000/upload'+ '/avatar/' + itemUser.avatar }} />
                                                                             );
                                                                         }
                                                                     }
                                                                     else {
                                                                         return (
-                                                                            <Avatar.Image size={45} style={{ backgroundColor: "#edf8f1" }} source={{ uri: 'http://localhost:8000/upload'+ '/avatar/avatar.png' }} />
+                                                                            <Avatar.Image size={45} style={{ backgroundColor: "#edf8f1" }} source={{ uri: 'http://192.168.43.97:8000/upload'+ '/avatar/avatar.png' }} />
                                                                         );
                                                                     }
                                                                 } else {
@@ -377,7 +377,7 @@ const CommendationScreen = ({ navigation }) => {
                                                         <Text style={{ textAlign: "center", fontSize: 12, color: "rgb(35, 54, 78)", marginTop: 5 }}>Executive Cum Legal Assistant Consultant Employee</Text>
                                                     </View>
                                                     <View style={{ alignItems: "center", width: "16%", marginLeft: 10, marginRight: 10 }}>
-                                                        <Avatar.Image size={70} style={{ backgroundColor: "white" }} source={{ uri: 'http://localhost:8000/upload'+ '/reward/gold.png' }} />
+                                                        <Avatar.Image size={70} style={{ backgroundColor: "white" }} source={{ uri: 'http://192.168.43.97:8000/upload'+ '/reward/gold.png' }} />
                                                     </View>
                                                     <View style={{ alignItems: "center", width: "40%" }}>
                                                         {employees.length ?
@@ -390,13 +390,13 @@ const CommendationScreen = ({ navigation }) => {
                                                                             );
                                                                         } else {
                                                                             return (
-                                                                                <Avatar.Image size={45} style={{ backgroundColor: "#edf8f1" }} source={{ uri: 'http://localhost:8000/upload'+ '/avatar/' + itemUser.avatar }} />
+                                                                                <Avatar.Image size={45} style={{ backgroundColor: "#edf8f1" }} source={{ uri: 'http://192.168.43.97:8000/upload'+ '/avatar/' + itemUser.avatar }} />
                                                                             );
                                                                         }
                                                                     }
                                                                     else {
                                                                         return (
-                                                                            <Avatar.Image size={45} style={{ backgroundColor: "#edf8f1" }} source={{ uri: 'http://localhost:8000/upload'+ '/avatar/avatar.png' }} />
+                                                                            <Avatar.Image size={45} style={{ backgroundColor: "#edf8f1" }} source={{ uri: 'http://192.168.43.97:8000/upload'+ '/avatar/avatar.png' }} />
                                                                         );
                                                                     }
                                                                 } else {
@@ -439,7 +439,7 @@ const CommendationScreen = ({ navigation }) => {
                                                         <Text style={{ fontSize: 12, fontWeight: "bold", color: "rgb(35, 54, 78)", backgroundColor: "#a7ffeb", padding: 7, borderRadius: 5 }}>Achievements</Text>
                                                     </View>
                                                     <View style={{ flexDirection: "row", width: "65%", alignItems: "center" }}>
-                                                        <Avatar.Image size={28} style={{ backgroundColor: "white" }} source={{ uri: 'http://localhost:8000/upload'+ '/reward/value.png' }} />
+                                                        <Avatar.Image size={28} style={{ backgroundColor: "white" }} source={{ uri: 'http://192.168.43.97:8000/upload'+ '/reward/value.png' }} />
                                                         <Text style={{ fontSize: 12, color: "rgb(35, 54, 78)", marginLeft: 5 }}>{item.cheer ? item.cheer : " - "}</Text>
                                                     </View>
                                                 </View>
@@ -500,13 +500,13 @@ const CommendationScreen = ({ navigation }) => {
                                 {
                                     (avatar == "null")
                                         ?
-                                        <Avatar.Image size={35} style={{ backgroundColor: "#edf8f1", marginRight: 10 }} source={{ uri: 'http://localhost:8000/upload'+ '/avatar/avatar.png' }} />
+                                        <Avatar.Image size={35} style={{ backgroundColor: "#edf8f1", marginRight: 10 }} source={{ uri: 'http://192.168.43.97:8000/upload'+ '/avatar/avatar.png' }} />
                                         :
                                         (avatar.search('https://') != -1)
                                             ?
                                             <Avatar.Image size={35} style={{ backgroundColor: "#edf8f1", marginRight: 10 }} source={{ uri: avatar }} />
                                             :
-                                            <Avatar.Image size={35} style={{ backgroundColor: "#edf8f1", marginRight: 10 }} source={{ uri: 'http://localhost:8000/upload'+ '/avatar/' + avatar }} />
+                                            <Avatar.Image size={35} style={{ backgroundColor: "#edf8f1", marginRight: 10 }} source={{ uri: 'http://192.168.43.97:8000/upload'+ '/avatar/' + avatar }} />
                                 }
                                 <Text style={{ fontSize: 16, fontWeight: "bold", color: "rgb(35, 54, 78)" }}>{"Hello, " + lastName + " " + firstName}</Text>
                             </View>
@@ -627,7 +627,7 @@ const CommendationScreen = ({ navigation }) => {
                                             </View>
                                             <View style={{ alignItems: "center" }}>
                                                 <Image
-                                                    source={{ uri: 'http://localhost:8000/upload'+ '/reward/leader_6.png' }}
+                                                    source={{ uri: 'http://192.168.43.97:8000/upload'+ '/reward/leader_6.png' }}
                                                     style={{
                                                         width: '100%',
                                                         height: 100,
@@ -638,7 +638,7 @@ const CommendationScreen = ({ navigation }) => {
                                             <Text style={{ fontSize: 14, textAlign: "center", color: "rgb(35, 54, 78)" }}>Great Inspirational Leadership</Text>
                                             <View style={{ alignItems: "center" }}>
                                                 <Image
-                                                    source={{ uri: 'http://localhost:8000/upload'+ '/reward/leader_3.png' }}
+                                                    source={{ uri: 'http://192.168.43.97:8000/upload'+ '/reward/leader_3.png' }}
                                                     style={{
                                                         width: '100%',
                                                         height: 70,
@@ -665,7 +665,7 @@ const CommendationScreen = ({ navigation }) => {
                                             </View>
                                             <View style={{ alignItems: "center" }}>
                                                 <Image
-                                                    source={{ uri: 'http://localhost:8000/upload'+ '/reward/leader_1.png' }}
+                                                    source={{ uri: 'http://192.168.43.97:8000/upload'+ '/reward/leader_1.png' }}
                                                     style={{
                                                         width: '100%',
                                                         height: 100,
@@ -676,7 +676,7 @@ const CommendationScreen = ({ navigation }) => {
                                             <Text style={{ fontSize: 14, textAlign: "center", color: "rgb(35, 54, 78)" }}>Expressing and contributing yourself</Text>
                                             <View style={{ alignItems: "center" }}>
                                                 <Image
-                                                    source={{ uri: 'http://localhost:8000/upload'+ '/reward/leader_2.png' }}
+                                                    source={{ uri: 'http://192.168.43.97:8000/upload'+ '/reward/leader_2.png' }}
                                                     style={{
                                                         width: '100%',
                                                         height: 70,
@@ -705,7 +705,7 @@ const CommendationScreen = ({ navigation }) => {
                                             </View>
                                             <View style={{ alignItems: "center" }}>
                                                 <Image
-                                                    source={{ uri: 'http://localhost:8000/upload'+ '/reward/leader_4.png' }}
+                                                    source={{ uri: 'http://192.168.43.97:8000/upload'+ '/reward/leader_4.png' }}
                                                     style={{
                                                         width: '100%',
                                                         height: 100,
@@ -716,7 +716,7 @@ const CommendationScreen = ({ navigation }) => {
                                             <Text style={{ fontSize: 14, textAlign: "center", color: "rgb(35, 54, 78)" }}>Helping people grow together</Text>
                                             <View style={{ alignItems: "center" }}>
                                                 <Image
-                                                    source={{ uri: 'http://localhost:8000/upload'+ '/reward/leader_5.png' }}
+                                                    source={{ uri: 'http://192.168.43.97:8000/upload'+ '/reward/leader_5.png' }}
                                                     style={{
                                                         width: '100%',
                                                         height: 70,
@@ -786,13 +786,13 @@ const CommendationScreen = ({ navigation }) => {
                                                                         );
                                                                     } else {
                                                                         return (
-                                                                            <Avatar.Image size={40} style={{ backgroundColor: "#edf8f1", marginRight: 10 }} source={{ uri: 'http://localhost:8000/upload'+ '/avatar/' + itemEmployee.avatar }} />
+                                                                            <Avatar.Image size={40} style={{ backgroundColor: "#edf8f1", marginRight: 10 }} source={{ uri: 'http://192.168.43.97:8000/upload'+ '/avatar/' + itemEmployee.avatar }} />
                                                                         );
                                                                     }
                                                                 }
                                                                 else {
                                                                     return (
-                                                                        <Avatar.Image size={40} style={{ backgroundColor: "#edf8f1", marginRight: 10 }} source={{ uri: 'http://localhost:8000/upload'+ '/avatar/avatar.png' }} />
+                                                                        <Avatar.Image size={40} style={{ backgroundColor: "#edf8f1", marginRight: 10 }} source={{ uri: 'http://192.168.43.97:8000/upload'+ '/avatar/avatar.png' }} />
                                                                     );
                                                                 }
                                                             } else {

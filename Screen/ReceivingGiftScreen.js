@@ -23,7 +23,7 @@ const ReceivigGiftScreen = ({ navigation }) => {
   const [searchGift, setSearchGift] = useState([]);
   const getPresents = (token) => {
     setLoading(true);
-    fetch('http://localhost:8000/api/present/getAllPresent', {
+    fetch('http://192.168.43.97:8000/api/present/getAllPresent', {
       method: "GET",
       headers: { "Authorization": `Bearer ` + token }
     })
@@ -73,7 +73,7 @@ const ReceivigGiftScreen = ({ navigation }) => {
   };
   const clickExchangeGift = (id) => {
     setLoading(true);
-    fetch('http://localhost:8000/api/present/exchangePresent/' + id, {
+    fetch('http://192.168.43.97:8000/api/present/exchangePresent/' + id, {
       method: "GET",
       headers: { "Authorization": `Bearer ` + token }
     })
@@ -127,25 +127,25 @@ const ReceivigGiftScreen = ({ navigation }) => {
           <View style={{ flexDirection: "row", marginBottom: 30, justifyContent: "center" }}>
             <View style={{ alignItems: "center", width: "24%" }}>
               <View style={{ backgroundColor: (checked == 0) ? "green" : "#e65100", borderRadius: 200 / 2, width: 55, height: 55, alignItems: "center", justifyContent: "center" }}>
-                <Avatar.Image size={50} style={{ backgroundColor: (checked == 0) ? "rgb(42, 210, 95)" : "#ffb74d" }} source={{ uri: 'http://localhost:8000/upload'+ '/reward/gold.png' }} />
+                <Avatar.Image size={50} style={{ backgroundColor: (checked == 0) ? "rgb(42, 210, 95)" : "#ffb74d" }} source={{ uri: 'http://192.168.43.97:8000/upload'+ '/reward/gold.png' }} />
               </View>
               <Text onPress={() => handleChangeChecked(0)} style={{ color: "rgb(35, 54, 78)", fontWeight: "bold", fontSize: 16 }}>All Gifts</Text>
             </View>
             <View style={{ alignItems: "center", width: "24%" }}>
               <View style={{ backgroundColor: (checked == 1) ? "green" : "#e65100", borderRadius: 200 / 2, width: 55, height: 55, alignItems: "center", justifyContent: "center" }}>
-                <Avatar.Image size={50} style={{ backgroundColor: (checked == 1) ? "rgb(42, 210, 95)" : "#ffb74d" }} source={{ uri: 'http://localhost:8000/upload'+ '/reward/food.png' }} />
+                <Avatar.Image size={50} style={{ backgroundColor: (checked == 1) ? "rgb(42, 210, 95)" : "#ffb74d" }} source={{ uri: 'http://192.168.43.97:8000/upload'+ '/reward/food.png' }} />
               </View>
               <Text onPress={() => handleChangeChecked(1)} style={{ color: "rgb(35, 54, 78)", fontWeight: "bold", fontSize: 16 }}>Food</Text>
             </View>
             <View style={{ alignItems: "center", width: "24%" }}>
               <View style={{ backgroundColor: (checked == 2) ? "green" : "#e65100", borderRadius: 200 / 2, width: 55, height: 55, alignItems: "center", justifyContent: "center" }}>
-                <Avatar.Image size={50} style={{ backgroundColor: (checked == 2) ? "rgb(42, 210, 95)" : "#ffb74d" }} source={{ uri: 'http://localhost:8000/upload'+ '/reward/gift.png' }} />
+                <Avatar.Image size={50} style={{ backgroundColor: (checked == 2) ? "rgb(42, 210, 95)" : "#ffb74d" }} source={{ uri: 'http://192.168.43.97:8000/upload'+ '/reward/gift.png' }} />
               </View>
               <Text onPress={() => handleChangeChecked(2)} style={{ color: "rgb(35, 54, 78)", fontWeight: "bold", fontSize: 16 }}>Artifacts</Text>
             </View>
             <View style={{ alignItems: "center", width: "24%" }}>
               <View style={{ backgroundColor: (checked == 3) ? "green" : "#e65100", borderRadius: 200 / 2, width: 55, height: 55, alignItems: "center", justifyContent: "center" }}>
-                <Avatar.Image size={50} style={{ backgroundColor: (checked == 3) ? "rgb(42, 210, 95)" : "#ffb74d" }} source={{ uri: 'http://localhost:8000/upload'+ '/reward/vourcher.png' }} />
+                <Avatar.Image size={50} style={{ backgroundColor: (checked == 3) ? "rgb(42, 210, 95)" : "#ffb74d" }} source={{ uri: 'http://192.168.43.97:8000/upload'+ '/reward/vourcher.png' }} />
               </View>
               <Text onPress={() => handleChangeChecked(3)} style={{ color: "rgb(35, 54, 78)", fontWeight: "bold", fontSize: 16 }}>Voucher</Text>
             </View>
@@ -159,7 +159,7 @@ const ReceivigGiftScreen = ({ navigation }) => {
                       <View style={{ marginTop: 6, width: Dimensions.get('window').width / 2 - 13, padding: 10, backgroundColor: "white", borderColor: "rgb(227, 235, 241)", borderWidth: 1, borderRadius: 3, marginRight: (index % 2 != 0) ? 0 : 6 }}>
                         <View style={{ alignItems: "center" }}>
                           <Image
-                            source={{ uri: 'http://localhost:8000/upload'+ '/present/image/' + item.image }}
+                            source={{ uri: 'http://192.168.43.97:8000/upload'+ '/present/image/' + item.image }}
                             style={{
                               width: '100%',
                               height: 100,
@@ -208,7 +208,7 @@ const ReceivigGiftScreen = ({ navigation }) => {
                       <View style={{ marginTop: 6, width: Dimensions.get('window').width / 2 - 13, padding: 10, backgroundColor: "white", borderColor: "rgb(227, 235, 241)", borderWidth: 1, borderRadius: 3, marginRight: (index % 2 != 0) ? 0 : 6 }}>
                         <View style={{ alignItems: "center" }}>
                           <Image
-                            source={{ uri: 'http://localhost:8000/upload'+ '/present/image/' + item.image }}
+                            source={{ uri: 'http://192.168.43.97:8000/upload'+ '/present/image/' + item.image }}
                             style={{
                               width: '100%',
                               height: 100,

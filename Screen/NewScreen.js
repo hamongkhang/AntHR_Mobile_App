@@ -20,7 +20,7 @@ const NewScreen = ({ navigation }) => {
 
   const getNews = (token) => {
     setLoading(true);
-    fetch('http://localhost:8000/api/new/getAllNew', {
+    fetch('http://192.168.43.97:8000/api/new/getAllNew', {
       method: "GET",
       headers: { "Authorization": `Bearer ` + token }
     })

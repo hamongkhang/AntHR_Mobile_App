@@ -120,10 +120,10 @@ const NewScreen = ({ navigation }) => {
                   return (
                     <View style={styles.item_one}>
                       <View style={{ flexDirection: "row", alignItems: "center" }}>
-                        <Text onPress={() => onChangeNewDetail(item.id)} style={{ fontSize: 18, fontHeight: 20, color: "rgb(35, 54, 78)", fontWeight: "bold" }}>{item.title ? item.title : "-"}</Text>
+                        <Text onPress={() => onChangeNewDetail(item.id)} style={{width:"65%", fontSize: 18, fontHeight: 20, color: "rgb(35, 54, 78)", fontWeight: "bold" }}>{item.title ? item.title : "-"}</Text>
                         {(item.important == 1)
                           ?
-                          <Text style={{ fontSize: 17, paddingTop: 4, paddingBottom: 4, paddingRight: 7, paddingLeft: 7, backgroundColor: "rgb(216, 246, 226)", color: "rgb(31, 153, 70)", borderRadius: 3, marginLeft: 10 }}>IMPORTANT</Text>
+                          <Text style={{fontSize: 17, paddingTop: 4, paddingBottom: 4, paddingRight: 7, paddingLeft: 7, backgroundColor: "rgb(216, 246, 226)", color: "rgb(31, 153, 70)", borderRadius: 3, marginLeft: 10 }}>IMPORTANT</Text>
                           :
                           null}
                       </View>
@@ -146,7 +146,7 @@ const NewScreen = ({ navigation }) => {
                 return (
                   <View style={styles.item_one}>
                     <View style={{ flexDirection: "row", alignItems: "center" }}>
-                      <Text onPress={() => onChangeNewDetail(item.id)} style={{ fontSize: 18, fontHeight: 20, color: "rgb(35, 54, 78)", fontWeight: "bold" }}>{item.title ? item.title : "-"}</Text>
+                      <Text onPress={() => onChangeNewDetail(item.id)} style={{width:"65%",fontSize: 18, fontHeight: 20, color: "rgb(35, 54, 78)", fontWeight: "bold" }}>{item.title ? item.title : "-"}</Text>
                       {(item.important == 1)
                         ?
                         <Text style={{ fontSize: 17, paddingTop: 4, paddingBottom: 4, paddingRight: 7, paddingLeft: 7, backgroundColor: "rgb(216, 246, 226)", color: "rgb(31, 153, 70)", borderRadius: 3, marginLeft: 10 }}>IMPORTANT</Text>

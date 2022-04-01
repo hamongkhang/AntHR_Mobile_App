@@ -50,12 +50,10 @@ const AccountScreen = ({ navigation }) => {
         <Loader loading={loading} />
         {
           employees.length ?
-            employees.map((item) => {
+            employees.map((item,index) => {
               if (item.user_id == id) {
                 return (
-
                   <>
-
                     <View style={styles.header}>
                       {item.avatar
                         ?
@@ -70,7 +68,7 @@ const AccountScreen = ({ navigation }) => {
                       <Text style={styles.name_header}>{item.last_name + " " + item.first_name}</Text>
                       <Text style={styles.email_header}>{item.email}</Text>
                     </View>
-                    <View style={styles.body}>
+                    <View  style={styles.body}>
                       <View style={{ backgroundColor: "#ffa000", flexDirection: 'row', opacity: 1, borderRadius: 5, marginLeft: 10, marginRight: 10 }}>
                         {
                           (showTab == 1)

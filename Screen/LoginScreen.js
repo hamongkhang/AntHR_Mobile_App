@@ -34,11 +34,11 @@ const LoginScreen = ({ navigation }) => {
         if (json.error) {
           if (json.error == 'Unauthorized') {
             setLoading(false);
-            ToastAndroid.showWithGravityAndOffset('Login information is incorrect !!!', ToastAndroid.LONG, ToastAndroid.CENTER, 10, 10);
+          //  ToastAndroid.showWithGravityAndOffset('Login information is incorrect !!!', ToastAndroid.LONG, ToastAndroid.CENTER, 10, 10);
             setErrorForm2('');
           } else if (json.error == 'Blocked') {
             setLoading(false);
-            ToastAndroid.showWithGravityAndOffset('Your account has been blocked !!!', ToastAndroid.LONG, ToastAndroid.CENTER, 10, 10);
+           // ToastAndroid.showWithGravityAndOffset('Your account has been blocked !!!', ToastAndroid.LONG, ToastAndroid.CENTER, 10, 10);
             setErrorForm2("");
           } else {
             setLoading(false);
@@ -52,8 +52,8 @@ const LoginScreen = ({ navigation }) => {
           AsyncStorage.setItem('email', json.name.email);
           AsyncStorage.setItem('role', json.user.role.toString());
           AsyncStorage.setItem('id', json.user.id.toString());
-          setLoading(false);
-       //   ToastAndroid.showWithGravityAndOffset('Logged in successfully !!!',ToastAndroid.LONG,ToastAndroid.CENTER,10,10);
+           setLoading(false);
+         // ToastAndroid.showWithGravityAndOffset('Logged in successfully !!!',ToastAndroid.LONG,ToastAndroid.CENTER,10,10);
           navigation.navigate('HomeScreen');
         }
       });
@@ -80,7 +80,7 @@ const LoginScreen = ({ navigation }) => {
           }
         } else {
           setLoading(false);
-        //  ToastAndroid.showWithGravityAndOffset('Successfully!!!',ToastAndroid.LONG,ToastAndroid.CENTER,10,10);
+         //  ToastAndroid.showWithGravityAndOffset('Successfully!!!',ToastAndroid.LONG,ToastAndroid.CENTER,10,10);
           if (!showForm) {
             setShowForm(true);
           } else {

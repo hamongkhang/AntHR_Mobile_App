@@ -16,9 +16,10 @@ import CheckUserScreen from './Screen/CheckUserScreen';
 const Stack = createNativeStackNavigator();
 
 const App = () => {
+ console.disableYellowBox = true;
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="HomeScreen">
+      <Stack.Navigator initialRouteName="Welcome">
         <Stack.Screen
           name="Welcome"
           component={Welcome}

@@ -1,15 +1,17 @@
 import React, { useState } from 'react';
 import { LinearGradient } from "expo-linear-gradient";
 import { StyleSheet, View, Text, ScrollView, Image, TouchableOpacity, KeyboardAvoidingView, } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage'
 import Loader from "./Loader";
 const Welcome = ({ navigation }) => {
+
   const [loading, setLoading] = useState(false);
   const getStart = () => {
     setLoading(true);
     setTimeout(() => {
       setLoading(false);
       navigation.navigate('CheckUserScreen');
-    }, 2000);
+    }, 200);
   }
   return (
     <LinearGradient colors={['#f5fdf8', '#f7f9fc']} style={styles.linearGradient}>

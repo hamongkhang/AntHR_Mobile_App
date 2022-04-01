@@ -268,6 +268,8 @@ const CommendationScreen = ({ navigation }) => {
                                                             employees.map((itemUser,index2) => {
                                                                 if (itemUser.user_id == item.author) {
                                                                     if (itemUser.avatar) {
+                                                                        console.warn(itemUser.avatar)
+
                                                                         if (itemUser.avatar.search('https://') != -1) {
                                                                             return (
                                                                                 <Avatar.Image key={index2}  size={45} style={{ backgroundColor: "#edf8f1" }} source={{ uri: itemUser.avatar }} />
